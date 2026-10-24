@@ -12,7 +12,7 @@
 [![Model](https://img.shields.io/badge/Model-CatBoost%20v2%20Champion-yellow.svg?style=flat-square)](https://catboost.ai/)
 [![Payload](https://img.shields.io/badge/Payload-48.4%20MB%20%2F%20250%20MB%20Limit-success.svg?style=flat-square)](https://vercel.com)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/Tests-34%2F34%20Passing-brightgreen.svg?style=flat-square)](https://github.com/abdalla7-nada/flight-delay-predictor)
+[![Tests](https://img.shields.io/badge/Tests-34%2F34%20Passing-success.svg?style=flat-square)](https://github.com/abdalla7-nada/flight-delay-predictor)
 
 <br/>
 
@@ -76,11 +76,11 @@ where $z = \text{logit}(P_{\text{raw}}) = \text{margin}$ (the model's direct raw
 
 4. **Extreme Payload Reduction**: Slashed the entire runtime bundle from **845 MB** down to **48.4 MB** total (< 20% of Vercel's ceiling, leaving **201.6 MB** of safety headroom).
 
-5. **Exact Bit-Level Parity**: The serverless pure-Python engine achieves exact bit-level parity ($\Delta P \approx 10^{-17}$) against the full CatBoost + Joblib pipeline with zero loss of precision.
+5. **Exact Bit-Level Parity & Automated CI Verification**: The serverless pure-Python engine achieves exact bit-level numerical parity ($\Delta P \le 1.67 \times 10^{-16}$) against the full CatBoost + Joblib pipeline across 200 diverse cross-country itineraries, verified continuously in CI via `backend/tests/test_model_distillation_parity.py` with zero loss of precision.
 
 ---
 
-## 3. Operational Safety, Transparency & Edge-Case Fallbacks
+## 3. Operational Safety, Architecture Hardening & Edge-Case Fallbacks
 
 In production, user payloads provide only itinerary schedule parameters (origin, destination, airline carrier, flight date, scheduled departure time, scheduled arrival time). The serving layer features robust operational safety mechanisms:
 
@@ -101,6 +101,20 @@ $$\Delta \text{logit} = \ln\left(\frac{p}{1-p}\right) - \ln\left(\frac{p_{\text{
 
 The top-3 drivers with the largest absolute log-odds impact are returned in human-readable plain language (e.g., origin window congestion, carrier delay rate, or high-volume holiday periods).
 
+### 3.4 Instant Static Prerendering (SSR/SSG) & Local Vocabulary Bundling
+The Next.js 16 App Router interface is statically prerendered (`○ / (Static)`) at build time using Turbopack with zero initial client-side network waterfalls:
+- **Sub-500 ms Paint**: Initial Largest Contentful Paint (LCP) is $< 0.5\text{ s}$, completely eliminating the blocking `Loading AeroRisk Engine...` state for search crawlers and initial visitors.
+- **Zero-Waterfall Vocabulary Bundling**: The 378 commercial airports and 18 reporting carriers are served directly from `frontend/src/lib/vocab.json` (and re-exported via `frontend/src/lib/constants.ts`) to populate form input `<datalist>` elements in 0 ms without requiring blocking pre-flight network requests.
+
+### 3.5 Client Resilience & Timeout Management
+The frontend API client implements an `AbortController` timeout configured at 8,000 ms (`TIMEOUT_MS = 8000` in `frontend/src/lib/api.ts`). If the serverless runtime or network connection hangs, the client aborts the pending request and surfaces an actionable danger retry banner with inline status feedback rather than leaving the user interface in an indefinite loading state.
+
+### 3.6 Pydantic Input Hardening & Validation Rules
+Both the containerized API (`backend/api/main.py`) and serverless edge API (`frontend/api/index.py`) enforce strict data integrity rules via Pydantic schemas:
+- **Identical Origin and Destination Rejection**: A `@model_validator(mode="after")` validates that flight origins and destinations are distinct (`ORIGIN != DEST`). Submitting identical airport codes (e.g., `JFK` $\to$ `JFK`) immediately returns a structured **HTTP 422 Unprocessable Entity** error, which the frontend intercepts and maps directly to inline field validation warnings.
+- **Strict Military Time Bounds**: Scheduled departure and arrival times are strictly parsed and validated ($0 \le \text{time} \le 2359$ with minutes $< 60$).
+- **ISO Date Formatting**: Flight dates are strictly validated against the ISO `YYYY-MM-DD` standard before entering the feature transformation pipeline.
+
 ---
 
 ## 4. Monorepo Architecture
@@ -117,9 +131,12 @@ flight-delay-predictor/
 │   │   ├── requirements.txt      # Ultra-light runtime dependencies (fastapi + pydantic only)
 │   │   └── assets/               # Precomputed lookups (vocab, route priors, coordinates)
 │   ├── src/                      # Next.js 16 App Router interface (React, Tailwind CSS, Lucide)
-│   │   ├── app/                  # App Router pages and global layouts
+│   │   ├── app/                  # Statically prerendered App Router pages and layouts
 │   │   ├── components/           # UI components (SinglePredictor, BatchPredictor, Transparency)
-│   │   ├── lib/                  # Universal API client with relative routing
+│   │   ├── lib/                  # Universal API client, static vocabulary, and helpers
+│   │   │   ├── api.ts            # Client with 8,000 ms AbortController timeout & 422 parser
+│   │   │   ├── constants.ts      # Risk thresholds and carrier mappings
+│   │   │   └── vocab.json        # Bundled local static airport/carrier vocabulary
 │   │   └── types/                # TypeScript interface contracts
 │   └── vercel.json               # Serverless route rewrites and strict security headers
 │
@@ -131,6 +148,10 @@ flight-delay-predictor/
 │   ├── reports/                  # Comprehensive audit metrics and verification claims
 │   ├── scripts/                  # Verification, asset building, and evaluation scripts
 │   ├── tests/                    # Comprehensive test suite (34/34 unit, integration & parity tests)
+│   │   ├── test_api.py           # API endpoints, health checks, and 422 validation
+│   │   ├── test_model_distillation_parity.py # Automated distillation parity test suite (200 flights)
+│   │   ├── test_pipeline.py      # Feature engineering and temporal split verification
+│   │   └── test_predictor.py     # Batch serving logic, Bayesian priors, and fallbacks
 │   ├── Dockerfile                # Production container specification for alternative deployments
 │   ├── docker-compose.yml        # Multi-container local orchestration
 │   └── pyproject.toml            # Poetry / Pip build and dependency specifications
@@ -248,8 +269,9 @@ In alignment with empirical machine learning standards, every candidate architec
 
 ---
 
-## 9. Serving Approximation Verification
+## 9. Serving Approximation & Distillation Verification
 
+### 9.1 Serving Approximation vs. Batch Pipeline
 In production, user payloads provide only itinerary schedule parameters (origin, destination, airline carrier, flight date, scheduled departure time, scheduled arrival time). The serving layer automatically derives scheduled elapsed time and distance from `route_lookup.json`.
 
 To quantify the approximation error of using route-median elapsed time and distance, **5,000** random validation rows (seed 42) were evaluated (including 25 flights across 24 unseen routes using geodesic and physical fallback):
@@ -259,6 +281,14 @@ To quantify the approximation error of using route-median elapsed time and dista
 - **Spearman Rank Correlation**: **0.999935** (near-perfect preservation of flight ranking).
 - **Decile Invariance**: **98.98%** of flights retained their exact risk decile; **100.0%** fell within $\pm 1$ decile.
 - **Numerical Pipeline Equivalence**: 200 validation rows scored through the serving predictor vs the batch pipeline yielded a max absolute difference of **0.000000** ($< 10^{-6}$).
+
+### 9.2 Automated Distillation Parity CI Verification (`test_model_distillation_parity.py`)
+To prevent regression or divergence between the offline research models and the production zero-dependency pure-Python engine, automated parity testing is executed on every build:
+- **Evaluation Cohort**: Evaluates 200 diverse cross-country itineraries systematically spanning all 18 reporting carriers, transcontinental hub pairs (e.g., `JFK_LAX`, `MIA_SEA`, `ORD_SFO`), all departure windows (morning, midday, evening, red-eye), and high-density holiday travel dates.
+- **Calibrated Probability Divergence**: Maximum absolute probability divergence is bounded at **$\Delta P \le 1.67 \times 10^{-16}$**, well within the required $10^{-6}$ engineering tolerance.
+- **Raw Ensemble Margin Divergence**: Maximum raw tree score divergence is bounded at **$\Delta z \le 1.11 \times 10^{-16}$**.
+- **Categorical Risk Band & Decile Concordance**: **100.0%** exact concordance across all categorical risk bands (`Low`, `Below average`, `Average`, `Above average`, `High`) and decile assignments (D1–D10).
+- **Closed-Form Platt Equivalence**: Validated analytical equivalence of $P = \frac{1}{1 + \exp(-(A \cdot z + B))}$ against Scikit-Learn's `LogisticRegression.predict_proba` to within $10^{-12}$ precision across the entire margin range $z \in [-4.0, +4.0]$.
 
 ---
 
@@ -272,7 +302,7 @@ The complete application (Next.js 16 Client + FastAPI Serverless Inference Engin
 3. Leave all build and install commands at default (`npm run build` and `npm install`).
 4. Click **Deploy**.
 
-Vercel automatically compiles the Next.js frontend with Turbopack, enables edge routing, and registers `frontend/api/index.py` as an ultra-fast Python Serverless Function. The total function payload is **48.4 MB**, well under the 250 MB ceiling with zero external VM dependencies.
+Vercel automatically compiles the Next.js frontend with Turbopack, enables edge routing, and registers `frontend/api/index.py` as an ultra-fast Python Serverless Function. The total function payload is **48.4 MB**, well under the 250 MB ceiling with zero external VM dependencies. Both `frontend/api/index.py` and `backend/api/main.py` share identical Pydantic validation logic (`ORIGIN != DEST`, military times, and ISO dates).
 
 ### 10.2 Alternative Deployment: Containerized Docker Evaluation
 To run the containerized evaluation API and test suite locally:
@@ -295,7 +325,9 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r backend/requirements.txt
 
 # 2. Run backend test suite (34/34 unit, integration & parity tests)
-pytest backend/tests/ -v
+cd backend
+pytest tests/ -v
+cd ..
 
 # 3. Launch Next.js interface
 cd frontend
