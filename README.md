@@ -1,9 +1,9 @@
-# Flight Delay Risk Predictor (Champion v2)
+# Flight Delay Risk Predictor
 
 **Author**: Abdallah Nada  
-**Release Version**: v2.0 (Serving & Deployment Package)  
+**Release Version**: v1.0 (Production API & Next.js Interface)  
 **Task**: Schedule-Only Pre-Departure Flight Delay Risk Stratification  
-**Demo Application**: [Hugging Face Space Demo](https://huggingface.co/spaces/abdallah-nada/flight-delay-predictor) *(Placeholder)*  
+**Demo Application**: [Live Web Application](https://flight-delay-predictor.vercel.app) *(Vercel)*  
 
 ---
 
@@ -14,7 +14,8 @@ Flight delays generate billions of dollars annually in commercial disruption, mi
 This project addresses the true pre-departure challenge: **Can flight delay vulnerability be meaningfully separated at booking time using only schedule coordinates?**
 
 The target is defined as:
-$$\text{DELAY} = \mathbf{1}(\text{ARR\_DELAY} > 15 \text{ minutes})$$
+
+$$\text{DELAY} = \mathbf{1}(\mathrm{ARR\_DELAY} > 15 \text{ minutes})$$
 
 ### Threshold Sensitivity & DOT Convention
 The standard US Department of Transportation (DOT) reporting convention treats flights arriving at exactly 15 minutes past schedule as delayed ($\ge 15$ minutes). In this pipeline, the target is defined as strictly greater than 15 minutes ($> 15$). In the 2022 validation dataset, exactly **3,137 flights** recorded an arrival delay of exactly 15.0 minutes; under this model's formulation, those flights are classified as on-time.
