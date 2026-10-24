@@ -6,7 +6,7 @@
 [![API](https://img.shields.io/badge/Inference-FastAPI%20Serverless-009688.svg)](https://fastapi.tiangolo.com/)
 [![Model](https://img.shields.io/badge/Champion-CatBoost%20v2%20(Pure%20Python)-green.svg)](https://catboost.ai/)
 [![Deployment](https://img.shields.io/badge/Deployment-Vercel%20Production-000000.svg)](https://flight-delay-predictor.vercel.app)
-[![Tests](https://img.shields.io/badge/Tests-31%2F31%20Passing-success.svg)](https://github.com/abdalla7-nada/flight_operations_ml)
+[![Tests](https://img.shields.io/badge/Tests-31%2F31%20Passing-success.svg)](https://github.com/abdalla7-nada/flight-delay-predictor)
 
 **Author**: Abdallah Nada  
 **Release Version**: v2.0 (Unified Vercel Serverless Architecture & Next.js 16 Interface)  
@@ -56,7 +56,7 @@ Instead of relying on heavy runtime packages or external VMs, the Champion model
 The repository is structured as a decoupled monorepo:
 
 ```text
-flight_operations_ml/
+flight-delay-predictor/
 ├── frontend/                     # Next.js 16 Web Application & Vercel Serverless API
 │   ├── api/                      # Vercel Python Serverless Backend (FastAPI)
 │   │   ├── champion_model.py     # Distilled zero-dependency CatBoost tree ensemble (47.3 MB)
