@@ -4,19 +4,19 @@
 
 ### *Production-Grade Schedule-Only ML Inference Engine & Analytics Dashboard*
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Next.js 16](https://img.shields.io/badge/Frontend-Next.js%2016%20(Turbopack)-black.svg)](https://nextjs.org/)
-[![FastAPI](https://img.shields.io/badge/Inference-FastAPI%20(ASGI%20Serverless)-009688.svg)](https://fastapi.tiangolo.com/)
-[![Vercel](https://img.shields.io/badge/Deployment-Vercel%20Production-000000.svg)](https://flight-delay-predictor.vercel.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](./LICENSE)
+[![Next.js 16](https://img.shields.io/badge/Frontend-Next.js%2016%20Turbopack-black.svg?style=flat-square&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/Inference-FastAPI%20Serverless-009688.svg?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Vercel](https://img.shields.io/badge/Deployment-Vercel%20Production-black.svg?style=flat-square&logo=vercel&logoColor=white)](https://flight-delay-predictor.vercel.app)
 
-[![Model](https://img.shields.io/badge/Champion-CatBoost%20v2%20(Pure%20Python)-green.svg)](https://catboost.ai/)
-[![Payload](https://img.shields.io/badge/Payload-48.4%20MB%20%2F%20250%20MB%20Limit-success.svg)](https://vercel.com)
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/Tests-31%2F31%20Passing-success.svg)](https://github.com/abdalla7-nada/flight-delay-predictor)
+[![Model](https://img.shields.io/badge/Model-CatBoost%20v2%20Champion-yellow.svg?style=flat-square)](https://catboost.ai/)
+[![Payload](https://img.shields.io/badge/Payload-48.4%20MB%20%2F%20250%20MB%20Limit-success.svg?style=flat-square)](https://vercel.com)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Tests](https://img.shields.io/badge/Tests-31%2F31%20Passing-brightgreen.svg?style=flat-square)](https://github.com/abdalla7-nada/flight-delay-predictor)
 
 <br/>
 
-[![Deploy Status](https://img.shields.io/badge/Live%20Application-flight--delay--predictor.vercel.app-0070F3?style=for-the-badge&logo=vercel&logoColor=white)](https://flight-delay-predictor.vercel.app)
+[![Live Application](https://img.shields.io/badge/Live%20Application-flight--delay--predictor.vercel.app-0070F3?style=for-the-badge&logo=vercel&logoColor=white)](https://flight-delay-predictor.vercel.app)
 
 </div>
 
@@ -42,7 +42,9 @@ This project addresses the true pre-departure challenge: **Can flight delay vuln
 
 The target is defined as:
 
-$$\text{DELAY} = \mathbf{1}(\text{ARR\_DELAY} > 15 \text{ minutes})$$
+$$\text{DELAY} = \mathbf{1}(\text{ARR}_{\text{DELAY}} > 15 \text{ minutes})$$
+
+*(where $\text{ARR}_{\text{DELAY}}$ represents actual arrival delay in minutes, and $\mathbf{1}(\cdot)$ is the indicator function)*.
 
 ### Threshold Sensitivity & DOT Convention
 The standard US Department of Transportation (DOT) reporting convention treats flights arriving at exactly 15 minutes past schedule as delayed ($\ge 15$ minutes). In this pipeline, the target is defined as strictly greater than 15 minutes ($> 15$). In the 2022 validation dataset, exactly **3,137** flights recorded an arrival delay of exactly 15.0 minutes; under this model's formulation, those flights are classified as on-time.
@@ -68,7 +70,7 @@ Rather than managing costly external virtual machines or cold-boot Docker contai
 
 $$P(\text{delay}) = \frac{1}{1 + \exp(-(0.933139 \cdot z + 0.097311))}$$
 
-where $z = \text{logit}(P_{\text{raw}}) = \text{raw\_margin}$ is the direct margin output of the tree ensemble, evaluated using standard library `math.exp` with zero third-party dependencies.
+where $z = \text{logit}(P_{\text{raw}}) = \text{margin}$ (the model's direct raw score output `raw_margin`), evaluated using standard library `math.exp` with zero third-party dependencies.
 
 3. **Precomputed Serialized Asset Lookups**: Airport coordinates, reporting carrier priors, route elapsed times, and holiday dates are compressed into lightweight JSON lookups (`1.09 MB`).
 
