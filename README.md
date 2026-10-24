@@ -1,20 +1,36 @@
+<div align="center">
+
 # Flight Delay Risk Predictor
 
-*Production-Grade Schedule-Only ML Inference Engine & Analytics Dashboard*
+### *Production-Grade Schedule-Only ML Inference Engine & Analytics Dashboard*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![CI Status](https://github.com/abdalla7-nada/flight-delay-predictor/actions/workflows/ci.yml/badge.svg)](https://github.com/abdalla7-nada/flight-delay-predictor/actions/workflows/ci.yml)
-[![Framework](https://img.shields.io/badge/Frontend-Next.js%2016%20(Turbopack)-black.svg)](https://nextjs.org/)
-[![API](https://img.shields.io/badge/Inference-FastAPI%20(ASGI%20Serverless)-009688.svg)](https://fastapi.tiangolo.com/)
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
+[![Next.js 16](https://img.shields.io/badge/Frontend-Next.js%2016%20(Turbopack)-black.svg)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/Inference-FastAPI%20(ASGI%20Serverless)-009688.svg)](https://fastapi.tiangolo.com/)
+[![Vercel](https://img.shields.io/badge/Deployment-Vercel%20Production-000000.svg)](https://flight-delay-predictor.vercel.app)
+
 [![Model](https://img.shields.io/badge/Champion-CatBoost%20v2%20(Pure%20Python)-green.svg)](https://catboost.ai/)
 [![Payload](https://img.shields.io/badge/Payload-48.4%20MB%20%2F%20250%20MB%20Limit-success.svg)](https://vercel.com)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![Tests](https://img.shields.io/badge/Tests-31%2F31%20Passing-success.svg)](https://github.com/abdalla7-nada/flight-delay-predictor)
 
-**Author**: Abdallah Nada  
-**Release Version**: v2.0 (Unified Vercel Serverless Architecture & Next.js 16 Interface)  
-**Task**: Schedule-Only Pre-Departure Flight Delay Risk Stratification  
-**Live Production Application**: [https://flight-delay-predictor.vercel.app](https://flight-delay-predictor.vercel.app) *(Vercel)*  
+<br/>
+
+[![Deploy Status](https://img.shields.io/badge/Live%20Application-flight--delay--predictor.vercel.app-0070F3?style=for-the-badge&logo=vercel&logoColor=white)](https://flight-delay-predictor.vercel.app)
+
+</div>
+
+<br/>
+
+### Executive Metadata Matrix
+
+| Attribute | Specification |
+| :--- | :--- |
+| **Author** | Abdallah Nada |
+| **Architecture** | Decoupled Monorepo (Next.js 16 Client + Pure-Python Serverless API) |
+| **Inference Moat** | Zero-Dependency CatBoost Distillation ($\Delta P \approx 10^{-17}$, 48.4 MB payload) |
+| **Target Definition** | FAA/DOT Schedule-Only Arrival Delay ($> 15$ min, strict pre-departure) |
+| **Status** | Production-Ready (Verified on BTS 2019–2023 dataset) |
 
 ---
 
@@ -26,7 +42,7 @@ This project addresses the true pre-departure challenge: **Can flight delay vuln
 
 The target is defined as:
 
-$$\text{DELAY} = \mathbf{1}(\mathrm{ARR\_DELAY} > 15 \text{ minutes})$$
+$$\text{DELAY} = \mathbf{1}(\text{ARR\_DELAY} > 15 \text{ minutes})$$
 
 ### Threshold Sensitivity & DOT Convention
 The standard US Department of Transportation (DOT) reporting convention treats flights arriving at exactly 15 minutes past schedule as delayed ($\ge 15$ minutes). In this pipeline, the target is defined as strictly greater than 15 minutes ($> 15$). In the 2022 validation dataset, exactly **3,137** flights recorded an arrival delay of exactly 15.0 minutes; under this model's formulation, those flights are classified as on-time.
@@ -47,11 +63,17 @@ Deploying production machine learning architectures to serverless hosting enviro
 Rather than managing costly external virtual machines or cold-boot Docker containers, the Champion v2 pipeline was distilled into an ultra-lean, self-contained inference engine:
 
 1. **Direct Pure-Python CatBoost Decision Tree Compilation**: The 178-tree ensemble was compiled directly into native Python arithmetic (`frontend/api/champion_model.py` - 47.33 MB) with all 12,782 categorical hash combinations mapped via an offline training pool.
+
 2. **Closed-Form Platt Scaling Calibration**: Rather than loading `scipy` or `scikit-learn` calibrators, probability calibration is computed analytically via exact Platt logistic scaling:
-   $$P(\text{delay}) = \frac{1}{1 + \exp(-(0.933139 \cdot z + 0.097311))}$$
-   where $z = \text{logit}(P_{\text{raw}}) = \text{raw\_margin}$ is the direct margin output of the tree ensemble, evaluated using standard library `math.exp` with zero third-party dependencies.
+
+$$P(\text{delay}) = \frac{1}{1 + \exp(-(0.933139 \cdot z + 0.097311))}$$
+
+where $z = \text{logit}(P_{\text{raw}}) = \text{raw\_margin}$ is the direct margin output of the tree ensemble, evaluated using standard library `math.exp` with zero third-party dependencies.
+
 3. **Precomputed Serialized Asset Lookups**: Airport coordinates, reporting carrier priors, route elapsed times, and holiday dates are compressed into lightweight JSON lookups (`1.09 MB`).
+
 4. **Extreme Payload Reduction**: Slashed the entire runtime bundle from **845 MB** down to **48.4 MB** total (< 20% of Vercel's ceiling, leaving **201.6 MB** of safety headroom).
+
 5. **Exact Bit-Level Parity**: The serverless pure-Python engine achieves exact bit-level parity ($\Delta P \approx 10^{-17}$) against the full CatBoost + Joblib pipeline with zero loss of precision.
 
 ---
