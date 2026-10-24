@@ -44,7 +44,7 @@ The target is defined as:
 
 $$\text{DELAY} = \mathbf{1}(\text{ARR}_{\text{DELAY}} > 15 \text{ minutes})$$
 
-*(where $\text{ARR}_{\text{DELAY}}$ represents actual arrival delay in minutes, and $\mathbf{1}(\cdot)$ is the indicator function)*.
+where `ARR_DELAY` represents the actual arrival delay in minutes, and $\mathbf{1}(\cdot)$ denotes the indicator function.
 
 ### Threshold Sensitivity & DOT Convention
 The standard US Department of Transportation (DOT) reporting convention treats flights arriving at exactly 15 minutes past schedule as delayed ($\ge 15$ minutes). In this pipeline, the target is defined as strictly greater than 15 minutes ($> 15$). In the 2022 validation dataset, exactly **3,137** flights recorded an arrival delay of exactly 15.0 minutes; under this model's formulation, those flights are classified as on-time.
