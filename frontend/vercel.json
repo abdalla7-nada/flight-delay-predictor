@@ -3,6 +3,36 @@
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/api",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/health",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/metadata",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/options",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/predict",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/predict/(.*)",
+      "destination": "/api/index.py"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

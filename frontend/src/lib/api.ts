@@ -7,8 +7,23 @@ import {
   ApiErrorResponse,
 } from "@/types";
 
-const RAW_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-export const API_BASE_URL = RAW_API_URL.replace(/\/+$/, "");
+const RAW_API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const API_BASE_URL = (
+  RAW_API_URL !== undefined
+    ? RAW_API_URL
+    : process.env.NODE_ENV === "production"
+    ? ""
+    : "http://localhost:8000"
+).replace(/\/+$/, "");
+
+function getFullUrl(path: string): URL {
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  if (API_BASE_URL) {
+    return new URL(`${API_BASE_URL}${cleanPath}`);
+  }
+  const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
+  return new URL(cleanPath, origin);
+}
 
 export class ApiClientError extends Error {
   status?: number;
@@ -44,7 +59,6 @@ async function handleResponse<T>(res: Response): Promise<T> {
       errorMessage = messages.join(" | ");
     }
   } catch {
-    // Non-JSON response
     errorMessage = `Request failed with HTTP status ${res.status}: ${res.statusText}`;
   }
 
@@ -53,7 +67,8 @@ async function handleResponse<T>(res: Response): Promise<T> {
 
 export async function fetchHealth(): Promise<ApiHealth> {
   try {
-    const res = await fetch(`${API_BASE_URL}/health`, {
+    const url = getFullUrl("/health");
+    const res = await fetch(url.toString(), {
       method: "GET",
       headers: { Accept: "application/json" },
       cache: "no-store",
@@ -62,7 +77,7 @@ export async function fetchHealth(): Promise<ApiHealth> {
   } catch (err: unknown) {
     if (err instanceof ApiClientError) throw err;
     throw new ApiClientError(
-      `Failed to connect to backend at ${API_BASE_URL}. Ensure FastAPI is running on port 8000.`,
+      `Failed to connect to backend at ${API_BASE_URL || "origin"}. Ensure API is reachable.`,
       0
     );
   }
@@ -70,7 +85,8 @@ export async function fetchHealth(): Promise<ApiHealth> {
 
 export async function fetchMetadata(): Promise<ApiMetadata> {
   try {
-    const res = await fetch(`${API_BASE_URL}/metadata`, {
+    const url = getFullUrl("/metadata");
+    const res = await fetch(url.toString(), {
       method: "GET",
       headers: { Accept: "application/json" },
       next: { revalidate: 3600 },
@@ -79,7 +95,7 @@ export async function fetchMetadata(): Promise<ApiMetadata> {
   } catch (err: unknown) {
     if (err instanceof ApiClientError) throw err;
     throw new ApiClientError(
-      `Failed to fetch model metadata from ${API_BASE_URL}.`,
+      `Failed to fetch model metadata from ${API_BASE_URL || "origin"}.`,
       0
     );
   }
@@ -87,7 +103,8 @@ export async function fetchMetadata(): Promise<ApiMetadata> {
 
 export async function fetchOptions(): Promise<ApiOptions> {
   try {
-    const res = await fetch(`${API_BASE_URL}/options`, {
+    const url = getFullUrl("/options");
+    const res = await fetch(url.toString(), {
       method: "GET",
       headers: { Accept: "application/json" },
       next: { revalidate: 3600 },
@@ -96,7 +113,7 @@ export async function fetchOptions(): Promise<ApiOptions> {
   } catch (err: unknown) {
     if (err instanceof ApiClientError) throw err;
     throw new ApiClientError(
-      `Failed to fetch supported airlines/airports from ${API_BASE_URL}.`,
+      `Failed to fetch supported airlines/airports from ${API_BASE_URL || "origin"}.`,
       0
     );
   }
@@ -107,7 +124,7 @@ export async function predictSingle(
   includeShap: boolean = true
 ): Promise<PredictionResult> {
   try {
-    const url = new URL(`${API_BASE_URL}/predict`);
+    const url = getFullUrl("/predict");
     if (!includeShap) {
       url.searchParams.set("include_shap", "false");
     }
@@ -124,7 +141,7 @@ export async function predictSingle(
   } catch (err: unknown) {
     if (err instanceof ApiClientError) throw err;
     throw new ApiClientError(
-      `Connection failure while predicting flight risk. Ensure API is running at ${API_BASE_URL}.`,
+      `Connection failure while predicting flight risk. Ensure API is reachable at ${API_BASE_URL || "origin"}.`,
       0
     );
   }
@@ -139,7 +156,7 @@ export async function predictBatch(
   }
 
   try {
-    const url = new URL(`${API_BASE_URL}/predict/batch`);
+    const url = getFullUrl("/predict/batch");
     if (includeShap) {
       url.searchParams.set("include_shap", "true");
     }
@@ -156,7 +173,7 @@ export async function predictBatch(
   } catch (err: unknown) {
     if (err instanceof ApiClientError) throw err;
     throw new ApiClientError(
-      `Connection failure during batch scoring. Ensure API is reachable at ${API_BASE_URL}.`,
+      `Connection failure during batch scoring. Ensure API is reachable at ${API_BASE_URL || "origin"}.`,
       0
     );
   }
