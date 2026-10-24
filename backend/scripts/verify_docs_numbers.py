@@ -55,9 +55,13 @@ def verify_claims():
 
     # Pre-load markdown documents
     doc_cache = {}
+    monorepo_root = os.path.abspath(os.path.join(repo_root, '..'))
     docs_to_check = ['README.md', 'MODEL_CARD.md']
     for doc in docs_to_check:
-        doc_path = os.path.join(repo_root, doc)
+        # Check monorepo root first for README.md, backend_root for others
+        doc_path = os.path.join(monorepo_root, doc) if doc == 'README.md' and os.path.exists(os.path.join(monorepo_root, doc)) else os.path.join(repo_root, doc)
+        if not os.path.exists(doc_path):
+            doc_path = os.path.join(monorepo_root, doc)
         if os.path.exists(doc_path):
             with open(doc_path, 'r', encoding='utf-8') as f:
                 doc_cache[doc] = f.read()

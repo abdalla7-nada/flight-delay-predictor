@@ -50,6 +50,9 @@ data/processed/
 artifacts/test_predictions.parquet
 artifacts/models/catboost_native_cats_v2.joblib
 artifacts/models/catboost_priors_v2.joblib
+backend/artifacts/test_predictions.parquet
+backend/artifacts/models/catboost_native_cats_v2.joblib
+backend/artifacts/models/catboost_priors_v2.joblib
 
 # OS & Editor Dumps
 .DS_Store
@@ -65,9 +68,14 @@ _quarantine/
 reports/cleanup_*
 reports/cleanup_audit.md
 reports/cleanup_inventory.csv
+backend/reports/cleanup_*
+backend/reports/cleanup_audit.md
+backend/reports/cleanup_inventory.csv
 
 # Request Logs
 *.log
 *.jsonl
 api/logs/*
 !api/logs/.gitkeep
+backend/api/logs/*
+!backend/api/logs/.gitkeep
