@@ -21,15 +21,28 @@
 
 <br/>
 
-### Executive Metadata Matrix
+### System Specifications
 
-| Attribute | Specification |
-| :--- | :--- |
-| **Author** | Abdallah Nada |
-| **Architecture** | Decoupled Monorepo (Next.js 16 Client + Pure-Python Serverless API) |
-| **Inference Moat** | Zero-Dependency CatBoost Distillation ($\Delta P \approx 10^{-17}$, 48.4 MB payload) |
-| **Target Definition** | FAA/DOT Schedule-Only Arrival Delay ($> 15$ min, strict pre-departure) |
-| **Status** | Production-Ready (Verified on BTS 2019–2023 dataset) |
+| Layer / Component | Technical Specification | Engineering Verification |
+| :--- | :--- | :--- |
+| **Problem Formulation** | Binary Classification — Arrival Delay ($> 15\text{ min}$) | FAA/DOT standard; strictly schedule-only features (Zero Data Leakage) |
+| **Dataset & Splitting** | U.S. DOT BTS (2019–2023) — 1,643,787 completed flights | Out-of-Time temporal split (Train: 2019/21, Val: 2022, Test: 2023) |
+| **Inference Engine** | Pure-Python CatBoost Decision Tree Compilation (178 trees) | Zero third-party ML runtime dependencies ($\Delta P \le 1.67 \times 10^{-16}$ parity) |
+| **Serving Architecture** | Decoupled Monorepo: Next.js 16 SSR + FastAPI Serverless | Statically prerendered UI ($LCP < 0.5\text{ s}$) with 8,000 ms client timeout |
+| **Empirical Benchmark** | 2023 Out-of-Sample Test Set (250 day-clustered bootstrap) | **ROC-AUC: 0.6523** \| **PR-AUC: 0.3497** \| **Brier: 0.1638** \| **Lift: 1.93x** |
+| **Quality & Assurance** | Automated Test Suite (34/34 passing in CI) | Parity tests, Pydantic edge-case hardening, empirical claims verified |
+
+```mermaid
+flowchart LR
+    A[Next.js 16 App Router<br/>Static SSR & vocab.json] -->|Schedule Coordinates<br/>JSON Payload| B[FastAPI Serverless Route<br/>Edge Runtime]
+    B --> C[Pydantic Hardening<br/>ORIGIN != DEST & Military Times]
+    C --> D[Deterministic Feature Encoder<br/>33 Leakage-Free Features]
+    D --> E[Pure-Python CatBoost v2 Engine<br/>178 Compiled Trees]
+    E --> F[Closed-Form Platt Scaler<br/>Analytical Logit Math]
+    F -->|Calibrated Prob + Top-3 Drivers| A
+    style E fill:#e0f2fe,stroke:#0284c7,stroke-width:2px
+    style C fill:#fef3c7,stroke:#d97706,stroke-width:1px
+```
 
 ---
 
@@ -50,30 +63,25 @@ The standard US Department of Transportation (DOT) reporting convention treats f
 
 ---
 
-## 2. Architectural Challenge & Distillation Engineering Moat
+## 2. The Serverless Constraint & Distillation Engineering Moat
 
-### The 250 MB Serverless Challenge
-Deploying production machine learning architectures to serverless hosting environments like Vercel is conventionally blocked by the hard **250 MB unzipped size ceiling**. Standard Python ML dependencies alone exceed this boundary:
-- `catboost`: ~329 MB
-- `scipy`: ~100 MB
-- `scikit-learn`: ~40 MB
-- `pandas` & `numpy`: ~70 MB
-- Total uncompressed runtime environment: **> 845 MB** (over 3.3x the Vercel ceiling, triggering fatal `LAMBDA_SIZE_EXCEEDED` errors).
+### The Serverless Dependency Bottleneck
+Deploying production machine learning architectures to serverless hosting environments is conventionally blocked by bundle quota limits and dependency bloat. Standard scientific Python machine learning stacks requiring heavy C++ extensions and large compiled packages (`catboost`, `scikit-learn`, `scipy`, `pandas`, `numpy`) routinely exceed serverless bundle quotas, causing fatal `LAMBDA_SIZE_EXCEEDED` crashes and severe cold-start latency spikes.
 
-### The Solution: Standalone Pure-Python Model + Closed-Form Calibration
-Rather than managing costly external virtual machines or cold-boot Docker containers, the Champion v2 pipeline was distilled into an ultra-lean, self-contained inference engine:
+### The Solution: Native Pure-Python Tree Distillation & Closed-Form Scaling
+Rather than provisioning costly always-on virtual machines or managing slow cold-boot container registries, the Champion v2 pipeline was distilled into an ultra-lean, self-contained serverless inference engine:
 
-1. **Direct Pure-Python CatBoost Decision Tree Compilation**: The 178-tree ensemble was compiled directly into native Python arithmetic (`frontend/api/champion_model.py` - 47.33 MB) with all 12,782 categorical hash combinations mapped via an offline training pool.
+1. **Direct Pure-Python CatBoost Decision Tree Compilation**: The 178-tree ensemble was compiled directly into native pure-Python arithmetic (`frontend/api/champion_model.py`) with all 12,782 categorical hash combinations mapped via an offline training pool, eliminating all C++ runtime bindings.
 
-2. **Closed-Form Platt Scaling Calibration**: Rather than loading `scipy` or `scikit-learn` calibrators, probability calibration is computed analytically via exact Platt logistic scaling:
+2. **Closed-Form Analytical Platt Scaling**: Rather than importing `scipy` or `scikit-learn` calibrator objects, probability calibration is computed analytically via exact Platt logistic scaling:
 
 $$P(\text{delay}) = \frac{1}{1 + \exp(-(0.933139 \cdot z + 0.097311))}$$
 
 where $z = \text{logit}(P_{\text{raw}}) = \text{margin}$ (the model's direct raw score output `raw_margin`), evaluated using standard library `math.exp` with zero third-party dependencies.
 
-3. **Precomputed Serialized Asset Lookups**: Airport coordinates, reporting carrier priors, route elapsed times, and holiday dates are compressed into lightweight JSON lookups (`1.09 MB`).
+3. **Precomputed Serialized Asset Lookups**: Airport coordinates, reporting carrier priors, route elapsed times, and holiday dates are compressed into lightweight static JSON lookups.
 
-4. **Extreme Payload Reduction**: Slashed the entire runtime bundle from **845 MB** down to **48.4 MB** total (< 20% of Vercel's ceiling, leaving **201.6 MB** of safety headroom).
+4. **Zero-Dependency Serverless Engine**: Eliminated all third-party scientific computing libraries from the production runtime, resulting in a compact pure-Python inference engine that fits comfortably within standard serverless hosting limits with instant cold-start readiness.
 
 5. **Exact Bit-Level Parity & Automated CI Verification**: The serverless pure-Python engine achieves exact bit-level numerical parity ($\Delta P \le 1.67 \times 10^{-16}$) against the full CatBoost + Joblib pipeline across 200 diverse cross-country itineraries, verified continuously in CI via `backend/tests/test_model_distillation_parity.py` with zero loss of precision.
 
@@ -124,7 +132,7 @@ The repository is organized as a decoupled monorepo:
 flight-delay-predictor/
 ├── frontend/                     # Next.js 16 Web Application & Vercel Serverless API
 │   ├── api/                      # Vercel Python Serverless Backend (FastAPI)
-│   │   ├── champion_model.py     # Distilled zero-dependency CatBoost tree ensemble (47.3 MB)
+│   │   ├── champion_model.py     # Distilled zero-dependency CatBoost tree ensemble
 │   │   ├── predictor.py          # Pure-Python inference pipeline & Platt calibrator
 │   │   ├── index.py              # FastAPI ASGI entrypoint (CORS, schemas, endpoints)
 │   │   ├── requirements.txt      # Ultra-light runtime dependencies (fastapi + pydantic only)
@@ -301,7 +309,7 @@ The complete application (Next.js 16 Client + FastAPI Serverless Inference Engin
 3. Leave all build and install commands at default (`npm run build` and `npm install`).
 4. Click **Deploy**.
 
-Vercel automatically compiles the Next.js frontend with Turbopack, enables edge routing, and registers `frontend/api/index.py` as an ultra-fast Python Serverless Function. The total function payload is **48.4 MB**, well under the 250 MB ceiling with zero external VM dependencies. Both `frontend/api/index.py` and `backend/api/main.py` share identical Pydantic validation logic (`ORIGIN != DEST`, military times, and ISO dates).
+Vercel automatically compiles the Next.js frontend with Turbopack, enables edge routing, and registers `frontend/api/index.py` as an ultra-fast Python Serverless Function. The resulting lightweight, zero-dependency serverless bundle deploys effortlessly within standard serverless hosting limits with zero external VM dependencies. Both `frontend/api/index.py` and `backend/api/main.py` share identical Pydantic validation logic (`ORIGIN != DEST`, military times, and ISO dates).
 
 ### 10.2 Alternative Deployment: Containerized Docker Evaluation
 To run the containerized evaluation API and test suite locally:

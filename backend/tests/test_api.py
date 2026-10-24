@@ -111,7 +111,8 @@ def test_api_logging_privacy(api_client: TestClient, valid_flight_payload):
     """Verifies that requests.jsonl records NEVER contain client IP, user_agent, or personal identifiers."""
     import json
     from pathlib import Path
-    log_path = Path("api/logs/requests.jsonl")
+    from api.main import REQUEST_LOG_FILE
+    log_path = REQUEST_LOG_FILE
     
     # Make a prediction with custom headers
     response = api_client.post(

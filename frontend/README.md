@@ -10,7 +10,7 @@ The `frontend/` directory contains both the client presentation layer and the pr
 - **Next.js 16 Web Application** (`frontend/src/`): Built with React 19, TypeScript, and Tailwind CSS, statically prerendered with Next.js Turbopack.
 - **Pure-Python Serverless Inference API** (`frontend/api/`): An ultra-lean FastAPI serverless function hosting the distilled CatBoost decision tree model (`champion_model.py`) and closed-form Platt calibrator (`predictor.py`).
 
-The entire application deploys to Vercel as a unified project, packaging the UI and the ML inference function within a compact **48.4 MB payload**—well below Vercel's 250 MB serverless ceiling with zero external VM or Docker dependencies.
+The entire application deploys to Vercel as a unified project, packaging the UI and the ML inference function within a lightweight, zero-dependency serverless bundle—well within standard serverless runtime limits with zero external VM or Docker dependencies.
 
 ---
 
@@ -43,7 +43,7 @@ The entire application deploys to Vercel as a unified project, packaging the UI 
 ```text
 frontend/
 ├── api/                          # Vercel Python Serverless Backend
-│   ├── champion_model.py         # Pure-Python distilled CatBoost decision tree ensemble (47.3 MB)
+│   ├── champion_model.py         # Pure-Python distilled CatBoost decision tree ensemble
 │   ├── predictor.py              # Pure-Python inference pipeline & Platt calibrator
 │   ├── index.py                  # FastAPI ASGI application & route handlers
 │   ├── requirements.txt          # Minimal serverless dependencies (fastapi + pydantic)

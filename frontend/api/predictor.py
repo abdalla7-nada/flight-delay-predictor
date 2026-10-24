@@ -1,7 +1,7 @@
 """
 api/predictor.py
 Zero-dependency, high-performance pure Python inference engine for Flight Delay Risk Predictor (Champion v2).
-Engineered specifically for Vercel Serverless Functions within the 250 MB ceiling.
+Engineered specifically for Vercel Serverless Functions with zero third-party ML dependencies.
 Requires strictly standard library (math, json, datetime, pathlib).
 Zero external ML dependencies (no numpy, scipy, pandas, or catboost).
 """

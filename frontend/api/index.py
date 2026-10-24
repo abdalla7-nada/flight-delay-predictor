@@ -1,7 +1,7 @@
 """
 api/index.py
 FastAPI Serverless Application for Flight Delay Risk Predictor (Champion v2).
-Optimized for Vercel Serverless Functions within the 250 MB ceiling.
+Optimized for Vercel Serverless Functions with zero third-party ML runtime dependencies.
 Zero heavy ML libraries required.
 """
 
