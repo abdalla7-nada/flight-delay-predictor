@@ -10,7 +10,6 @@
 [![Vercel](https://img.shields.io/badge/Deployment-Vercel%20Production-black.svg?style=flat-square&logo=vercel&logoColor=white)](https://flight-delay-predictor.vercel.app)
 
 [![Model](https://img.shields.io/badge/Model-CatBoost%20v2%20Champion-yellow.svg?style=flat-square)](https://catboost.ai/)
-[![Payload](https://img.shields.io/badge/Payload-48.4%20MB%20%2F%20250%20MB%20Limit-success.svg?style=flat-square)](https://vercel.com)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![Tests](https://img.shields.io/badge/Tests-34%2F34%20Passing-success.svg?style=flat-square)](https://github.com/abdalla7-nada/flight-delay-predictor)
 
