@@ -18,9 +18,10 @@ if str(API_DIR) not in sys.path:
     sys.path.insert(0, str(API_DIR))
 
 from fastapi import FastAPI, HTTPException, Request, status
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator, field_validator
 
 from predictor import ServerlessPredictor, InputValidationError
 
@@ -84,6 +85,50 @@ class FlightPredictionRequest(BaseModel):
         examples=["11:00"],
         description="Scheduled local arrival time in HH:MM, HHMM, or integer format"
     )
+
+    @model_validator(mode="after")
+    def check_airports_distinct(self):
+        if self.origin and self.dest and self.origin.strip().upper() == self.dest.strip().upper():
+            raise ValueError("Origin and destination airports cannot be identical.")
+        return self
+
+    @field_validator("flight_date")
+    @classmethod
+    def validate_flight_date(cls, v: str) -> str:
+        s = str(v).strip()
+        try:
+            datetime.strptime(s, "%Y-%m-%d")
+        except ValueError:
+            raise ValueError(f"Invalid flight_date format '{v}'; must be ISO format YYYY-MM-DD.")
+        return s
+
+    @field_validator("sched_dep_time", "sched_arr_time")
+    @classmethod
+    def validate_time(cls, v: str) -> str:
+        s = str(v).strip()
+        try:
+            if ":" in s:
+                parts = s.split(":")
+                if len(parts) != 2:
+                    raise ValueError(f"Invalid time format '{v}'; expected HH:MM.")
+                h, m = int(parts[0]), int(parts[1])
+            else:
+                if not s.isdigit():
+                    raise ValueError(f"Non-numeric time value '{v}'.")
+                if len(s) in (1, 2):
+                    h, m = int(s), 0
+                elif len(s) in (3, 4):
+                    h, m = int(s[:-2]), int(s[-2:])
+                else:
+                    raise ValueError(f"Time string '{v}' has invalid length.")
+
+            if (h == 24 and m == 0) or (h == 0 and m == 0):
+                return s
+            if not (0 <= h <= 23 and 0 <= m <= 59):
+                raise ValueError(f"Time '{v}' is outside valid military time range (00:00 - 23:59).")
+        except ValueError as e:
+            raise ValueError(str(e))
+        return s
 
     model_config = {
         "json_schema_extra": {
@@ -153,6 +198,24 @@ async def input_validation_error_handler(request: Request, exc: InputValidationE
     err_body = {
         "error": "Unprocessable Entity",
         "detail": str(exc),
+        "status_code": status.HTTP_422_UNPROCESSABLE_ENTITY
+    }
+    return JSONResponse(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, content=err_body)
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """Translates Pydantic schema validation errors to consistent HTTP 422 JSON responses."""
+    messages = []
+    for err in exc.errors():
+        msg = err.get("msg", "")
+        if msg.startswith("Value error, "):
+            msg = msg[len("Value error, "):]
+        loc = ": ".join(str(l) for l in err.get("loc", []) if l != "body")
+        messages.append(f"{loc}: {msg}" if loc else msg)
+    detail_str = " | ".join(messages) if messages else "Invalid request payload."
+    err_body = {
+        "error": "Unprocessable Entity",
+        "detail": detail_str,
         "status_code": status.HTTP_422_UNPROCESSABLE_ENTITY
     }
     return JSONResponse(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, content=err_body)

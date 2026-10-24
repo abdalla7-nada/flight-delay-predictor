@@ -1,3 +1,5 @@
+import vocabData from "./vocab.json";
+
 export const AIRLINE_NAMES: Record<string, string> = {
   "AA": "American Airlines",
   "DL": "Delta Air Lines",
@@ -18,6 +20,9 @@ export const AIRLINE_NAMES: Record<string, string> = {
   "EV": "ExpressJet Airlines",
   "VX": "Virgin America",
 };
+
+export const ALL_AIRPORT_CODES: string[] = vocabData.airports;
+export const ALL_AIRLINE_CODES: string[] = vocabData.airlines;
 
 export const POPULAR_AIRPORTS: Array<{ code: string; name: string; city: string }> = [
   { code: "ATL", name: "Hartsfield-Jackson Atlanta", city: "Atlanta, GA" },

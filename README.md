@@ -12,7 +12,7 @@
 [![Model](https://img.shields.io/badge/Model-CatBoost%20v2%20Champion-yellow.svg?style=flat-square)](https://catboost.ai/)
 [![Payload](https://img.shields.io/badge/Payload-48.4%20MB%20%2F%20250%20MB%20Limit-success.svg?style=flat-square)](https://vercel.com)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/Tests-31%2F31%20Passing-brightgreen.svg?style=flat-square)](https://github.com/abdalla7-nada/flight-delay-predictor)
+[![Tests](https://img.shields.io/badge/Tests-34%2F34%20Passing-brightgreen.svg?style=flat-square)](https://github.com/abdalla7-nada/flight-delay-predictor)
 
 <br/>
 
@@ -130,7 +130,7 @@ flight-delay-predictor/
 │   ├── notebooks/                # Exploratory data analysis and model development
 │   ├── reports/                  # Comprehensive audit metrics and verification claims
 │   ├── scripts/                  # Verification, asset building, and evaluation scripts
-│   ├── tests/                    # Comprehensive test suite (31/31 unit & integration tests)
+│   ├── tests/                    # Comprehensive test suite (34/34 unit, integration & parity tests)
 │   ├── Dockerfile                # Production container specification for alternative deployments
 │   ├── docker-compose.yml        # Multi-container local orchestration
 │   └── pyproject.toml            # Poetry / Pip build and dependency specifications
@@ -294,7 +294,7 @@ python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r backend/requirements.txt
 
-# 2. Run backend test suite (31/31 unit & integration tests)
+# 2. Run backend test suite (34/34 unit, integration & parity tests)
 pytest backend/tests/ -v
 
 # 3. Launch Next.js interface

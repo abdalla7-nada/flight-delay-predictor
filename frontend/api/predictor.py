@@ -274,7 +274,7 @@ class ServerlessPredictor:
                 f"Unknown destination airport '{dest}'. Airport must be one of {len(self.known_airports)} supported IATA codes."
             )
         if origin == dest:
-            raise InputValidationError(f"Origin and destination cannot be the same airport ('{origin}').")
+            raise InputValidationError("Origin and destination airports cannot be identical.")
 
         dep_time_int = self.parse_time_to_int(payload["sched_dep_time"])
         arr_time_int = self.parse_time_to_int(payload["sched_arr_time"])

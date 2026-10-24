@@ -19,7 +19,10 @@ import { Badge } from "@/components/ui/Badge";
 import { Alert } from "@/components/ui/Alert";
 import { predictSingle, ApiClientError } from "@/lib/api";
 import { FlightPredictionRequest, PredictionResult } from "@/types";
-import { AIRLINE_NAMES, POPULAR_AIRPORTS, SAMPLE_ITINERARIES } from "@/lib/constants";
+import { AIRLINE_NAMES, POPULAR_AIRPORTS, SAMPLE_ITINERARIES, ALL_AIRPORT_CODES } from "@/lib/constants";
+
+const popularCodes = new Set(POPULAR_AIRPORTS.map((a) => a.code));
+const ADDITIONAL_AIRPORTS = ALL_AIRPORT_CODES.filter((code) => !popularCodes.has(code));
 
 export function SinglePredictor() {
   const [formData, setFormData] = useState<FlightPredictionRequest>({
@@ -206,6 +209,11 @@ export function SinglePredictor() {
               {POPULAR_AIRPORTS.map((airport) => (
                 <option key={airport.code} value={airport.code}>
                   {airport.name} ({airport.city})
+                </option>
+              ))}
+              {ADDITIONAL_AIRPORTS.map((code) => (
+                <option key={code} value={code}>
+                  {code} - Commercial Airport
                 </option>
               ))}
             </datalist>
