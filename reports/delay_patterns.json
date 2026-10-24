@@ -1,0 +1,1251 @@
+{
+  "monthly": [
+    {
+      "year_month": "2019-01",
+      "year": 2019,
+      "month": 1,
+      "total_flights": 39568,
+      "cancelled_flights": 1093.0,
+      "delayed_flights": 6902.0,
+      "completed_flights": 38387.0,
+      "delay_rate": 17.98,
+      "cancellation_rate": 2.76
+    },
+    {
+      "year_month": "2019-02",
+      "year": 2019,
+      "month": 2,
+      "total_flights": 35912,
+      "cancelled_flights": 1002.0,
+      "delayed_flights": 7818.0,
+      "completed_flights": 34814.0,
+      "delay_rate": 22.46,
+      "cancellation_rate": 2.79
+    },
+    {
+      "year_month": "2019-03",
+      "year": 2019,
+      "month": 3,
+      "total_flights": 43208,
+      "cancelled_flights": 844.0,
+      "delayed_flights": 7007.0,
+      "completed_flights": 42302.0,
+      "delay_rate": 16.56,
+      "cancellation_rate": 1.95
+    },
+    {
+      "year_month": "2019-04",
+      "year": 2019,
+      "month": 4,
+      "total_flights": 41136,
+      "cancelled_flights": 996.0,
+      "delayed_flights": 7039.0,
+      "completed_flights": 40027.0,
+      "delay_rate": 17.59,
+      "cancellation_rate": 2.42
+    },
+    {
+      "year_month": "2019-05",
+      "year": 2019,
+      "month": 5,
+      "total_flights": 43293,
+      "cancelled_flights": 867.0,
+      "delayed_flights": 8379.0,
+      "completed_flights": 42289.0,
+      "delay_rate": 19.81,
+      "cancellation_rate": 2.0
+    },
+    {
+      "year_month": "2019-06",
+      "year": 2019,
+      "month": 6,
+      "total_flights": 43584,
+      "cancelled_flights": 884.0,
+      "delayed_flights": 10129.0,
+      "completed_flights": 42529.0,
+      "delay_rate": 23.82,
+      "cancellation_rate": 2.03
+    },
+    {
+      "year_month": "2019-07",
+      "year": 2019,
+      "month": 7,
+      "total_flights": 44850,
+      "cancelled_flights": 896.0,
+      "delayed_flights": 8977.0,
+      "completed_flights": 43797.0,
+      "delay_rate": 20.5,
+      "cancellation_rate": 2.0
+    },
+    {
+      "year_month": "2019-08",
+      "year": 2019,
+      "month": 8,
+      "total_flights": 45015,
+      "cancelled_flights": 780.0,
+      "delayed_flights": 8670.0,
+      "completed_flights": 44109.0,
+      "delay_rate": 19.66,
+      "cancellation_rate": 1.73
+    },
+    {
+      "year_month": "2019-09",
+      "year": 2019,
+      "month": 9,
+      "total_flights": 41281,
+      "cancelled_flights": 684.0,
+      "delayed_flights": 5512.0,
+      "completed_flights": 40511.0,
+      "delay_rate": 13.61,
+      "cancellation_rate": 1.66
+    },
+    {
+      "year_month": "2019-10",
+      "year": 2019,
+      "month": 10,
+      "total_flights": 43438,
+      "cancelled_flights": 339.0,
+      "delayed_flights": 6830.0,
+      "completed_flights": 43020.0,
+      "delay_rate": 15.88,
+      "cancellation_rate": 0.78
+    },
+    {
+      "year_month": "2019-11",
+      "year": 2019,
+      "month": 11,
+      "total_flights": 40990,
+      "cancelled_flights": 295.0,
+      "delayed_flights": 5569.0,
+      "completed_flights": 40635.0,
+      "delay_rate": 13.7,
+      "cancellation_rate": 0.72
+    },
+    {
+      "year_month": "2019-12",
+      "year": 2019,
+      "month": 12,
+      "total_flights": 43070,
+      "cancelled_flights": 387.0,
+      "delayed_flights": 8359.0,
+      "completed_flights": 42596.0,
+      "delay_rate": 19.62,
+      "cancellation_rate": 0.9
+    },
+    {
+      "year_month": "2020-01",
+      "year": 2020,
+      "month": 1,
+      "total_flights": 40937,
+      "cancelled_flights": 479.0,
+      "delayed_flights": 5274.0,
+      "completed_flights": 40374.0,
+      "delay_rate": 13.06,
+      "cancellation_rate": 1.17
+    },
+    {
+      "year_month": "2020-02",
+      "year": 2020,
+      "month": 2,
+      "total_flights": 39308,
+      "cancelled_flights": 332.0,
+      "delayed_flights": 5608.0,
+      "completed_flights": 38904.0,
+      "delay_rate": 14.41,
+      "cancellation_rate": 0.84
+    },
+    {
+      "year_month": "2020-03",
+      "year": 2020,
+      "month": 3,
+      "total_flights": 44272,
+      "cancelled_flights": 7610.0,
+      "delayed_flights": 3589.0,
+      "completed_flights": 36599.0,
+      "delay_rate": 9.81,
+      "cancellation_rate": 17.19
+    },
+    {
+      "year_month": "2020-04",
+      "year": 2020,
+      "month": 4,
+      "total_flights": 21190,
+      "cancelled_flights": 8814.0,
+      "delayed_flights": 586.0,
+      "completed_flights": 12364.0,
+      "delay_rate": 4.74,
+      "cancellation_rate": 41.6
+    },
+    {
+      "year_month": "2020-05",
+      "year": 2020,
+      "month": 5,
+      "total_flights": 12322,
+      "cancelled_flights": 815.0,
+      "delayed_flights": 492.0,
+      "completed_flights": 11482.0,
+      "delay_rate": 4.28,
+      "cancellation_rate": 6.61
+    },
+    {
+      "year_month": "2020-06",
+      "year": 2020,
+      "month": 6,
+      "total_flights": 15371,
+      "cancelled_flights": 52.0,
+      "delayed_flights": 992.0,
+      "completed_flights": 15290.0,
+      "delay_rate": 6.49,
+      "cancellation_rate": 0.34
+    },
+    {
+      "year_month": "2020-07",
+      "year": 2020,
+      "month": 7,
+      "total_flights": 23869,
+      "cancelled_flights": 196.0,
+      "delayed_flights": 1973.0,
+      "completed_flights": 23613.0,
+      "delay_rate": 8.36,
+      "cancellation_rate": 0.82
+    },
+    {
+      "year_month": "2020-08",
+      "year": 2020,
+      "month": 8,
+      "total_flights": 25700,
+      "cancelled_flights": 289.0,
+      "delayed_flights": 1922.0,
+      "completed_flights": 25361.0,
+      "delay_rate": 7.58,
+      "cancellation_rate": 1.12
+    },
+    {
+      "year_month": "2020-09",
+      "year": 2020,
+      "month": 9,
+      "total_flights": 21946,
+      "cancelled_flights": 118.0,
+      "delayed_flights": 1286.0,
+      "completed_flights": 21790.0,
+      "delay_rate": 5.9,
+      "cancellation_rate": 0.54
+    },
+    {
+      "year_month": "2020-10",
+      "year": 2020,
+      "month": 10,
+      "total_flights": 24011,
+      "cancelled_flights": 141.0,
+      "delayed_flights": 1917.0,
+      "completed_flights": 23824.0,
+      "delay_rate": 8.05,
+      "cancellation_rate": 0.59
+    },
+    {
+      "year_month": "2020-11",
+      "year": 2020,
+      "month": 11,
+      "total_flights": 24790,
+      "cancelled_flights": 158.0,
+      "delayed_flights": 1707.0,
+      "completed_flights": 24600.0,
+      "delay_rate": 6.94,
+      "cancellation_rate": 0.64
+    },
+    {
+      "year_month": "2020-12",
+      "year": 2020,
+      "month": 12,
+      "total_flights": 25052,
+      "cancelled_flights": 234.0,
+      "delayed_flights": 2833.0,
+      "completed_flights": 24781.0,
+      "delay_rate": 11.43,
+      "cancellation_rate": 0.93
+    },
+    {
+      "year_month": "2021-01",
+      "year": 2021,
+      "month": 1,
+      "total_flights": 24715,
+      "cancelled_flights": 261.0,
+      "delayed_flights": 2315.0,
+      "completed_flights": 24411.0,
+      "delay_rate": 9.48,
+      "cancellation_rate": 1.06
+    },
+    {
+      "year_month": "2021-02",
+      "year": 2021,
+      "month": 2,
+      "total_flights": 22820,
+      "cancelled_flights": 1241.0,
+      "delayed_flights": 3083.0,
+      "completed_flights": 21520.0,
+      "delay_rate": 14.33,
+      "cancellation_rate": 5.44
+    },
+    {
+      "year_month": "2021-03",
+      "year": 2021,
+      "month": 3,
+      "total_flights": 30017,
+      "cancelled_flights": 439.0,
+      "delayed_flights": 2880.0,
+      "completed_flights": 29525.0,
+      "delay_rate": 9.75,
+      "cancellation_rate": 1.46
+    },
+    {
+      "year_month": "2021-04",
+      "year": 2021,
+      "month": 4,
+      "total_flights": 30928,
+      "cancelled_flights": 180.0,
+      "delayed_flights": 3116.0,
+      "completed_flights": 30687.0,
+      "delay_rate": 10.15,
+      "cancellation_rate": 0.58
+    },
+    {
+      "year_month": "2021-05",
+      "year": 2021,
+      "month": 5,
+      "total_flights": 33619,
+      "cancelled_flights": 136.0,
+      "delayed_flights": 4280.0,
+      "completed_flights": 33399.0,
+      "delay_rate": 12.81,
+      "cancellation_rate": 0.4
+    },
+    {
+      "year_month": "2021-06",
+      "year": 2021,
+      "month": 6,
+      "total_flights": 37213,
+      "cancelled_flights": 585.0,
+      "delayed_flights": 8385.0,
+      "completed_flights": 36498.0,
+      "delay_rate": 22.97,
+      "cancellation_rate": 1.57
+    },
+    {
+      "year_month": "2021-07",
+      "year": 2021,
+      "month": 7,
+      "total_flights": 39591,
+      "cancelled_flights": 673.0,
+      "delayed_flights": 9456.0,
+      "completed_flights": 38776.0,
+      "delay_rate": 24.39,
+      "cancellation_rate": 1.7
+    },
+    {
+      "year_month": "2021-08",
+      "year": 2021,
+      "month": 8,
+      "total_flights": 39288,
+      "cancelled_flights": 1168.0,
+      "delayed_flights": 8396.0,
+      "completed_flights": 37984.0,
+      "delay_rate": 22.1,
+      "cancellation_rate": 2.97
+    },
+    {
+      "year_month": "2021-09",
+      "year": 2021,
+      "month": 9,
+      "total_flights": 36712,
+      "cancelled_flights": 491.0,
+      "delayed_flights": 4798.0,
+      "completed_flights": 36164.0,
+      "delay_rate": 13.27,
+      "cancellation_rate": 1.34
+    },
+    {
+      "year_month": "2021-10",
+      "year": 2021,
+      "month": 10,
+      "total_flights": 38102,
+      "cancelled_flights": 769.0,
+      "delayed_flights": 6479.0,
+      "completed_flights": 37268.0,
+      "delay_rate": 17.38,
+      "cancellation_rate": 2.02
+    },
+    {
+      "year_month": "2021-11",
+      "year": 2021,
+      "month": 11,
+      "total_flights": 37266,
+      "cancelled_flights": 214.0,
+      "delayed_flights": 5372.0,
+      "completed_flights": 36992.0,
+      "delay_rate": 14.52,
+      "cancellation_rate": 0.57
+    },
+    {
+      "year_month": "2021-12",
+      "year": 2021,
+      "month": 12,
+      "total_flights": 37553,
+      "cancelled_flights": 917.0,
+      "delayed_flights": 7899.0,
+      "completed_flights": 36535.0,
+      "delay_rate": 21.62,
+      "cancellation_rate": 2.44
+    },
+    {
+      "year_month": "2022-01",
+      "year": 2022,
+      "month": 1,
+      "total_flights": 36650,
+      "cancelled_flights": 2208.0,
+      "delayed_flights": 6304.0,
+      "completed_flights": 34365.0,
+      "delay_rate": 18.34,
+      "cancellation_rate": 6.02
+    },
+    {
+      "year_month": "2022-02",
+      "year": 2022,
+      "month": 2,
+      "total_flights": 33301,
+      "cancelled_flights": 1496.0,
+      "delayed_flights": 5836.0,
+      "completed_flights": 31755.0,
+      "delay_rate": 18.38,
+      "cancellation_rate": 4.49
+    },
+    {
+      "year_month": "2022-03",
+      "year": 2022,
+      "month": 3,
+      "total_flights": 38646,
+      "cancelled_flights": 570.0,
+      "delayed_flights": 7886.0,
+      "completed_flights": 37974.0,
+      "delay_rate": 20.77,
+      "cancellation_rate": 1.47
+    },
+    {
+      "year_month": "2022-04",
+      "year": 2022,
+      "month": 4,
+      "total_flights": 37941,
+      "cancelled_flights": 871.0,
+      "delayed_flights": 7975.0,
+      "completed_flights": 36985.0,
+      "delay_rate": 21.56,
+      "cancellation_rate": 2.3
+    },
+    {
+      "year_month": "2022-05",
+      "year": 2022,
+      "month": 5,
+      "total_flights": 39184,
+      "cancelled_flights": 740.0,
+      "delayed_flights": 7850.0,
+      "completed_flights": 38346.0,
+      "delay_rate": 20.47,
+      "cancellation_rate": 1.89
+    },
+    {
+      "year_month": "2022-06",
+      "year": 2022,
+      "month": 6,
+      "total_flights": 39273,
+      "cancelled_flights": 1195.0,
+      "delayed_flights": 8727.0,
+      "completed_flights": 37977.0,
+      "delay_rate": 22.98,
+      "cancellation_rate": 3.04
+    },
+    {
+      "year_month": "2022-07",
+      "year": 2022,
+      "month": 7,
+      "total_flights": 40677,
+      "cancelled_flights": 696.0,
+      "delayed_flights": 9165.0,
+      "completed_flights": 39840.0,
+      "delay_rate": 23.0,
+      "cancellation_rate": 1.71
+    },
+    {
+      "year_month": "2022-08",
+      "year": 2022,
+      "month": 8,
+      "total_flights": 40105,
+      "cancelled_flights": 949.0,
+      "delayed_flights": 8648.0,
+      "completed_flights": 39034.0,
+      "delay_rate": 22.16,
+      "cancellation_rate": 2.37
+    },
+    {
+      "year_month": "2022-09",
+      "year": 2022,
+      "month": 9,
+      "total_flights": 38118,
+      "cancelled_flights": 593.0,
+      "delayed_flights": 5915.0,
+      "completed_flights": 37454.0,
+      "delay_rate": 15.79,
+      "cancellation_rate": 1.56
+    },
+    {
+      "year_month": "2022-10",
+      "year": 2022,
+      "month": 10,
+      "total_flights": 38929,
+      "cancelled_flights": 332.0,
+      "delayed_flights": 5904.0,
+      "completed_flights": 38534.0,
+      "delay_rate": 15.32,
+      "cancellation_rate": 0.85
+    },
+    {
+      "year_month": "2022-11",
+      "year": 2022,
+      "month": 11,
+      "total_flights": 37001,
+      "cancelled_flights": 412.0,
+      "delayed_flights": 6711.0,
+      "completed_flights": 36507.0,
+      "delay_rate": 18.38,
+      "cancellation_rate": 1.11
+    },
+    {
+      "year_month": "2022-12",
+      "year": 2022,
+      "month": 12,
+      "total_flights": 37935,
+      "cancelled_flights": 2071.0,
+      "delayed_flights": 9403.0,
+      "completed_flights": 35783.0,
+      "delay_rate": 26.28,
+      "cancellation_rate": 5.46
+    },
+    {
+      "year_month": "2023-01",
+      "year": 2023,
+      "month": 1,
+      "total_flights": 36743,
+      "cancelled_flights": 658.0,
+      "delayed_flights": 7597.0,
+      "completed_flights": 36002.0,
+      "delay_rate": 21.1,
+      "cancellation_rate": 1.79
+    },
+    {
+      "year_month": "2023-02",
+      "year": 2023,
+      "month": 2,
+      "total_flights": 34545,
+      "cancelled_flights": 585.0,
+      "delayed_flights": 6151.0,
+      "completed_flights": 33912.0,
+      "delay_rate": 18.14,
+      "cancellation_rate": 1.69
+    },
+    {
+      "year_month": "2023-03",
+      "year": 2023,
+      "month": 3,
+      "total_flights": 39709,
+      "cancelled_flights": 468.0,
+      "delayed_flights": 9083.0,
+      "completed_flights": 39150.0,
+      "delay_rate": 23.2,
+      "cancellation_rate": 1.18
+    },
+    {
+      "year_month": "2023-04",
+      "year": 2023,
+      "month": 4,
+      "total_flights": 38300,
+      "cancelled_flights": 617.0,
+      "delayed_flights": 8415.0,
+      "completed_flights": 37584.0,
+      "delay_rate": 22.39,
+      "cancellation_rate": 1.61
+    },
+    {
+      "year_month": "2023-05",
+      "year": 2023,
+      "month": 5,
+      "total_flights": 39656,
+      "cancelled_flights": 226.0,
+      "delayed_flights": 6859.0,
+      "completed_flights": 39335.0,
+      "delay_rate": 17.44,
+      "cancellation_rate": 0.57
+    },
+    {
+      "year_month": "2023-06",
+      "year": 2023,
+      "month": 6,
+      "total_flights": 39175,
+      "cancelled_flights": 792.0,
+      "delayed_flights": 10064.0,
+      "completed_flights": 38241.0,
+      "delay_rate": 26.32,
+      "cancellation_rate": 2.02
+    },
+    {
+      "year_month": "2023-07",
+      "year": 2023,
+      "month": 7,
+      "total_flights": 40813,
+      "cancelled_flights": 1063.0,
+      "delayed_flights": 10946.0,
+      "completed_flights": 39592.0,
+      "delay_rate": 27.65,
+      "cancellation_rate": 2.6
+    },
+    {
+      "year_month": "2023-08",
+      "year": 2023,
+      "month": 8,
+      "total_flights": 41362,
+      "cancelled_flights": 601.0,
+      "delayed_flights": 8607.0,
+      "completed_flights": 40642.0,
+      "delay_rate": 21.18,
+      "cancellation_rate": 1.45
+    }
+  ],
+  "airlines": [
+    {
+      "AIRLINE_CODE": "B6",
+      "AIRLINE": "JetBlue Airways",
+      "total_flights": 75129,
+      "cancelled_flights": 2113.0,
+      "cancellation_rate": 2.81,
+      "completed_flights": 72737.0,
+      "delayed_flights": 19114.0,
+      "delay_rate": 26.28,
+      "mean_arr_delay": 11.84
+    },
+    {
+      "AIRLINE_CODE": "G4",
+      "AIRLINE": "Allegiant Air",
+      "total_flights": 35175,
+      "cancelled_flights": 1644.0,
+      "cancellation_rate": 4.67,
+      "completed_flights": 33434.0,
+      "delayed_flights": 8689.0,
+      "delay_rate": 25.99,
+      "mean_arr_delay": 13.68
+    },
+    {
+      "AIRLINE_CODE": "F9",
+      "AIRLINE": "Frontier Airlines Inc.",
+      "total_flights": 43012,
+      "cancelled_flights": 1160.0,
+      "cancellation_rate": 2.7,
+      "completed_flights": 41788.0,
+      "delayed_flights": 10604.0,
+      "delay_rate": 25.38,
+      "mean_arr_delay": 10.62
+    },
+    {
+      "AIRLINE_CODE": "NK",
+      "AIRLINE": "Spirit Air Lines",
+      "total_flights": 63683,
+      "cancelled_flights": 1503.0,
+      "cancellation_rate": 2.36,
+      "completed_flights": 62060.0,
+      "delayed_flights": 13605.0,
+      "delay_rate": 21.92,
+      "mean_arr_delay": 8.32
+    },
+    {
+      "AIRLINE_CODE": "EV",
+      "AIRLINE": "ExpressJet Airlines LLC d/b/a aha!",
+      "total_flights": 12673,
+      "cancelled_flights": 690.0,
+      "cancellation_rate": 5.44,
+      "completed_flights": 11944.0,
+      "delayed_flights": 2522.0,
+      "delay_rate": 21.12,
+      "mean_arr_delay": 9.65
+    },
+    {
+      "AIRLINE_CODE": "AA",
+      "AIRLINE": "American Airlines Inc.",
+      "total_flights": 255452,
+      "cancelled_flights": 7093.0,
+      "cancellation_rate": 2.78,
+      "completed_flights": 247716.0,
+      "delayed_flights": 47926.0,
+      "delay_rate": 19.35,
+      "mean_arr_delay": 7.07
+    },
+    {
+      "AIRLINE_CODE": "UA",
+      "AIRLINE": "United Air Lines Inc.",
+      "total_flights": 169990,
+      "cancelled_flights": 3800.0,
+      "cancellation_rate": 2.24,
+      "completed_flights": 165758.0,
+      "delayed_flights": 30799.0,
+      "delay_rate": 18.58,
+      "mean_arr_delay": 5.18
+    },
+    {
+      "AIRLINE_CODE": "WN",
+      "AIRLINE": "Southwest Airlines Co.",
+      "total_flights": 384493,
+      "cancelled_flights": 12800.0,
+      "cancellation_rate": 3.33,
+      "completed_flights": 370951.0,
+      "delayed_flights": 68778.0,
+      "delay_rate": 18.54,
+      "mean_arr_delay": 3.24
+    },
+    {
+      "AIRLINE_CODE": "YV",
+      "AIRLINE": "Mesa Airlines Inc.",
+      "total_flights": 43396,
+      "cancelled_flights": 1575.0,
+      "cancellation_rate": 3.63,
+      "completed_flights": 41715.0,
+      "delayed_flights": 7696.0,
+      "delay_rate": 18.45,
+      "mean_arr_delay": 7.73
+    },
+    {
+      "AIRLINE_CODE": "AS",
+      "AIRLINE": "Alaska Airlines Inc.",
+      "total_flights": 67663,
+      "cancelled_flights": 1334.0,
+      "cancellation_rate": 1.97,
+      "completed_flights": 66161.0,
+      "delayed_flights": 11662.0,
+      "delay_rate": 17.63,
+      "mean_arr_delay": 1.37
+    },
+    {
+      "AIRLINE_CODE": "MQ",
+      "AIRLINE": "Envoy Air",
+      "total_flights": 81145,
+      "cancelled_flights": 2562.0,
+      "cancellation_rate": 3.16,
+      "completed_flights": 78383.0,
+      "delayed_flights": 13173.0,
+      "delay_rate": 16.81,
+      "mean_arr_delay": 3.14
+    },
+    {
+      "AIRLINE_CODE": "OH",
+      "AIRLINE": "PSA Airlines Inc.",
+      "total_flights": 71151,
+      "cancelled_flights": 2112.0,
+      "cancellation_rate": 2.97,
+      "completed_flights": 68848.0,
+      "delayed_flights": 11399.0,
+      "delay_rate": 16.56,
+      "mean_arr_delay": 3.93
+    },
+    {
+      "AIRLINE_CODE": "OO",
+      "AIRLINE": "SkyWest Airlines Inc.",
+      "total_flights": 228131,
+      "cancelled_flights": 5188.0,
+      "cancellation_rate": 2.27,
+      "completed_flights": 222233.0,
+      "delayed_flights": 34027.0,
+      "delay_rate": 15.31,
+      "mean_arr_delay": 3.84
+    },
+    {
+      "AIRLINE_CODE": "YX",
+      "AIRLINE": "Republic Airline",
+      "total_flights": 95543,
+      "cancelled_flights": 2999.0,
+      "cancellation_rate": 3.14,
+      "completed_flights": 92328.0,
+      "delayed_flights": 14116.0,
+      "delay_rate": 15.29,
+      "mean_arr_delay": 0.71
+    },
+    {
+      "AIRLINE_CODE": "HA",
+      "AIRLINE": "Hawaiian Airlines Inc.",
+      "total_flights": 21418,
+      "cancelled_flights": 260.0,
+      "cancellation_rate": 1.21,
+      "completed_flights": 21144.0,
+      "delayed_flights": 3182.0,
+      "delay_rate": 15.05,
+      "mean_arr_delay": 3.72
+    },
+    {
+      "AIRLINE_CODE": "DL",
+      "AIRLINE": "Delta Air Lines Inc.",
+      "total_flights": 263521,
+      "cancelled_flights": 3801.0,
+      "cancellation_rate": 1.44,
+      "completed_flights": 259179.0,
+      "delayed_flights": 35646.0,
+      "delay_rate": 13.75,
+      "mean_arr_delay": 1.1
+    },
+    {
+      "AIRLINE_CODE": "QX",
+      "AIRLINE": "Horizon Air",
+      "total_flights": 13606,
+      "cancelled_flights": 264.0,
+      "cancellation_rate": 1.94,
+      "completed_flights": 13315.0,
+      "delayed_flights": 1796.0,
+      "delay_rate": 13.49,
+      "mean_arr_delay": 2.25
+    },
+    {
+      "AIRLINE_CODE": "9E",
+      "AIRLINE": "Endeavor Air Inc.",
+      "total_flights": 74819,
+      "cancelled_flights": 1624.0,
+      "cancellation_rate": 2.17,
+      "completed_flights": 73075.0,
+      "delayed_flights": 9141.0,
+      "delay_rate": 12.51,
+      "mean_arr_delay": -1.21
+    }
+  ],
+  "top_airports": [
+    {
+      "ORIGIN": "EWR",
+      "ORIGIN_CITY": "Newark, NJ",
+      "flight_count": 33606,
+      "delay_rate": 23.72,
+      "mean_delay": 8.57
+    },
+    {
+      "ORIGIN": "MCO",
+      "ORIGIN_CITY": "Orlando, FL",
+      "flight_count": 41691,
+      "delay_rate": 23.1,
+      "mean_delay": 10.1
+    },
+    {
+      "ORIGIN": "FLL",
+      "ORIGIN_CITY": "Fort Lauderdale, FL",
+      "flight_count": 25902,
+      "delay_rate": 22.54,
+      "mean_delay": 9.22
+    },
+    {
+      "ORIGIN": "MDW",
+      "ORIGIN_CITY": "Chicago, IL",
+      "flight_count": 22149,
+      "delay_rate": 21.87,
+      "mean_delay": 5.26
+    },
+    {
+      "ORIGIN": "DEN",
+      "ORIGIN_CITY": "Denver, CO",
+      "flight_count": 77439,
+      "delay_rate": 21.82,
+      "mean_delay": 7.21
+    },
+    {
+      "ORIGIN": "SJU",
+      "ORIGIN_CITY": "San Juan, PR",
+      "flight_count": 8570,
+      "delay_rate": 21.73,
+      "mean_delay": 9.69
+    },
+    {
+      "ORIGIN": "MIA",
+      "ORIGIN_CITY": "Miami, FL",
+      "flight_count": 27258,
+      "delay_rate": 21.6,
+      "mean_delay": 8.63
+    },
+    {
+      "ORIGIN": "LAS",
+      "ORIGIN_CITY": "Las Vegas, NV",
+      "flight_count": 47437,
+      "delay_rate": 21.0,
+      "mean_delay": 6.83
+    },
+    {
+      "ORIGIN": "DFW",
+      "ORIGIN_CITY": "Dallas/Fort Worth, TX",
+      "flight_count": 83688,
+      "delay_rate": 20.98,
+      "mean_delay": 8.46
+    },
+    {
+      "ORIGIN": "DAL",
+      "ORIGIN_CITY": "Dallas, TX",
+      "flight_count": 19745,
+      "delay_rate": 20.72,
+      "mean_delay": 5.01
+    }
+  ],
+  "bottom_airports": [
+    {
+      "ORIGIN": "TUS",
+      "ORIGIN_CITY": "Tucson, AZ",
+      "flight_count": 5032,
+      "delay_rate": 12.94,
+      "mean_delay": 0.69
+    },
+    {
+      "ORIGIN": "ANC",
+      "ORIGIN_CITY": "Anchorage, AK",
+      "flight_count": 5625,
+      "delay_rate": 13.23,
+      "mean_delay": 0.13
+    },
+    {
+      "ORIGIN": "GEG",
+      "ORIGIN_CITY": "Spokane, WA",
+      "flight_count": 5037,
+      "delay_rate": 13.32,
+      "mean_delay": 2.01
+    },
+    {
+      "ORIGIN": "PDX",
+      "ORIGIN_CITY": "Portland, OR",
+      "flight_count": 16849,
+      "delay_rate": 13.54,
+      "mean_delay": 1.89
+    },
+    {
+      "ORIGIN": "BOI",
+      "ORIGIN_CITY": "Boise, ID",
+      "flight_count": 6657,
+      "delay_rate": 13.55,
+      "mean_delay": 1.32
+    },
+    {
+      "ORIGIN": "SJC",
+      "ORIGIN_CITY": "San Jose, CA",
+      "flight_count": 14780,
+      "delay_rate": 13.63,
+      "mean_delay": -0.04
+    },
+    {
+      "ORIGIN": "SLC",
+      "ORIGIN_CITY": "Salt Lake City, UT",
+      "flight_count": 34087,
+      "delay_rate": 13.64,
+      "mean_delay": 1.49
+    },
+    {
+      "ORIGIN": "HNL",
+      "ORIGIN_CITY": "Honolulu, HI",
+      "flight_count": 15417,
+      "delay_rate": 13.77,
+      "mean_delay": 2.2
+    },
+    {
+      "ORIGIN": "SAT",
+      "ORIGIN_CITY": "San Antonio, TX",
+      "flight_count": 10091,
+      "delay_rate": 13.88,
+      "mean_delay": 2.01
+    },
+    {
+      "ORIGIN": "SMF",
+      "ORIGIN_CITY": "Sacramento, CA",
+      "flight_count": 14538,
+      "delay_rate": 14.42,
+      "mean_delay": 1.91
+    }
+  ],
+  "top_routes": [
+    {
+      "route": "JFK -> MCO",
+      "ORIGIN": "JFK",
+      "DEST": "MCO",
+      "flights": 1284,
+      "delay_rate": 30.76,
+      "mean_delay": 17.04
+    },
+    {
+      "route": "MCO -> EWR",
+      "ORIGIN": "MCO",
+      "DEST": "EWR",
+      "flights": 1863,
+      "delay_rate": 29.84,
+      "mean_delay": 17.1
+    },
+    {
+      "route": "MCO -> JFK",
+      "ORIGIN": "MCO",
+      "DEST": "JFK",
+      "flights": 1208,
+      "delay_rate": 28.64,
+      "mean_delay": 16.46
+    },
+    {
+      "route": "FLL -> EWR",
+      "ORIGIN": "FLL",
+      "DEST": "EWR",
+      "flights": 1437,
+      "delay_rate": 28.32,
+      "mean_delay": 17.12
+    },
+    {
+      "route": "MCO -> SJU",
+      "ORIGIN": "MCO",
+      "DEST": "SJU",
+      "flights": 1756,
+      "delay_rate": 28.3,
+      "mean_delay": 15.9
+    },
+    {
+      "route": "LGA -> FLL",
+      "ORIGIN": "LGA",
+      "DEST": "FLL",
+      "flights": 1271,
+      "delay_rate": 27.93,
+      "mean_delay": 11.94
+    },
+    {
+      "route": "EWR -> MIA",
+      "ORIGIN": "EWR",
+      "DEST": "MIA",
+      "flights": 1171,
+      "delay_rate": 27.58,
+      "mean_delay": 11.04
+    },
+    {
+      "route": "EWR -> FLL",
+      "ORIGIN": "EWR",
+      "DEST": "FLL",
+      "flights": 1480,
+      "delay_rate": 27.57,
+      "mean_delay": 13.02
+    },
+    {
+      "route": "DFW -> MCO",
+      "ORIGIN": "DFW",
+      "DEST": "MCO",
+      "flights": 1347,
+      "delay_rate": 27.1,
+      "mean_delay": 13.03
+    },
+    {
+      "route": "DFW -> SFO",
+      "ORIGIN": "DFW",
+      "DEST": "SFO",
+      "flights": 1040,
+      "delay_rate": 26.73,
+      "mean_delay": 12.56
+    },
+    {
+      "route": "MCO -> LGA",
+      "ORIGIN": "MCO",
+      "DEST": "LGA",
+      "flights": 1220,
+      "delay_rate": 26.72,
+      "mean_delay": 10.9
+    },
+    {
+      "route": "MIA -> JFK",
+      "ORIGIN": "MIA",
+      "DEST": "JFK",
+      "flights": 1363,
+      "delay_rate": 26.56,
+      "mean_delay": 12.94
+    },
+    {
+      "route": "FLL -> JFK",
+      "ORIGIN": "FLL",
+      "DEST": "JFK",
+      "flights": 1148,
+      "delay_rate": 26.39,
+      "mean_delay": 14.19
+    },
+    {
+      "route": "EWR -> MCO",
+      "ORIGIN": "EWR",
+      "DEST": "MCO",
+      "flights": 1871,
+      "delay_rate": 26.24,
+      "mean_delay": 11.13
+    },
+    {
+      "route": "JFK -> FLL",
+      "ORIGIN": "JFK",
+      "DEST": "FLL",
+      "flights": 1179,
+      "delay_rate": 26.21,
+      "mean_delay": 10.94
+    }
+  ],
+  "distance_buckets": [
+    {
+      "distance_bucket": "1. Very Short (<250 mi)",
+      "flights": 242386,
+      "delay_rate": 15.76,
+      "mean_delay": 3.42
+    },
+    {
+      "distance_bucket": "2. Short (250-499 mi)",
+      "flights": 459426,
+      "delay_rate": 16.17,
+      "mean_delay": 3.37
+    },
+    {
+      "distance_bucket": "3. Medium (500-999 mi)",
+      "flights": 701940,
+      "delay_rate": 18.08,
+      "mean_delay": 4.88
+    },
+    {
+      "distance_bucket": "4. Long (1000-1499 mi)",
+      "flights": 303051,
+      "delay_rate": 19.78,
+      "mean_delay": 5.75
+    },
+    {
+      "distance_bucket": "5. Very Long (1500-2199 mi)",
+      "flights": 146620,
+      "delay_rate": 19.01,
+      "mean_delay": 4.1
+    },
+    {
+      "distance_bucket": "6. Transcontinental (>2200 mi)",
+      "flights": 89346,
+      "delay_rate": 18.67,
+      "mean_delay": 2.35
+    }
+  ],
+  "elapsed_buckets": [
+    {
+      "elapsed_bucket": "1. Under 1h",
+      "flights": 69068,
+      "delay_rate": 14.74,
+      "mean_delay": 3.83
+    },
+    {
+      "elapsed_bucket": "2. 1-2 hours",
+      "flights": 826701,
+      "delay_rate": 16.42,
+      "mean_delay": 3.8
+    },
+    {
+      "elapsed_bucket": "3. 2-3 hours",
+      "flights": 614100,
+      "delay_rate": 18.8,
+      "mean_delay": 5.31
+    },
+    {
+      "elapsed_bucket": "4. 3-4 hours",
+      "flights": 235742,
+      "delay_rate": 19.4,
+      "mean_delay": 4.91
+    },
+    {
+      "elapsed_bucket": "5. 4-6 hours",
+      "flights": 168086,
+      "delay_rate": 18.56,
+      "mean_delay": 3.03
+    },
+    {
+      "elapsed_bucket": "6. Over 6 hours",
+      "flights": 29072,
+      "delay_rate": 19.31,
+      "mean_delay": 0.98
+    }
+  ],
+  "causes_summary": [
+    {
+      "Cause": "Carrier",
+      "Total_Minutes": 8881580.0,
+      "Percentage": 36.81099882760419
+    },
+    {
+      "Cause": "Weather",
+      "Total_Minutes": 1412961.0,
+      "Percentage": 5.856222171556236
+    },
+    {
+      "Cause": "NAS",
+      "Total_Minutes": 4675601.0,
+      "Percentage": 19.3787077219757
+    },
+    {
+      "Cause": "Security",
+      "Total_Minutes": 49284.0,
+      "Percentage": 0.20426469909854378
+    },
+    {
+      "Cause": "Late_Aircraft",
+      "Total_Minutes": 9108091.0,
+      "Percentage": 37.74980657976534
+    }
+  ],
+  "causes_yearly": [
+    {
+      "Year": 2019,
+      "Carrier": 30.63,
+      "Late_Aircraft": 39.92,
+      "NAS": 23.87,
+      "Weather": 5.46,
+      "Security": 0.12
+    },
+    {
+      "Year": 2020,
+      "Carrier": 42.0,
+      "Late_Aircraft": 28.93,
+      "NAS": 21.9,
+      "Weather": 6.87,
+      "Security": 0.3
+    },
+    {
+      "Year": 2021,
+      "Carrier": 41.03,
+      "Late_Aircraft": 35.44,
+      "NAS": 16.44,
+      "Weather": 6.8,
+      "Security": 0.29
+    },
+    {
+      "Year": 2022,
+      "Carrier": 39.63,
+      "Late_Aircraft": 37.67,
+      "NAS": 16.87,
+      "Weather": 5.63,
+      "Security": 0.2
+    },
+    {
+      "Year": 2023,
+      "Carrier": 35.53,
+      "Late_Aircraft": 40.4,
+      "NAS": 18.44,
+      "Weather": 5.42,
+      "Security": 0.21
+    }
+  ],
+  "splits": [
+    {
+      "split_label": "Test (2023)",
+      "total_rows": 310303,
+      "completed_rows": 304458.0,
+      "delay_rate": 22.24
+    },
+    {
+      "split_label": "Train (2019-2021)",
+      "total_rows": 1231937,
+      "completed_rows": 1193757.0,
+      "delay_rate": 15.57
+    },
+    {
+      "split_label": "Validation (2022)",
+      "total_rows": 457760,
+      "completed_rows": 444554.0,
+      "delay_rate": 20.32
+    }
+  ]
+}

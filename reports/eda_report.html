@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>Flight Delay & Cancellation EDA Report (2,000,000 Flights)</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #24292e; max-width: 1200px; margin: 0 auto; padding: 30px; background-color: #f8f9fa; }
+.container { background: #ffffff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+h1 { color: #1f2937; border-bottom: 2px solid #e5e7eb; padding-bottom: 12px; font-size: 2.2rem; }
+h2 { color: #1e3a8a; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; margin-top: 35px; font-size: 1.6rem; }
+h3 { color: #1f2937; margin-top: 25px; font-size: 1.25rem; }
+table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+th, td { border: 1px solid #d1d5db; padding: 10px 14px; text-align: left; }
+th { background-color: #f3f4f6; color: #111827; font-weight: 600; }
+tr:nth-child(even) { background-color: #f9fafb; }
+tr:hover { background-color: #f1f5f9; }
+.badge { display: inline-block; padding: 3px 8px; font-size: 0.8rem; font-weight: bold; border-radius: 4px; }
+.badge-safe { background-color: #d1fae5; color: #065f46; }
+.badge-leak { background-color: #fee2e2; color: #991b1b; }
+.badge-target { background-color: #e0e7ff; color: #3730a3; }
+img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0; border: 1px solid #e5e7eb; }
+.alert { background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 14px 18px; margin: 20px 0; border-radius: 0 4px 4px 0; }
+.alert-warning { background-color: #fffbeb; border-left-color: #f59e0b; }
+.alert-danger { background-color: #fef2f2; border-left-color: #ef4444; }
+code { background-color: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class='container'>
+<h1>Exploratory Data Analysis & Data Quality Report</h1>
+<h2>Flight Delay and Cancellation Dataset (2019–2023) — Full 2,000,000 Flight Analysis
+</h2>
+<p>**Dataset Reference**: `Flight Delay and Cancellation Data (2019-2023) v2` (patrickzel)  </p>
+<p>**Analysis Scope**: Exhaustive 2,000,000-row audit using DuckDB, Polars, and PyArrow  </p>
+<p>**Report Status**: Complete Pre-Modeling EDA and Data Quality Clearance  
+</p>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>Executive Summary
+</h2>
+<p>This report presents an exhaustive exploratory data analysis and rigorous data quality audit on the full **2,000,000 flight records** spanning January 1, 2019 through August 31, 2023 across 18 major US airlines and 380 airports. </p>
+<p>The primary objective is to evaluate data integrity, uncover operational and temporal patterns, identify statistical risks, and lay a mathematically sound foundation for predicting whether a flight will experience an arrival delay exceeding 15 minutes (`DELAY = ARR_DELAY > 15`) using **only pre-departure information**.
+</p>
+<h3>Key High-Level Findings
+</h3>
+<p>1. **Data Volume & Compression**: The raw CSV occupies **390.47 MB** (409,432,439 bytes) and was converted into an optimized Parquet store of **52.86 MB** (7.39x compression) in **10.44 seconds**, enabling fast columnar analytical scans.</p>
+<p>2. **Flight Completion vs. Non-Completion**: Out of 2,000,000 flights, **1,942,769 (97.14%)** successfully completed their journey; **52,522 flights (2.63%)** were cancelled, and **4,709 flights (0.23%)** were diverted.</p>
+<p>3. **Target Class Balance**: Among completed flights, **343,875 (17.70%)** arrived > 15 minutes late, while **1,598,894 (82.30%)** arrived on time or early (median delay: **-7.0 minutes**). Across all 2M flights, the positive rate is **17.19%**.</p>
+<p>4. **Zero Missingness on Completed Flights**: All missing values in `ARR_DELAY`, `ELAPSED_TIME`, and `AIR_TIME` (**57,231 rows / 2.86%**) are **100% explained** by cancelled (52,522) and diverted (4,709) flights. Non-cancelled, non-diverted flights have **0% missing values**.</p>
+<p>5. **Severe Post-Departure Leakage Identified**: Crucial operational fields (`DEP_DELAY`, `DEP_TIME`, `TAXI_OUT`, `WHEELS_OFF`, `WHEELS_ON`, `TAXI_IN`, `ARR_TIME`, `ELAPSED_TIME`, `AIR_TIME`, `DELAY_DUE_*`) occur post-departure. In particular, `DEP_DELAY` has a **Pearson correlation of r = 0.96** with `ARR_DELAY` and **must be strictly excluded** from pre-departure modeling.</p>
+<p>6. **Critical Temporal Drift (2020 COVID Shock)**: Cancellation spiked to **6.04%** in 2020 with 16,169 security/pandemic cancellations (Code D), while delay rates plunged to **9.42%** as airspace emptied. Post-pandemic recovery saw delay rates climb steadily: 16.62% (2021), 20.32% (2022), and **22.24%** (2023).</p>
+<p>7. **Primary Pre-Departure Delay Drivers**: Scheduled departure hour (`dep_hour`) is the single strongest pre-departure categorical signal (Cramér's V = 0.1429), with delay rates compounding from **~7.5% at 06:00** to **26.5% at 21:00** due to late-arriving aircraft propagation (**37.75%** of all delay minutes).
+</p>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>1. Dataset Overview & Conversion Audit
+</h2>
+<h3>Conversion Efficiency & Storage Metrics
+</h3>
+<table>
+<thead><tr>
+<th>Metric</th>
+<th>Raw CSV File</th>
+<th>Processed Parquet File</th>
+<th>Improvement / Ratio</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**File Path**</td>
+<td>`data/raw/flights_sample_2m.csv`</td>
+<td>`data/processed/flights_2m.parquet`</td>
+<td>-</td>
+</tr>
+<tr>
+<td>**File Size**</td>
+<td>**390.47 MB** (409,432,439 bytes)</td>
+<td>**52.86 MB** (55,431,684 bytes)</td>
+<td>**7.39x Compression** (86.46% savings)</td>
+</tr>
+<tr>
+<td>**Row Count**</td>
+<td>2,000,000</td>
+<td>2,000,000</td>
+<td>100% Integrity Preserved</td>
+</tr>
+<tr>
+<td>**Column Count**</td>
+<td>32</td>
+<td>32</td>
+<td>Complete Schema Retention</td>
+</tr>
+<tr>
+<td>**Conversion Time**</td>
+<td>-</td>
+<td>**10.44 seconds**</td>
+<td>DuckDB Columnar Pipe</td>
+</tr>
+<tr>
+<td>**Row Groups**</td>
+<td>N/A</td>
+<td>17 row groups</td>
+<td>Optimized Parquet Chunking</td>
+</tr>
+<tr>
+<td>**Compression Codec**</td>
+<td>None</td>
+<td>Zstandard (`ZSTD`)</td>
+<td>High-throughput decompression</td>
+</tr>
+<h3>Schema and Data Types
+</h3>
+</tbody></table>
+<p>The dataset comprises 32 attributes categorized into temporal, spatial, operational, and causal dimensions:
+</p>
+<table>
+<thead><tr>
+<th>Column Name</th>
+<th>Inferred Parquet Dtype</th>
+<th>Category</th>
+<th>Pre-Departure Status</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>`FL_DATE`</td>
+<td>`date32[day]`</td>
+<td>Temporal</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`AIRLINE`</td>
+<td>`string`</td>
+<td>Identifier</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`AIRLINE_DOT`</td>
+<td>`string`</td>
+<td>Identifier</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`AIRLINE_CODE`</td>
+<td>`string`</td>
+<td>Identifier</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`DOT_CODE`</td>
+<td>`int64`</td>
+<td>Identifier</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`FL_NUMBER`</td>
+<td>`int64`</td>
+<td>Identifier</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`ORIGIN`</td>
+<td>`string`</td>
+<td>Spatial</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`ORIGIN_CITY`</td>
+<td>`string`</td>
+<td>Spatial</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`DEST`</td>
+<td>`string`</td>
+<td>Spatial</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`DEST_CITY`</td>
+<td>`string`</td>
+<td>Spatial</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`CRS_DEP_TIME`</td>
+<td>`int64`</td>
+<td>Temporal</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`DEP_TIME`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`DEP_DELAY`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`TAXI_OUT`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`WHEELS_OFF`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`WHEELS_ON`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`TAXI_IN`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`CRS_ARR_TIME`</td>
+<td>`int64`</td>
+<td>Temporal</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`ARR_TIME`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`ARR_DELAY`</td>
+<td>`double`</td>
+<td>Target</td>
+<td><span class='badge badge-target'>TARGET</span></td>
+</tr>
+<tr>
+<td>`CANCELLED`</td>
+<td>`double`</td>
+<td>Target / Filter</td>
+<td>**LEAKAGE / SECONDARY TARGET**</td>
+</tr>
+<tr>
+<td>`CANCELLATION_CODE`</td>
+<td>`string`</td>
+<td>Target / Filter</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`DIVERTED`</td>
+<td>`double`</td>
+<td>Filter</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`CRS_ELAPSED_TIME`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`ELAPSED_TIME`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`AIR_TIME`</td>
+<td>`double`</td>
+<td>Operational</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`DISTANCE`</td>
+<td>`double`</td>
+<td>Spatial</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+</tr>
+<tr>
+<td>`DELAY_DUE_CARRIER`</td>
+<td>`double`</td>
+<td>Delay Cause</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`DELAY_DUE_WEATHER`</td>
+<td>`double`</td>
+<td>Delay Cause</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`DELAY_DUE_NAS`</td>
+<td>`double`</td>
+<td>Delay Cause</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`DELAY_DUE_SECURITY`</td>
+<td>`double`</td>
+<td>Delay Cause</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+<tr>
+<td>`DELAY_DUE_LATE_AIRCRAFT`</td>
+<td>`double`</td>
+<td>Delay Cause</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+</tr>
+</tbody></table>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>2. Rigorous Data Quality Audit
+</h2>
+<h3>2.1 Missing Value Analysis and Systematic Patterns
+</h3>
+<p>A thorough missingness audit reveals that missing data is neither random (MCAR) nor erroneous. Rather, missingness is entirely governed by the flight lifecycle state machine:
+</p>
+<table>
+<thead><tr>
+<th>Column Name</th>
+<th>Missing Count</th>
+<th>Missing %</th>
+<th>Governed Flight Condition</th>
+<th>Operational Explanation</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>`DEP_TIME`</td>
+<td>51,430</td>
+<td>2.57%</td>
+<td>Cancelled before pushback</td>
+<td>51,430 flights cancelled prior to gate departure.</td>
+</tr>
+<tr>
+<td>`DEP_DELAY`</td>
+<td>51,449</td>
+<td>2.57%</td>
+<td>Cancelled before pushback</td>
+<td>51,449 flights cancelled before departure.</td>
+</tr>
+<tr>
+<td>`TAXI_OUT`</td>
+<td>52,281</td>
+<td>2.61%</td>
+<td>Cancelled before takeoff</td>
+<td>52,281 flights cancelled before taxi or gate return.</td>
+</tr>
+<tr>
+<td>`WHEELS_OFF`</td>
+<td>52,281</td>
+<td>2.61%</td>
+<td>Cancelled before takeoff</td>
+<td>52,281 flights never became airborne.</td>
+</tr>
+<tr>
+<td>`WHEELS_ON`</td>
+<td>53,091</td>
+<td>2.65%</td>
+<td>Cancelled or diverted flights</td>
+<td>52,522 cancelled + 569 uncompleted diversions.</td>
+</tr>
+<tr>
+<td>`TAXI_IN`</td>
+<td>53,091</td>
+<td>2.65%</td>
+<td>Cancelled or diverted flights</td>
+<td>52,522 cancelled + 569 uncompleted diversions.</td>
+</tr>
+<tr>
+<td>`ARR_TIME`</td>
+<td>53,091</td>
+<td>2.65%</td>
+<td>Cancelled or diverted flights</td>
+<td>52,522 cancelled + 569 uncompleted diversions.</td>
+</tr>
+<tr>
+<td>`ARR_DELAY`</td>
+<td>57,231</td>
+<td>2.86%</td>
+<td>Cancelled (52,522) + Diverted (4,709)</td>
+<td>100% of missing delay is explained by cancelled & diverted flights.</td>
+</tr>
+<tr>
+<td>`CANCELLATION_CODE`</td>
+<td>1,947,478</td>
+<td>97.37%</td>
+<td>Non-cancelled completed flights</td>
+<td>Populated only when CANCELLED = 1.0 (52,522 rows).</td>
+</tr>
+<tr>
+<td>`CRS_ELAPSED_TIME`</td>
+<td>17</td>
+<td>0.00%</td>
+<td>Schedule data gaps</td>
+<td>17 flights missing published duration in timetable.</td>
+</tr>
+<tr>
+<td>`ELAPSED_TIME`</td>
+<td>57,231</td>
+<td>2.86%</td>
+<td>Cancelled (52,522) + Diverted (4,709)</td>
+<td>Flight aborted prior to scheduled arrival.</td>
+</tr>
+<tr>
+<td>`AIR_TIME`</td>
+<td>57,231</td>
+<td>2.86%</td>
+<td>Cancelled (52,522) + Diverted (4,709)</td>
+<td>Flight aborted prior to scheduled arrival.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_CARRIER`</td>
+<td>1,643,780</td>
+<td>82.19%</td>
+<td>Flights without ≥ 15m delay</td>
+<td>DOT rule: only populated when delay attribution required.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_WEATHER`</td>
+<td>1,643,780</td>
+<td>82.19%</td>
+<td>Flights without ≥ 15m delay</td>
+<td>DOT rule: only populated when delay attribution required.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_NAS`</td>
+<td>1,643,780</td>
+<td>82.19%</td>
+<td>Flights without ≥ 15m delay</td>
+<td>DOT rule: only populated when delay attribution required.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_SECURITY`</td>
+<td>1,643,780</td>
+<td>82.19%</td>
+<td>Flights without ≥ 15m delay</td>
+<td>DOT rule: only populated when delay attribution required.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_LATE_AIRCRAFT`</td>
+<td>1,643,780</td>
+<td>82.19%</td>
+<td>Flights without ≥ 15m delay</td>
+<td>DOT rule: only populated when delay attribution required.</td>
+</tr>
+</tbody></table>
+<h4>Systematic Determinism of Missingness:
+</h4>
+<p>- **Completed Flights (1,942,769 flights)**: **0.00% missing values** in `ARR_DELAY`, `ARR_TIME`, `ELAPSED_TIME`, and `AIR_TIME`. Every single completed flight has complete telemetry.</p>
+<p>- **Cancelled Flights (52,522 flights)**: 100% of cancelled flights have null `ARR_DELAY`, null `ARR_TIME`, and null `AIR_TIME`. 51,430 (97.9%) were cancelled prior to pushback (`DEP_TIME` is null); 1,092 were cancelled after gate departure but prior to takeoff. All 52,522 cancelled flights possess a valid `CANCELLATION_CODE`.</p>
+<p>- **Diverted Flights (4,709 flights)**: 100% have null `ARR_DELAY` and null `AIR_TIME` because scheduled destination was never reached.</p>
+<p>- **Delay Causes (`DELAY_DUE_*`)**: 1,643,780 rows (82.19%) are missing. Exactly 343,875 delayed completed flights (>15m) and 12,345 operational flights carry cause entries. On-time flights do not receive DOT delay cause codes.
+</p>
+<h3>2.2 Duplicates and Identifier Uniqueness
+</h3>
+<p>- **Full-Row Exact Duplicates**: **0 rows (0.00%)**. The dataset has zero duplicate rows.</p>
+<p>- **Business Key Uniqueness (`FL_DATE + AIRLINE_CODE + FL_NUMBER + ORIGIN`)**: Only **1 group (2 rows)** shared this compound key across 2 million records.</p>
+<p>  - *Inspection*: Spirit Airlines (`NK`) flight 631 on `2020-04-07` from `DTW` had two entries scheduled at 17:35: one destined for Tampa (`TPA`) and one destined for Atlantic City (`ACY`), both cancelled under Code D during initial COVID lockdowns.</p>
+<p>  - *Conclusion*: When including destination (`+ DEST`), the dataset has **100.00% unique primary keys**.
+</p>
+<h3>2.3 Invalid, Negative, and Boundary Values
+</h3>
+<table>
+<thead><tr>
+<th>Quality Check</th>
+<th>Invalid Count</th>
+<th>% of Data</th>
+<th>Assessment & Treatment</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>Scheduled Dep Time (`CRS_DEP_TIME < 0` or `> 2359`)</td>
+<td>0</td>
+<td>0.00%</td>
+<td>Clean military time (0001 to 2359)</td>
+</tr>
+<tr>
+<td>Scheduled Dep Minutes (`CRS_DEP_TIME % 100 >= 60`)</td>
+<td>0</td>
+<td>0.00%</td>
+<td>Valid minute range [00, 59]</td>
+</tr>
+<tr>
+<td>Scheduled Arr Time (`CRS_ARR_TIME > 2359`)</td>
+<td>12</td>
+<td>0.0006%</td>
+<td>12 flights recorded as `2400` (midnight). Convert `2400 -> 0000`</td>
+</tr>
+<tr>
+<td>Non-positive Distance (`DISTANCE <= 0`)</td>
+<td>0</td>
+<td>0.00%</td>
+<td>All flight distances are positive (min: 31 miles)</td>
+</tr>
+<tr>
+<td>Non-positive Duration (`CRS_ELAPSED_TIME <= 0`)</td>
+<td>1</td>
+<td>0.00005%</td>
+<td>Exactly 1 flight had CRS_ELAPSED_TIME = 0. Drop or impute with distance median</td>
+</tr>
+<tr>
+<td>Negative Taxi Times (`TAXI_OUT < 0`, `TAXI_IN < 0`)</td>
+<td>0</td>
+<td>0.00%</td>
+<td>Zero negative taxi durations</td>
+</tr>
+<tr>
+<td>Negative Airborne Time (`AIR_TIME < 0`)</td>
+<td>0</td>
+<td>0.00%</td>
+<td>Zero negative airborne times</td>
+</tr>
+<tr>
+<td>Simultaneous Cancelled & Diverted Flag</td>
+<td>0</td>
+<td>0.00%</td>
+<td>Mutual exclusivity 100% verified</td>
+</tr>
+<h3>2.4 Categorical Integrity & Mappings
+</h3>
+</tbody></table>
+<p>- **Airline Identification**: Exactly **18 unique `AIRLINE` names**, exactly **18 unique `AIRLINE_CODE` values**, and exactly **18 unique `DOT_CODE` values**. The mapping is strictly 1-to-1-to-1 with zero orphaned codes or ambiguous aliases.</p>
+<p>- **Airport Codes**: Exactly **380 unique origin airports** and **380 unique destination airports**. All 380 codes strictly follow the standard 3-letter IATA uppercase convention (0 malformed strings).
+</p>
+<h3>2.5 Outlier Analysis: ARR_DELAY and DEP_DELAY
+</h3>
+<p>Due to operational extremes in air traffic (snowstorms, aircraft mechanical failures, rolling ground stops), delay distributions exhibit heavy right-skewed tails:
+</p>
+<table>
+<thead><tr>
+<th>Metric</th>
+<th>Arrival Delay (`ARR_DELAY`)</th>
+<th>Departure Delay (`DEP_DELAY`)</th>
+<th>Interpretation</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**Valid Observations**</td>
+<td>1,942,769</td>
+<td>1,948,551</td>
+<td>Completed flights only</td>
+</tr>
+<tr>
+<td>**Minimum**</td>
+<td>**-119.0 min** (-1.98 hrs early)</td>
+<td>**-93.0 min**</td>
+<td>Early departures and arrivals</td>
+</tr>
+<tr>
+<td>**1st Percentile (p01)**</td>
+<td>-37.0 min</td>
+<td>-14.0 min</td>
+<td>Significant headwind/buffer arrival</td>
+</tr>
+<tr>
+<td>**25th Percentile (Q1)**</td>
+<td>-16.0 min</td>
+<td>-6.0 min</td>
+<td>Routine early arrival</td>
+</tr>
+<tr>
+<td>**Median (p50)**</td>
+<td>**-7.0 min**</td>
+<td>**-2.0 min**</td>
+<td>**Typical flight arrives 7 minutes EARLY**</td>
+</tr>
+<tr>
+<td>**Mean ± Std**</td>
+<td>**4.30 ± 51.58 min**</td>
+<td>**10.18 ± 49.63 min**</td>
+<td>Substantial positive skew</td>
+</tr>
+<tr>
+<td>**75th Percentile (Q3)**</td>
+<td>7.0 min</td>
+<td>6.0 min</td>
+<td>On-time window upper quartile</td>
+</tr>
+<tr>
+<td>**95th Percentile (p95)**</td>
+<td>71.0 min</td>
+<td>72.0 min</td>
+<td>Severe operational delay</td>
+</tr>
+<tr>
+<td>**99th Percentile (p99)**</td>
+<td>190.0 min (3.17 hrs)</td>
+<td>191.0 min</td>
+<td>Extreme delay tail</td>
+</tr>
+<tr>
+<td>**99.9th Percentile (p99.9)**</td>
+<td>654.0 min (10.9 hrs)</td>
+<td>665.0 min</td>
+<td>Overnight disruption / rolling delay</td>
+</tr>
+<tr>
+<td>**Maximum**</td>
+<td>**3237.0 min** (53.95 hrs)</td>
+<td>**3221.0 min** (53.68 hrs)</td>
+<td>Extreme multi-day mechanical hold</td>
+</tr>
+<tr>
+<td>**Interquartile Range (IQR)**</td>
+<td>23.0 min</td>
+<td>12.0 min</td>
+<td>Spread of central 50%</td>
+</tr>
+<tr>
+<td>**Tukey Upper Fence (Q3+1.5*IQR)**</td>
+<td>41.5 min</td>
+<td>24.0 min</td>
+<td>Statistical outlier boundary</td>
+</tr>
+<tr>
+<td>**Tukey Outliers Above Fence**</td>
+<td>170,451 (8.77%)</td>
+<td>261,211 (13.41%)</td>
+<td>High-impact business events</td>
+</tr>
+<div class='alert'>
+<p>**Outlier Treatment Rationale**: For the primary binary classification task (`ARR_DELAY > 15`), extreme values (such as 500 or 3,000 minutes) cleanly collapse into the positive label `1` and require no truncation or deletion. If secondary regression modeling is performed, target clipping at the 99th percentile (190 minutes) or a log-transform is strongly recommended to stabilize gradient descent.</p>
+</tbody></table>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>3. Target Distribution and Temporal Drift Analysis
+</h2>
+<h3>3.1 Class Balance of the Target (`DELAY = ARR_DELAY > 15`)
+</h3>
+<p>In accordance with Federal Aviation Administration (FAA) standards, a flight is classified as delayed if it reaches the gate more than 15 minutes after its scheduled arrival time (`ARR_DELAY > 15`).
+</p>
+<table>
+<thead><tr>
+<th>Population Cohort</th>
+<th>Total Flights</th>
+<th>On-Time Flights (≤ 15 min)</th>
+<th>Delayed Flights (> 15 min)</th>
+<th>Delay Rate (%)</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**Completed Flights (Target Subpopulation)**</td>
+<td>**1,942,769**</td>
+<td>**1,598,894** (82.30%)</td>
+<td>**343,875** (17.70%)</td>
+<td>**17.70%**</td>
+</tr>
+<tr>
+<td>**All Scheduled Flights (Full Dataset)**</td>
+<td>**2,000,000**</td>
+<td>1,598,894 (79.95%)</td>
+<td>343,875 (17.19%)</td>
+<td>17.19%</td>
+</tr>
+<tr>
+<td>*Cancelled Flights*</td>
+<td>52,522 (2.63%)</td>
+<td>-</td>
+<td>-</td>
+<td>N/A (Flight uncompleted)</td>
+</tr>
+<tr>
+<td>*Diverted Flights*</td>
+<td>4,709 (0.23%)</td>
+<td>-</td>
+<td>-</td>
+<td>N/A (Destination unreached)</td>
+</tr>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig01_target_distribution.png' alt='Figure 1: Target Distribution and Class Balance'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 1: Target Distribution and Class Balance</p>
+</div>
+<h3>3.2 Cancellation Breakdown and CANCELLATION_CODE Analysis
+</h3>
+</tbody></table>
+<p>Of the 2,000,000 flights, **52,522 were cancelled (2.626%)**. Analysis of the official FAA reason codes reveals:
+</p>
+<table>
+<thead><tr>
+<th>Code</th>
+<th>Standard FAA Description</th>
+<th>Cancelled Flights</th>
+<th>% of All Cancellations</th>
+<th>% of Total Flights</th>
+<th>Dominant Driver / Year</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**B**</td>
+<td>Weather</td>
+<td>**19,022**</td>
+<td>**36.22%**</td>
+<td>0.951%</td>
+<td>Leading cause across all standard operational years (winter storms, convective activity)</td>
+</tr>
+<tr>
+<td>**D**</td>
+<td>Security</td>
+<td>**16,308**</td>
+<td>**31.05%**</td>
+<td>0.815%</td>
+<td>Prevalent in 2020 (16,169 flights, 99.1% in 2020) due to COVID travel bans</td>
+</tr>
+<tr>
+<td>**A**</td>
+<td>Carrier</td>
+<td>**12,825**</td>
+<td>**24.42%**</td>
+<td>0.641%</td>
+<td>Airline crew shortages, maintenance holds, airline dispatch issues</td>
+</tr>
+<tr>
+<td>**C**</td>
+<td>National Aviation System (NAS)</td>
+<td>**4,367**</td>
+<td>**8.31%**</td>
+<td>0.218%</td>
+<td>ATC ground delay programs, volume constraints, runway closures</td>
+</tr>
+</tbody></table>
+<h3>3.3 Year-by-Year Temporal Drift and the 2020 COVID Shock
+</h3>
+<p>Evaluating delay and cancellation rates chronologically reveals significant dataset shift caused by the pandemic:
+</p>
+<table>
+<thead><tr>
+<th>Year</th>
+<th>Scheduled Flights</th>
+<th>Cancelled Flights</th>
+<th>Cancellation Rate</th>
+<th>Diverted Flights</th>
+<th>Completed Flights</th>
+<th>Delayed Flights (>15m)</th>
+<th>Delay Rate (Completed)</th>
+<th>Mean Arrival Delay</th>
+<th>Median Arrival Delay</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**2019**</td>
+<td>505,345</td>
+<td>9,067.0</td>
+<td>1.79%</td>
+<td>1,262.0</td>
+<td>495,016.0</td>
+<td>91,191.0</td>
+<td>**18.42%**</td>
+<td>+5.35 min</td>
+<td>-6.0 min</td>
+</tr>
+<tr>
+<td>**2020**</td>
+<td>318,768</td>
+<td>19,238.0</td>
+<td>6.04%</td>
+<td>548.0</td>
+<td>298,982.0</td>
+<td>28,179.0</td>
+<td>**9.42%**</td>
+<td>-4.96 min</td>
+<td>-11.0 min</td>
+</tr>
+<tr>
+<td>**2021**</td>
+<td>407,824</td>
+<td>7,074.0</td>
+<td>1.73%</td>
+<td>991.0</td>
+<td>399,759.0</td>
+<td>66,459.0</td>
+<td>**16.62%**</td>
+<td>+3.17 min</td>
+<td>-7.0 min</td>
+</tr>
+<tr>
+<td>**2022**</td>
+<td>457,760</td>
+<td>12,133.0</td>
+<td>2.65%</td>
+<td>1,073.0</td>
+<td>444,554.0</td>
+<td>90,324.0</td>
+<td>**20.32%**</td>
+<td>+6.99 min</td>
+<td>-5.0 min</td>
+</tr>
+<tr>
+<td>**2023**</td>
+<td>310,303</td>
+<td>5,010.0</td>
+<td>1.61%</td>
+<td>835.0</td>
+<td>304,458.0</td>
+<td>67,722.0</td>
+<td>**22.24%**</td>
+<td>+9.26 min</td>
+<td>-5.0 min</td>
+</tr>
+</tbody></table>
+<div class='alert'>
+<p>**Critical Insight on 2020 Data Drift**: In 2020, flight volume collapsed by ~37%, cancellation spiked to **6.04%** (driven by pandemic lockdowns), and the delay rate dropped to just **9.42%** (mean delay: **-4.96 min**, median: **-11.0 min**). With minimal traffic, runway queues and air traffic congestion vanished. As commercial aviation rebounded, delay rates surged from **16.62% in 2021** to **20.32% in 2022** and **22.24% in 2023**.</p>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig02_yearly_monthly_trends_covid.png' alt='Figure 2: Yearly and Monthly Flight Trends'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 2: Yearly and Monthly Flight Trends</p>
+</div>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>4. Delay Patterns Across Operational Dimensions
+</h2>
+<h3>4.1 Scheduled Departure Hour and Day of Week
+</h3>
+<p>The heatmap of delay rate by departure hour and day of week exposes a major operational reality of modern aviation:
+</p>
+<p>- **Early Morning (05:00 - 08:00)**: Flights experience the lowest delay rates of the day (**7.5% - 9.5%**). Aircraft and flight crews are fresh, having parked overnight at their gates with zero accumulated delay.</p>
+<p>- **Midday Progression (11:00 - 15:00)**: Delay rates rise steadily (**14.0% - 19.5%**) as turnaround buffers are absorbed by minor gate and air traffic holds.</p>
+<p>- **Evening Peak (18:00 - 22:00)**: Delay rates peak at **24.5% - 27.2%**. Late-arriving incoming aircraft trigger cascade delays down the network.</p>
+<p>- **Day-of-Week Effect**: Thursdays, Fridays, and Sundays suffer higher evening delays (**26% - 27%**) due to overlapping business travel and weekend leisure demand, whereas Tuesdays and Wednesdays are markedly calmer.</p>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig03_day_of_week_and_hour_heatmap.png' alt='Figure 3: Heatmap of Delay Rate by Departure Hour and Day of Week'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 3: Heatmap of Delay Rate by Departure Hour and Day of Week</p>
+</div>
+<h3>4.2 Airline Punctuality and Delay Dispersion
+</h3>
+<p>Delay rates vary substantially across the 18 reporting carriers (national average: **17.7%**):
+</p>
+<table>
+<thead><tr>
+<th>Airline Name</th>
+<th>Code</th>
+<th>Total Flights</th>
+<th>Cancelled</th>
+<th>Cancellation Rate</th>
+<th>Completed</th>
+<th>Delayed (>15m)</th>
+<th>Delay Rate (%)</th>
+<th>Mean Arrival Delay</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**JetBlue Airways**</td>
+<td>`B6`</td>
+<td>75,129</td>
+<td>2,113.0</td>
+<td>2.81%</td>
+<td>72,737.0</td>
+<td>19,114.0</td>
+<td>**26.28%**</td>
+<td>+11.84 min</td>
+</tr>
+<tr>
+<td>**Allegiant Air**</td>
+<td>`G4`</td>
+<td>35,175</td>
+<td>1,644.0</td>
+<td>4.67%</td>
+<td>33,434.0</td>
+<td>8,689.0</td>
+<td>**25.99%**</td>
+<td>+13.68 min</td>
+</tr>
+<tr>
+<td>**Frontier Airlines Inc.**</td>
+<td>`F9`</td>
+<td>43,012</td>
+<td>1,160.0</td>
+<td>2.70%</td>
+<td>41,788.0</td>
+<td>10,604.0</td>
+<td>**25.38%**</td>
+<td>+10.62 min</td>
+</tr>
+<tr>
+<td>**Spirit Air Lines**</td>
+<td>`NK`</td>
+<td>63,683</td>
+<td>1,503.0</td>
+<td>2.36%</td>
+<td>62,060.0</td>
+<td>13,605.0</td>
+<td>**21.92%**</td>
+<td>+8.32 min</td>
+</tr>
+<tr>
+<td>**ExpressJet Airlines LLC d/b/a aha!**</td>
+<td>`EV`</td>
+<td>12,673</td>
+<td>690.0</td>
+<td>5.44%</td>
+<td>11,944.0</td>
+<td>2,522.0</td>
+<td>**21.12%**</td>
+<td>+9.65 min</td>
+</tr>
+<tr>
+<td>**American Airlines Inc.**</td>
+<td>`AA`</td>
+<td>255,452</td>
+<td>7,093.0</td>
+<td>2.78%</td>
+<td>247,716.0</td>
+<td>47,926.0</td>
+<td>**19.35%**</td>
+<td>+7.07 min</td>
+</tr>
+<tr>
+<td>**United Air Lines Inc.**</td>
+<td>`UA`</td>
+<td>169,990</td>
+<td>3,800.0</td>
+<td>2.24%</td>
+<td>165,758.0</td>
+<td>30,799.0</td>
+<td>**18.58%**</td>
+<td>+5.18 min</td>
+</tr>
+<tr>
+<td>**Southwest Airlines Co.**</td>
+<td>`WN`</td>
+<td>384,493</td>
+<td>12,800.0</td>
+<td>3.33%</td>
+<td>370,951.0</td>
+<td>68,778.0</td>
+<td>**18.54%**</td>
+<td>+3.24 min</td>
+</tr>
+<tr>
+<td>**Mesa Airlines Inc.**</td>
+<td>`YV`</td>
+<td>43,396</td>
+<td>1,575.0</td>
+<td>3.63%</td>
+<td>41,715.0</td>
+<td>7,696.0</td>
+<td>**18.45%**</td>
+<td>+7.73 min</td>
+</tr>
+<tr>
+<td>**Alaska Airlines Inc.**</td>
+<td>`AS`</td>
+<td>67,663</td>
+<td>1,334.0</td>
+<td>1.97%</td>
+<td>66,161.0</td>
+<td>11,662.0</td>
+<td>**17.63%**</td>
+<td>+1.37 min</td>
+</tr>
+<tr>
+<td>**Envoy Air**</td>
+<td>`MQ`</td>
+<td>81,145</td>
+<td>2,562.0</td>
+<td>3.16%</td>
+<td>78,383.0</td>
+<td>13,173.0</td>
+<td>**16.81%**</td>
+<td>+3.14 min</td>
+</tr>
+<tr>
+<td>**PSA Airlines Inc.**</td>
+<td>`OH`</td>
+<td>71,151</td>
+<td>2,112.0</td>
+<td>2.97%</td>
+<td>68,848.0</td>
+<td>11,399.0</td>
+<td>**16.56%**</td>
+<td>+3.93 min</td>
+</tr>
+<tr>
+<td>**SkyWest Airlines Inc.**</td>
+<td>`OO`</td>
+<td>228,131</td>
+<td>5,188.0</td>
+<td>2.27%</td>
+<td>222,233.0</td>
+<td>34,027.0</td>
+<td>**15.31%**</td>
+<td>+3.84 min</td>
+</tr>
+<tr>
+<td>**Republic Airline**</td>
+<td>`YX`</td>
+<td>95,543</td>
+<td>2,999.0</td>
+<td>3.14%</td>
+<td>92,328.0</td>
+<td>14,116.0</td>
+<td>**15.29%**</td>
+<td>+0.71 min</td>
+</tr>
+<tr>
+<td>**Hawaiian Airlines Inc.**</td>
+<td>`HA`</td>
+<td>21,418</td>
+<td>260.0</td>
+<td>1.21%</td>
+<td>21,144.0</td>
+<td>3,182.0</td>
+<td>**15.05%**</td>
+<td>+3.72 min</td>
+</tr>
+<tr>
+<td>**Delta Air Lines Inc.**</td>
+<td>`DL`</td>
+<td>263,521</td>
+<td>3,801.0</td>
+<td>1.44%</td>
+<td>259,179.0</td>
+<td>35,646.0</td>
+<td>**13.75%**</td>
+<td>+1.10 min</td>
+</tr>
+<tr>
+<td>**Horizon Air**</td>
+<td>`QX`</td>
+<td>13,606</td>
+<td>264.0</td>
+<td>1.94%</td>
+<td>13,315.0</td>
+<td>1,796.0</td>
+<td>**13.49%**</td>
+<td>+2.25 min</td>
+</tr>
+<tr>
+<td>**Endeavor Air Inc.**</td>
+<td>`9E`</td>
+<td>74,819</td>
+<td>1,624.0</td>
+<td>2.17%</td>
+<td>73,075.0</td>
+<td>9,141.0</td>
+<td>**12.51%**</td>
+<td>-1.21 min</td>
+</tr>
+</tbody></table>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig04_airline_delay_rates.png' alt='Figure 4: Airline Delay Rates'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 4: Airline Delay Rates</p>
+</div>
+<p>Key observations:
+</p>
+<p>- **Highest Delay Rates**: JetBlue Airways (`B6`, **26.28%** delay rate), Allegiant Air (`G4`, **25.99%**), and Frontier Airlines (`F9`, **25.38%**), followed closely by Spirit Air Lines (`NK`, **21.92%**). JetBlue is concentrated in the congested Northeast corridor (JFK/BOS/EWR), while ultra-low-cost carriers operate tight turnaround buffers.</p>
+<p>- **Lowest Delay Rates**: Endeavor Air (`9E`, **12.51%** delay rate), Horizon Air (`QX`, **13.49%**), and Delta Air Lines (`DL`, **13.75%**), followed by Hawaiian Airlines (`HA`, **15.05%**). Delta and regional partners achieve superior punctuality through disciplined hub management.</p>
+<h3>4.3 Airport Congestion: Top and Bottom Origin Airports
+</h3>
+<p>To avoid noisy estimates from small regional airstrips with few flights, a robust statistical threshold of **minimum 5,000 flights** was applied (leaving 84 major commercial airports):
+</p>
+<table>
+<thead><tr>
+<th>Airport (Top 10 Most Delayed)</th>
+<th>Code</th>
+<th>City / Metro</th>
+<th>Flight Count</th>
+<th>Delay Rate (%)</th>
+<th>Mean Arrival Delay</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**EWR**</td>
+<td>`EWR`</td>
+<td>Newark, NJ</td>
+<td>33,606</td>
+<td>**23.72%**</td>
+<td>+8.57 min</td>
+</tr>
+<tr>
+<td>**MCO**</td>
+<td>`MCO`</td>
+<td>Orlando, FL</td>
+<td>41,691</td>
+<td>**23.10%**</td>
+<td>+10.10 min</td>
+</tr>
+<tr>
+<td>**FLL**</td>
+<td>`FLL`</td>
+<td>Fort Lauderdale, FL</td>
+<td>25,902</td>
+<td>**22.54%**</td>
+<td>+9.22 min</td>
+</tr>
+<tr>
+<td>**MDW**</td>
+<td>`MDW`</td>
+<td>Chicago, IL</td>
+<td>22,149</td>
+<td>**21.87%**</td>
+<td>+5.26 min</td>
+</tr>
+<tr>
+<td>**DEN**</td>
+<td>`DEN`</td>
+<td>Denver, CO</td>
+<td>77,439</td>
+<td>**21.82%**</td>
+<td>+7.21 min</td>
+</tr>
+<tr>
+<td>**SJU**</td>
+<td>`SJU`</td>
+<td>San Juan, PR</td>
+<td>8,570</td>
+<td>**21.73%**</td>
+<td>+9.69 min</td>
+</tr>
+<tr>
+<td>**MIA**</td>
+<td>`MIA`</td>
+<td>Miami, FL</td>
+<td>27,258</td>
+<td>**21.60%**</td>
+<td>+8.63 min</td>
+</tr>
+<tr>
+<td>**LAS**</td>
+<td>`LAS`</td>
+<td>Las Vegas, NV</td>
+<td>47,437</td>
+<td>**21.00%**</td>
+<td>+6.83 min</td>
+</tr>
+<tr>
+<td>**DFW**</td>
+<td>`DFW`</td>
+<td>Dallas/Fort Worth, TX</td>
+<td>83,688</td>
+<td>**20.98%**</td>
+<td>+8.46 min</td>
+</tr>
+<tr>
+<td>**DAL**</td>
+<td>`DAL`</td>
+<td>Dallas, TX</td>
+<td>19,745</td>
+<td>**20.72%**</td>
+<td>+5.01 min</td>
+</tr>
+</tbody></table>
+<table>
+<thead><tr>
+<th>Airport (Top 10 Most Punctual)</th>
+<th>Code</th>
+<th>City / Metro</th>
+<th>Flight Count</th>
+<th>Delay Rate (%)</th>
+<th>Mean Arrival Delay</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**TUS**</td>
+<td>`TUS`</td>
+<td>Tucson, AZ</td>
+<td>5,032</td>
+<td>**12.94%**</td>
+<td>+0.69 min</td>
+</tr>
+<tr>
+<td>**ANC**</td>
+<td>`ANC`</td>
+<td>Anchorage, AK</td>
+<td>5,625</td>
+<td>**13.23%**</td>
+<td>+0.13 min</td>
+</tr>
+<tr>
+<td>**GEG**</td>
+<td>`GEG`</td>
+<td>Spokane, WA</td>
+<td>5,037</td>
+<td>**13.32%**</td>
+<td>+2.01 min</td>
+</tr>
+<tr>
+<td>**PDX**</td>
+<td>`PDX`</td>
+<td>Portland, OR</td>
+<td>16,849</td>
+<td>**13.54%**</td>
+<td>+1.89 min</td>
+</tr>
+<tr>
+<td>**BOI**</td>
+<td>`BOI`</td>
+<td>Boise, ID</td>
+<td>6,657</td>
+<td>**13.55%**</td>
+<td>+1.32 min</td>
+</tr>
+<tr>
+<td>**SJC**</td>
+<td>`SJC`</td>
+<td>San Jose, CA</td>
+<td>14,780</td>
+<td>**13.63%**</td>
+<td>-0.04 min</td>
+</tr>
+<tr>
+<td>**SLC**</td>
+<td>`SLC`</td>
+<td>Salt Lake City, UT</td>
+<td>34,087</td>
+<td>**13.64%**</td>
+<td>+1.49 min</td>
+</tr>
+<tr>
+<td>**HNL**</td>
+<td>`HNL`</td>
+<td>Honolulu, HI</td>
+<td>15,417</td>
+<td>**13.77%**</td>
+<td>+2.20 min</td>
+</tr>
+<tr>
+<td>**SAT**</td>
+<td>`SAT`</td>
+<td>San Antonio, TX</td>
+<td>10,091</td>
+<td>**13.88%**</td>
+<td>+2.01 min</td>
+</tr>
+<tr>
+<td>**SMF**</td>
+<td>`SMF`</td>
+<td>Sacramento, CA</td>
+<td>14,538</td>
+<td>**14.42%**</td>
+<td>+1.91 min</td>
+</tr>
+</tbody></table>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig05_top_bottom_airports.png' alt='Figure 5: Top and Bottom Airports by Delay Rate'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 5: Top and Bottom Airports by Delay Rate</p>
+</div>
+<h3>4.4 Top Delayed Flight Routes
+</h3>
+<p>Applying a minimum volume filter of **1,000 flights per directional route** isolates high-delay corridors:
+</p>
+<table>
+<thead><tr>
+<th>Route (Origin → Destination)</th>
+<th>Flight Volume</th>
+<th>Delay Rate (%)</th>
+<th>Mean Delay</th>
+<th>Operational Characteristic</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**JFK -> MCO**</td>
+<td>1,284</td>
+<td>**30.76%**</td>
+<td>+17.04 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**MCO -> EWR**</td>
+<td>1,863</td>
+<td>**29.84%**</td>
+<td>+17.10 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**MCO -> JFK**</td>
+<td>1,208</td>
+<td>**28.64%**</td>
+<td>+16.46 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**FLL -> EWR**</td>
+<td>1,437</td>
+<td>**28.32%**</td>
+<td>+17.12 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**MCO -> SJU**</td>
+<td>1,756</td>
+<td>**28.30%**</td>
+<td>+15.90 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**LGA -> FLL**</td>
+<td>1,271</td>
+<td>**27.93%**</td>
+<td>+11.94 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**EWR -> MIA**</td>
+<td>1,171</td>
+<td>**27.58%**</td>
+<td>+11.04 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**EWR -> FLL**</td>
+<td>1,480</td>
+<td>**27.57%**</td>
+<td>+13.02 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**DFW -> MCO**</td>
+<td>1,347</td>
+<td>**27.10%**</td>
+<td>+13.03 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**DFW -> SFO**</td>
+<td>1,040</td>
+<td>**26.73%**</td>
+<td>+12.56 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**MCO -> LGA**</td>
+<td>1,220</td>
+<td>**26.72%**</td>
+<td>+10.90 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**MIA -> JFK**</td>
+<td>1,363</td>
+<td>**26.56%**</td>
+<td>+12.94 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**FLL -> JFK**</td>
+<td>1,148</td>
+<td>**26.39%**</td>
+<td>+14.19 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**EWR -> MCO**</td>
+<td>1,871</td>
+<td>**26.24%**</td>
+<td>+11.13 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+<tr>
+<td>**JFK -> FLL**</td>
+<td>1,179</td>
+<td>**26.21%**</td>
+<td>+10.94 min</td>
+<td>Severe terminal airspace saturation / ATC metering</td>
+</tr>
+</tbody></table>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig06_top_routes_delay_rate.png' alt='Figure 6: Top Routes by Delay Rate'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 6: Top Routes by Delay Rate</p>
+</div>
+<h3>4.5 Distance and Scheduled Flight Duration
+</h3>
+<p>Examining delay probability across flight mileage and scheduled duration:
+</p>
+<table>
+<thead><tr>
+<th>Distance Bracket</th>
+<th>Scheduled Duration Bracket</th>
+<th>Flight Count</th>
+<th>Delay Rate (%)</th>
+<th>Mean Delay</th>
+<th>Takeaway</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>1. Very Short (<250 mi)</td>
+<td>1. Under 1h</td>
+<td>242,386</td>
+<td>**15.76%**</td>
+<td>+3.42 min</td>
+<td>Longer routes possess schedule padding to absorb minor ground delays</td>
+</tr>
+<tr>
+<td>2. Short (250-499 mi)</td>
+<td>2. 1-2 hours</td>
+<td>459,426</td>
+<td>**16.17%**</td>
+<td>+3.37 min</td>
+<td>Longer routes possess schedule padding to absorb minor ground delays</td>
+</tr>
+<tr>
+<td>3. Medium (500-999 mi)</td>
+<td>3. 2-3 hours</td>
+<td>701,940</td>
+<td>**18.08%**</td>
+<td>+4.88 min</td>
+<td>Longer routes possess schedule padding to absorb minor ground delays</td>
+</tr>
+<tr>
+<td>4. Long (1000-1499 mi)</td>
+<td>4. 3-4 hours</td>
+<td>303,051</td>
+<td>**19.78%**</td>
+<td>+5.75 min</td>
+<td>Longer routes possess schedule padding to absorb minor ground delays</td>
+</tr>
+<tr>
+<td>5. Very Long (1500-2199 mi)</td>
+<td>5. 4-6 hours</td>
+<td>146,620</td>
+<td>**19.01%**</td>
+<td>+4.10 min</td>
+<td>Longer routes possess schedule padding to absorb minor ground delays</td>
+</tr>
+<tr>
+<td>6. Transcontinental (>2200 mi)</td>
+<td>6. Over 6 hours</td>
+<td>89,346</td>
+<td>**18.67%**</td>
+<td>+2.35 min</td>
+<td>Longer routes possess schedule padding to absorb minor ground delays</td>
+</tr>
+</tbody></table>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig07_distance_and_elapsed_time.png' alt='Figure 7: Distance and Elapsed Time Analysis'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 7: Distance and Elapsed Time Analysis</p>
+</div>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>5. Delay Causes Analysis (`DELAY_DUE_*`)
+</h2>
+<div class='alert alert-warning'>
+<p>**Operational Context Only**: In accordance with project instructions, `DELAY_DUE_*` columns are evaluated exclusively for systemic diagnostic understanding. These columns represent post-flight official DOT delay apportionments and **must never be used as predictive features**.</p>
+<p>Across all delayed flights carrying cause apportionments (totaling **24.13 million delay minutes**):
+</p>
+<table>
+<thead><tr>
+<th>Delay Cause Category</th>
+<th>Total Minutes Apportioned</th>
+<th>Share of Total Delay Minutes</th>
+<th>Primary Driver</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**Carrier**</td>
+<td>**8.88 Million**</td>
+<td>**36.81%**</td>
+<td>Maintenance, baggage handling, cleaning, crew duty time limits</td>
+</tr>
+<tr>
+<td>**Weather**</td>
+<td>**1.41 Million**</td>
+<td>**5.86%**</td>
+<td>Severe meteorological events (thunderstorms, blizzards, hurricanes)</td>
+</tr>
+<tr>
+<td>**NAS**</td>
+<td>**4.68 Million**</td>
+<td>**19.38%**</td>
+<td>Air traffic control flow control, airport volume, runway congestion</td>
+</tr>
+<tr>
+<td>**Security**</td>
+<td>**0.05 Million**</td>
+<td>**0.20%**</td>
+<td>Security breaches, terminal evacuation, re-screening holds</td>
+</tr>
+<tr>
+<td>**Late_Aircraft**</td>
+<td>**9.11 Million**</td>
+<td>**37.75%**</td>
+<td>Cascading delay from previous flight using the same aircraft</td>
+</tr>
+</tbody></table>
+<p>Key takeaways from delay causes:
+</p>
+<p>- **Late Aircraft Propagation (37.75%)** is the single greatest cause of flight delays in the United States, followed closely by **Carrier Operations (36.81%)**. Together, carrier-controllable and network-propagation issues account for **74.56%** of all delay minutes.</p>
+<p>- **National Aviation System (NAS, 19.38%)** represents runway queues and FAA ATC ground metering holds.</p>
+<p>- **Direct Weather (5.86%)** accounts for a modest share of direct delay minutes, because severe weather events often lead to full cancellations rather than prolonged delay, or manifest as NAS flow management.</p>
+<p>- **Security (0.20%)** represents rare terminal evacuation and screening incidents.
+</p>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig08_delay_causes_breakdown.png' alt='Figure 8: Delay Causes Breakdown'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 8: Delay Causes Breakdown</p>
+</div>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>6. Correlation Analysis & Feature Associations
+</h2>
+<h3>6.1 Numeric Feature Correlations
+</h3>
+<p>A Pearson and Spearman correlation analysis across operational and pre-departure features highlights critical dynamics:
+</p>
+<p>- **`DEP_DELAY` vs `ARR_DELAY`**: **r = +0.96** (near perfect linearity). If an aircraft leaves the gate 30 minutes late, it almost invariably lands late. This demonstrates why `DEP_DELAY` is severe target leakage.
+</p>
+<p>- **`DISTANCE` vs `CRS_ELAPSED_TIME`**: **r = +0.98** (expected collinearity between distance and flight duration).
+</p>
+<p>- **`TAXI_OUT` vs `ARR_DELAY`**: **r = +0.31** (long runway queues at hub airports directly bleed into arrival delays).
+</p>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig09_numeric_correlation_matrix.png' alt='Figure 9: Numeric Correlation Matrix'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 9: Numeric Correlation Matrix</p>
+</div>
+<h3>6.2 Categorical Feature Associations with Target (`DELAY > 15`)
+</h3>
+<p>To measure non-linear relationship between categorical features and the binary delay target, **Cramér's V** (measuring association strength on a 0 to 1 scale) and **Mutual Information (MI)** were computed on a representative sample:
+</p>
+<table>
+<thead><tr>
+<th>Feature</th>
+<th>Cardinality</th>
+<th>Cramér's V</th>
+<th>Mutual Information (nats)</th>
+<th>Predictive Ranking & Note</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>`dep_hour`</td>
+<td>24</td>
+<td>**0.1429**</td>
+<td>**0.01061**</td>
+<td>Strongest pre-departure predictor; captures diurnal cascade accumulation</td>
+</tr>
+<tr>
+<td>`route`</td>
+<td>6826</td>
+<td>**0.1189**</td>
+<td>**0.02566**</td>
+<td>Captures route-specific airspace constraints and terrain</td>
+</tr>
+<tr>
+<td>`AIRLINE_CODE`</td>
+<td>18</td>
+<td>**0.0859**</td>
+<td>**0.00363**</td>
+<td>Captures airline fleet buffer and turnaround operational efficiency</td>
+</tr>
+<tr>
+<td>`month`</td>
+<td>12</td>
+<td>**0.0740**</td>
+<td>**0.00278**</td>
+<td>Seasonal weather and holiday travel demand surge</td>
+</tr>
+<tr>
+<td>`ORIGIN`</td>
+<td>378</td>
+<td>**0.0709**</td>
+<td>**0.00358**</td>
+<td>Origin airport terminal and runway capacity constraints</td>
+</tr>
+<tr>
+<td>`DEST`</td>
+<td>377</td>
+<td>**0.0677**</td>
+<td>**0.00333**</td>
+<td>Destination airport arrival metering and weather</td>
+</tr>
+<tr>
+<td>`day_of_week`</td>
+<td>7</td>
+<td>**0.0355**</td>
+<td>**0.00065**</td>
+<td>Weekly travel patterns (business vs weekend leisure)</td>
+</tr>
+</tbody></table>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>7. Data Leakage Review & Column Classification
+</h2>
+<p>In a realistic production deployment, the model predicts flight arrival delay **at or before scheduled departure time** (e.g. at booking, 24h prior, or 2h prior to gate pushback). Using any post-departure variable induces catastrophic data leakage.
+</p>
+<table>
+<thead><tr>
+<th>Column Name</th>
+<th>Status</th>
+<th>Availability Time</th>
+<th>Rationale & Strict Leakage Warning</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>`FL_DATE`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Temporal</td>
+<td>Known at schedule publication and ticket booking time.</td>
+</tr>
+<tr>
+<td>`AIRLINE`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Identifier</td>
+<td>Known at booking time (redundant with AIRLINE_CODE).</td>
+</tr>
+<tr>
+<td>`AIRLINE_DOT`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Identifier</td>
+<td>Known at booking time (redundant text format).</td>
+</tr>
+<tr>
+<td>`AIRLINE_CODE`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Identifier</td>
+<td>Primary 2-letter airline code known at booking time.</td>
+</tr>
+<tr>
+<td>`DOT_CODE`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Identifier</td>
+<td>Numeric carrier DOT code known at booking time.</td>
+</tr>
+<tr>
+<td>`FL_NUMBER`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Identifier</td>
+<td>Flight number assigned at schedule publication.</td>
+</tr>
+<tr>
+<td>`ORIGIN`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Spatial</td>
+<td>Departure airport code known at booking time.</td>
+</tr>
+<tr>
+<td>`ORIGIN_CITY`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Spatial</td>
+<td>Origin municipality known at booking time.</td>
+</tr>
+<tr>
+<td>`DEST`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Spatial</td>
+<td>Destination airport code known at booking time.</td>
+</tr>
+<tr>
+<td>`DEST_CITY`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Spatial</td>
+<td>Destination municipality known at booking time.</td>
+</tr>
+<tr>
+<td>`CRS_DEP_TIME`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Temporal</td>
+<td>Computer Reservation System scheduled departure time (HHMM).</td>
+</tr>
+<tr>
+<td>`DEP_TIME`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Operational</td>
+<td>Actual gate pushback time; only recorded as flight departs.</td>
+</tr>
+<tr>
+<td>`DEP_DELAY`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Operational</td>
+<td>Actual departure delay; strongly collinear with target (r=0.96) and unknown pre-departure.</td>
+</tr>
+<tr>
+<td>`TAXI_OUT`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Operational</td>
+<td>Taxiing duration from gate to runway; occurs after departure.</td>
+</tr>
+<tr>
+<td>`WHEELS_OFF`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Operational</td>
+<td>Time aircraft wheels leave ground; occurs post-departure.</td>
+</tr>
+<tr>
+<td>`WHEELS_ON`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Operational</td>
+<td>Touchdown time at destination; occurs post-flight.</td>
+</tr>
+<tr>
+<td>`TAXI_IN`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Operational</td>
+<td>Taxi duration from runway to arrival gate; occurs post-flight.</td>
+</tr>
+<tr>
+<td>`CRS_ARR_TIME`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Temporal</td>
+<td>Computer Reservation System scheduled arrival time (HHMM).</td>
+</tr>
+<tr>
+<td>`ARR_TIME`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Operational</td>
+<td>Actual gate arrival time; directly reveals arrival delay.</td>
+</tr>
+<tr>
+<td>`ARR_DELAY`</td>
+<td><span class='badge badge-target'>TARGET</span></td>
+<td>Target</td>
+<td>Ground truth continuous arrival delay in minutes; used to create binary target.</td>
+</tr>
+<tr>
+<td>`CANCELLED`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Target / Filter</td>
+<td>Recorded upon flight cancellation; cannot be used as an input feature for predicting ARR_DELAY.</td>
+</tr>
+<tr>
+<td>`CANCELLATION_CODE`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Target / Filter</td>
+<td>Reason code (A, B, C, D) entered upon cancellation; post-schedule operational outcome.</td>
+</tr>
+<tr>
+<td>`DIVERTED`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Filter</td>
+<td>Diversion flag recorded mid-flight or upon diversion landing.</td>
+</tr>
+<tr>
+<td>`CRS_ELAPSED_TIME`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Operational</td>
+<td>Scheduled gate-to-gate duration; published in timetable.</td>
+</tr>
+<tr>
+<td>`ELAPSED_TIME`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Operational</td>
+<td>Actual gate-to-gate flight duration; only known after gate arrival.</td>
+</tr>
+<tr>
+<td>`AIR_TIME`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Operational</td>
+<td>Airborne flight duration (wheels-off to wheels-on); known only after flight.</td>
+</tr>
+<tr>
+<td>`DISTANCE`</td>
+<td><span class='badge badge-safe'>SAFE</span></td>
+<td>Spatial</td>
+<td>Direct nautical/statute mileage between airport coordinates.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_CARRIER`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Delay Cause</td>
+<td>DOT post-flight delay attribution; populated only after arrival.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_WEATHER`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Delay Cause</td>
+<td>DOT post-flight delay attribution; populated only after arrival.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_NAS`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Delay Cause</td>
+<td>DOT post-flight delay attribution; populated only after arrival.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_SECURITY`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Delay Cause</td>
+<td>DOT post-flight delay attribution; populated only after arrival.</td>
+</tr>
+<tr>
+<td>`DELAY_DUE_LATE_AIRCRAFT`</td>
+<td><span class='badge badge-leak'>LEAKAGE</span></td>
+<td>Delay Cause</td>
+<td>DOT post-flight delay attribution; populated only after arrival.</td>
+</tr>
+</tbody></table>
+<div class='alert alert-danger'>
+<p>**Confirmed Leakage Columns to Exclude from Model Training**:
+</p>
+<p>`DEP_TIME`, `DEP_DELAY`, `TAXI_OUT`, `WHEELS_OFF`, `WHEELS_ON`, `TAXI_IN`, `ARR_TIME`, `ELAPSED_TIME`, `AIR_TIME`, `CANCELLED`, `CANCELLATION_CODE`, `DIVERTED`, `DELAY_DUE_CARRIER`, `DELAY_DUE_WEATHER`, `DELAY_DUE_NAS`, `DELAY_DUE_SECURITY`, `DELAY_DUE_LATE_AIRCRAFT`.</p>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>8. High-Cardinality Analysis & Encoding Strategies
+</h2>
+<h3>Cardinality Overview (2,000,000 Flights)
+</h3>
+<p>- `AIRLINE_CODE`: **18 unique categories**  
+</p>
+<p>- `ORIGIN`: **380 unique airports**  
+</p>
+<p>- `DEST`: **380 unique airports**  
+</p>
+<p>- `ROUTE (ORIGIN_DEST)`: **7718 unique routes**  
+</p>
+<h3>Distribution of Route Frequencies
+</h3>
+<p>- **High-Volume Routes (≥ 1,000 flights)**: **377 routes** (Dense statistical support)  
+</p>
+<p>- **Medium-Volume Routes (100 - 999 flights)**: **3714 routes**  
+</p>
+<p>- **Low-Volume Routes (10 - 99 flights)**: **2605 routes**  
+</p>
+<p>- **Rare / Sparsely Flown Routes (< 10 flights)**: **1022 routes** (Severe risk of overfitting)  
+</p>
+<h3>Recommended Encoding Strategies
+</h3>
+<p>1. **`AIRLINE_CODE` (18 classes)**: **One-Hot Encoding** is ideal. With only 18 dimensions, one-hot adds minimal memory overhead and allows linear models and tree-based algorithms to learn pure carrier-specific intercepts.</p>
+<p>2. **`ORIGIN` and `DEST` (380 classes each)**:</p>
+<p>   - **Target Encoding with Out-Of-Fold Smoothing (Recommended)**: Calculate historical delay rates smoothed using empirical Bayes or additive m-estimate (`(n * mean_cat + m * global_mean) / (n + m)` with `m = 50`) fitted **strictly on training folds** to prevent target leakage.</p>
+<p>   - **Frequency / Count Encoding**: Airport volume is a strong proxy for ground congestion and gate capacity.</p>
+<p>   - **Cluster / Metro Area Grouping**: Map multi-airport metros (e.g. JFK/LGA/EWR -> NYC Metro, ORD/MDW -> Chicago Metro) to capture regional airspace congestion.</p>
+<p>3. **`ROUTE` (7,718 classes)**:</p>
+<p>   - **Regularized Target Encoding**: High predictive power (Cramér's V = 0.1231) but must be smoothed aggressively (`m = 100`).</p>
+<p>   - **Rare Route Binning**: Group routes with < 50 historical flights into a designated `'OTHER_RARE_ROUTE'` category.</p>
+<p>   - **Learned Embeddings**: For neural network architectures, 16-dimensional entity embeddings initialized with airport latitude/longitude coordinates.
+</p>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>9. Time-Split Feasibility & Partitioning Evaluation
+</h2>
+<p>Because air traffic exhibits strong temporal dependency, seasonality, and long-term trend drift, **random k-fold cross-validation is strictly invalid** and introduces temporal look-ahead leakage. Chronological splits must be employed.
+</p>
+<h3>Candidate Split Configurations
+</h3>
+<h4>Candidate Option 1: Standard Chronological 3-Way Split
+</h4>
+<table>
+<thead><tr>
+<th>Partition</th>
+<th>Calendar Period</th>
+<th>Scheduled Flights</th>
+<th>Completed Flights</th>
+<th>Cancelled Flights</th>
+<th>Delay Rate (%)</th>
+<th>Mean Arrival Delay</th>
+<th>Purpose</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**Train (2019-2021)**</td>
+<td>2019 - 2021 / 2022 / 2023</td>
+<td>1,231,937</td>
+<td>1,193,757.0</td>
+<td>35,379.0</td>
+<td>**15.57%**</td>
+<td>+2.04 min</td>
+<td>Model training, validation tuning, and holdout testing</td>
+</tr>
+<tr>
+<td>**Validation (2022)**</td>
+<td>2019 - 2021 / 2022 / 2023</td>
+<td>457,760</td>
+<td>444,554.0</td>
+<td>12,133.0</td>
+<td>**20.32%**</td>
+<td>+6.99 min</td>
+<td>Model training, validation tuning, and holdout testing</td>
+</tr>
+<tr>
+<td>**Test (2023)**</td>
+<td>2019 - 2021 / 2022 / 2023</td>
+<td>310,303</td>
+<td>304,458.0</td>
+<td>5,010.0</td>
+<td>**22.24%**</td>
+<td>+9.26 min</td>
+<td>Model training, validation tuning, and holdout testing</td>
+</tr>
+</tbody></table>
+<h4>Candidate Option 2: COVID-Filtered Chronological Split (Recommended)
+</h4>
+<table>
+<thead><tr>
+<th>Partition</th>
+<th>Calendar Period</th>
+<th>Scheduled Flights</th>
+<th>Completed Flights</th>
+<th>Cancelled Flights</th>
+<th>Delay Rate (%)</th>
+<th>Mean Arrival Delay</th>
+<th>Purpose</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |</p>
+<tr>
+<td>**Train (2019 + 2021 No COVID)**</td>
+<td>2019 + 2021 / 2022 / 2023</td>
+<td>913,169</td>
+<td>894,775.0</td>
+<td>16,141.0</td>
+<td>**17.62%**</td>
+<td>+4.38 min</td>
+<td>Eliminates artificial 2020 pandemic distortion</td>
+</tr>
+<tr>
+<td>**Validation (2022)**</td>
+<td>2019 + 2021 / 2022 / 2023</td>
+<td>457,760</td>
+<td>444,554.0</td>
+<td>12,133.0</td>
+<td>**20.32%**</td>
+<td>+6.99 min</td>
+<td>Eliminates artificial 2020 pandemic distortion</td>
+</tr>
+<tr>
+<td>**Test (2023)**</td>
+<td>2019 + 2021 / 2022 / 2023</td>
+<td>310,303</td>
+<td>304,458.0</td>
+<td>5,010.0</td>
+<td>**22.24%**</td>
+<td>+9.26 min</td>
+<td>Eliminates artificial 2020 pandemic distortion</td>
+</tr>
+</tbody></table>
+<div style='text-align: center; margin: 25px 0;'>
+<img src='figures/fig10_temporal_split_structure.png' alt='Figure 10: Temporal Split Structure'>
+<p style='font-size: 0.9rem; color: #4b5563; font-weight: 500;'>Figure 10: Temporal Split Structure</p>
+</div>
+<div class='alert'>
+<p>**Why Option 2 is Statistically Superior**: The 2020 lockdown year artificially depresses delay rate to 9.42% and injects 16,169 non-standard security/lockdown cancellations. Training on 2019 + 2021 yields **913,169 flights** with a natural baseline delay rate of **17.62%**, aligning much more realistically with the 2022 validation set (20.32%) and 2023 holdout test set (22.24%).</p>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<h2>Findings and Recommendations
+</h2>
+<h3>1. Key Project Risks & Mitigation Strategies
+</h3>
+<table>
+<thead><tr>
+<th>Risk Area</th>
+<th>Specific Operational Danger</th>
+<th>Mitigation Strategy</th>
+</tr></thead><tbody>
+<p>| :--- | :--- | :--- |</p>
+<tr>
+<td>**1. Target Leakage**</td>
+<td>`DEP_DELAY`, `DEP_TIME`, and `TAXI_OUT` correlate so heavily with `ARR_DELAY` (r=0.96) that including them will result in an artificial 99% accuracy model that is useless pre-departure.</td>
+<td>Enforce strict column whitelist in feature pipeline. Drop all operational post-departure variables before featurization.</td>
+</tr>
+<tr>
+<td>**2. Class Imbalance**</td>
+<td>Positive delay class is ~17.7% (approx. 4.6:1 negative-to-positive ratio). Naive accuracy (82.3%) will easily mislead model evaluation.</td>
+<td>Optimize PR-AUC (Precision-Recall AUC) as primary metric; tune classification decision thresholds; evaluate Focal Loss or `scale_pos_weight = 4.65`.</td>
+</tr>
+<tr>
+<td>**3. Temporal Drift**</td>
+<td>Severe systemic shifts across 2019-2023 (lockdown collapse in 2020 followed by post-COVID revenge travel congestion in 2022-2023).</td>
+<td>Exclude 2020 or weight it lower; use chronological rolling window splits; include rolling 14-day network congestion indicators.</td>
+</tr>
+<tr>
+<td>**4. Outliers**</td>
+<td>Heavy right skew in delays (max 3,237 min). Regression targets will be destabilized.</td>
+<td>For binary classification, outliers are naturally bounded in class 1. For regression, clip targets at 99th percentile (190 min) or use Huber/Quantile loss.</td>
+</tr>
+<tr>
+<td>**5. High Cardinality**</td>
+<td>7,718 routes and 380 airports will cause massive sparsity if one-hot encoded.</td>
+<td>Apply out-of-fold regularized Target Encoding with empirical Bayes smoothing (`m=50`), Frequency Encoding, and rare class binning.</td>
+</tr>
+<h3>2. Recommended Data Cleaning Pipeline
+</h3>
+</tbody></table>
+<p>1. **Filter Non-Completed Flights for Primary Target**: Drop rows where `CANCELLED = 1.0` (52,522 rows) or `DIVERTED = 1.0` (4,709 rows). Completed sample: **1,942,769 clean rows**.</p>
+<p>2. **Fix Boundary Time Anomalies**: Replace 12 occurrences of `CRS_ARR_TIME = 2400` with `0000`.</p>
+<p>3. **Handle Rare Nulls in Scheduled Duration**: Exactly 17 rows have null `CRS_ELAPSED_TIME` and 1 row has `0`. Impute using route median `DISTANCE / 7.5 + 30` (average commercial jet cruising speed + taxi buffer).</p>
+<p>4. **Exclude COVID Lockdown Anomaly (Recommended)**: Filter out April–December 2020 from training data to avoid learning distorted zero-traffic priors.</p>
+<p>5. **Strict Pre-Departure Feature Isolation**: Retain only known pre-departure fields: `FL_DATE`, `AIRLINE_CODE`, `ORIGIN`, `DEST`, `CRS_DEP_TIME`, `CRS_ARR_TIME`, `CRS_ELAPSED_TIME`, `DISTANCE`.
+</p>
+<h3>3. Recommended Feature Set and Engineering Ideas
+</h3>
+<h4>Safe Baseline Features (Raw)
+</h4>
+<p>- `AIRLINE_CODE`: 18 categories (One-hot encoded)</p>
+<p>- `ORIGIN`, `DEST`: Target encoded with OOF smoothing + Frequency encoded</p>
+<p>- `CRS_DEP_TIME`, `CRS_ARR_TIME`: Scheduled times (HHMM)</p>
+<p>- `CRS_ELAPSED_TIME`: Scheduled duration in minutes</p>
+<p>- `DISTANCE`: Flight distance in miles
+</p>
+<h4>Engineered Pre-Departure Features
+</h4>
+<p>1. **Cyclical Temporal Encodings**:
+</p>
+<p>   - `dep_hour = CRS_DEP_TIME // 100` (0 - 23)</p>
+<p>   - `dep_hour_sin = sin(2 * pi * dep_hour / 24)`, `dep_hour_cos = cos(2 * pi * dep_hour / 24)`</p>
+<p>   - `month_sin = sin(2 * pi * month / 12)`, `month_cos = cos(2 * pi * month / 12)`</p>
+<p>   - `day_of_week` (0 to 6) and `is_weekend` flag (Friday/Sunday travel surge)</p>
+<p>2. **Air Corridor & Route Physics**:
+</p>
+<p>   - `scheduled_ground_speed = DISTANCE / (CRS_ELAPSED_TIME / 60.0)` (detects unrealistic airline schedule padding or headwinds)</p>
+<p>   - `route_flight_count`: Total flights on the route (identifies trunk vs regional spoke)</p>
+<p>3. **Historical Congestion & Punctuality Priors (OOF Smoothed)**:
+</p>
+<p>   - `carrier_historical_delay_rate`: Prior smoothed delay rate of the airline</p>
+<p>   - `origin_hourly_congestion`: Number of scheduled departures from the origin airport in the same 1-hour window (direct proxy for runway taxi congestion)</p>
+<p>   - `dest_hourly_congestion`: Number of scheduled arrivals at the destination airport in the scheduled arrival window</p>
+<p>4. **Rolling Temporal Features (Strictly Lagged)**:
+</p>
+<p>   - `origin_delay_rate_last_7d`: Rolling 7-day delay rate at origin airport</p>
+<p>   - `carrier_delay_rate_last_7d`: Rolling 7-day delay rate for the airline
+</p>
+<h3>4. Recommended Split Strategy and Evaluation Metrics
+</h3>
+<p>- **Splitting Protocol**: Chronological time-series split:
+</p>
+<p>  - **Training Set**: 2019 + 2021 (913,169 flights, 894,775 completed; 17.62% delay rate)</p>
+<p>  - **Validation Set**: 2022 (457,760 flights, 444,554 completed; 20.32% delay rate)</p>
+<p>  - **Holdout Test Set**: 2023 through August 31 (310,303 flights, 304,458 completed; 22.24% delay rate)</p>
+<p>- **Primary Evaluation Metric**: **PR-AUC (Area Under Precision-Recall Curve)**. Because positive delays are 17.7%, PR-AUC focuses on the minority class without being inflated by true negative on-time flights.</p>
+<p>- **Secondary Metrics**:
+</p>
+<p>  - **ROC-AUC**: Overall ranking capability across all thresholds</p>
+<p>  - **F1-Score / Precision@k**: At top decile of predicted risk (crucial for airline dispatch intervention)</p>
+<p>  - **Brier Score / Expected Calibration Error (ECE)**: Verifies whether a predicted 30% delay probability corresponds to 30 out of 100 delayed flights.
+</p>
+<h3>5. Step-by-Step Modeling Plan
+</h3>
+<p>graph TD</p>
+<p>    A["Raw Parquet Data<br/>(2,000,000 flights)"] --> B["Cleaning & Splitting Pipeline<br/>- Filter Completed Flights (1,942,769)<br/>- Chronological Split: Train (2019+21), Val (2022), Test (2023)"]</p>
+<p>    B --> C["Feature Engineering Pipeline<br/>- Cyclical Hour/Month<br/>- Origin/Dest OOF Target Encoding<br/>- Airport Hourly Scheduled Congestion<br/>- Route Speed & Schedule Padding"]</p>
+<p>    C --> D["Baseline Models<br/>1. Majority Class Dummy<br/>2. Logistic Regression (L2 regularized)<br/>3. LightGBM / XGBoost Baseline"]</p>
+<p>    D --> E["Advanced Model Exploration<br/>- Tuned LightGBM with Hist Gradient<br/>- CatBoost with native categorical handling<br/>- Deep Tabular ResNet / TabNet"]</p>
+<p>    E --> F["Calibration & Threshold Optimization<br/>- Platt Scaling / Isotonic Regression<br/>- Cost-sensitive threshold tuning"]</p>
+<p>    F --> G["Final Evaluation & Explainability<br/>- Holdout Test Evaluation (2023)<br/>- SHAP Global & Local Interpretability<br/>- Slice Analysis (by Hub & Airline)"]</p>
+<p>1. **Phase 1: Baseline Establishment**
+</p>
+<p>   - Implement a naive baseline (always predict majority class on-time: 82.3% accuracy, PR-AUC = 0.177).</p>
+<p>   - Train an L2-regularized Logistic Regression model on standard scaled cyclical and one-hot features to establish a linear benchmark.</p>
+<p>2. **Phase 2: Gradient Boosted Trees (LightGBM & CatBoost)**
+</p>
+<p>   - Train LightGBM with histogram binning on target-encoded airport and route features.</p>
+<p>   - Train CatBoost with built-in ordered target statistics on high-cardinality `ORIGIN`, `DEST`, and `ROUTE`.</p>
+<p>   - Optimize hyperparameters using Bayesian Search (Optuna) evaluated on 2022 validation PR-AUC.</p>
+<p>3. **Phase 3: Model Calibration & Cost-Sensitive Tuning**
+</p>
+<p>   - Apply Isotonic Regression or Platt scaling to ensure calibrated probabilities.</p>
+<p>   - Align decision threshold with operational costs (e.g. false positives vs missed delays).</p>
+<p>4. **Phase 4: Interpretability & Final Validation**
+</p>
+<p>   - Compute SHAP values to identify top global drivers (scheduled departure hour, origin congestion, carrier).</p>
+<p>   - Perform slice-based error analysis across top hubs (ATL, ORD, DFW, DEN, CLT) and airlines to audit fairness and robustness.</p>
+<p>   - Final evaluation on untouched 2023 holdout test set with bootstrapped 95% confidence intervals.</p>
+<hr style='border: 0; height: 1px; background: #e5e7eb; margin: 30px 0;'>
+<p>*Report generated automatically by Antigravity IDE EDA Pipeline.*
+</p>
+</div>
+</body>
+</html>

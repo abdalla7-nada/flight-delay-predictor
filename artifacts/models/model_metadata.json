@@ -1,0 +1,129 @@
+{
+  "model_name": "LightGBM_Variant_G_Best",
+  "description": "Recommended feature subset: Calendar + Physics + Smoothed Priors + Frequencies (No raw high-cardinality ORIGIN/DEST/route)",
+  "features": [
+    "month",
+    "day_of_week",
+    "is_weekend",
+    "is_holiday_period",
+    "dep_hour",
+    "arr_hour",
+    "part_of_day",
+    "dep_hour_sin",
+    "dep_hour_cos",
+    "arr_hour_sin",
+    "arr_hour_cos",
+    "month_sin",
+    "month_cos",
+    "day_of_week_sin",
+    "day_of_week_cos",
+    "AIRLINE_CODE",
+    "CRS_DEP_TIME",
+    "CRS_ARR_TIME",
+    "CRS_ELAPSED_TIME",
+    "DISTANCE",
+    "log_distance",
+    "scheduled_speed",
+    "prior_airline",
+    "prior_origin",
+    "prior_dest",
+    "prior_route",
+    "prior_origin_hour",
+    "origin_freq",
+    "dest_freq",
+    "route_freq"
+  ],
+  "categoricals": [
+    "part_of_day",
+    "AIRLINE_CODE"
+  ],
+  "hyperparameters": {
+    "objective": "binary",
+    "n_estimators": 2000,
+    "learning_rate": 0.05,
+    "num_leaves": 63,
+    "min_child_samples": 200,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.8,
+    "cat_smooth": 10.0,
+    "min_data_per_group": 100,
+    "random_state": 42,
+    "best_iteration": 74,
+    "fit_time_sec": 17.05
+  },
+  "performance": {
+    "val_pr_auc": 0.3232,
+    "val_roc_auc": 0.6552,
+    "val_brier": 0.1544,
+    "val_log_loss": 0.4827,
+    "val_best_f1": 0.3916,
+    "val_best_threshold": 0.17,
+    "val_prec_at_10": 0.3923,
+    "val_rec_at_10": 0.1931,
+    "val_lift_at_10": 1.93,
+    "val_base_rate": 0.2032,
+    "val_samples": 444554,
+    "train_pr_auc": 0.3205,
+    "train_roc_auc": 0.6795,
+    "train_brier": 0.1357,
+    "train_log_loss": 0.4353,
+    "train_best_f1": 0.3763,
+    "train_best_threshold": 0.19,
+    "train_prec_at_10": 0.3939,
+    "train_rec_at_10": 0.2235,
+    "train_lift_at_10": 2.24,
+    "train_base_rate": 0.1762,
+    "train_samples": 894775
+  },
+  "diagnostics": {
+    "label_shuffle": {
+      "shuffled_val_roc_auc": 0.5064,
+      "shuffled_val_pr_auc": 0.2081,
+      "status": "PASSED"
+    },
+    "calibration": {
+      "mean_predicted_prob": 0.1755,
+      "mean_actual_prob": 0.2032,
+      "drift_underestimation": 0.0277
+    },
+    "learning_curve": [
+      {
+        "fraction": 0.25,
+        "train_samples": 223694,
+        "best_iter": 71,
+        "val_pr_auc": 0.3216,
+        "val_roc_auc": 0.6545,
+        "val_brier": 0.1546,
+        "fit_time_sec": 9.29
+      },
+      {
+        "fraction": 0.5,
+        "train_samples": 447388,
+        "best_iter": 68,
+        "val_pr_auc": 0.3228,
+        "val_roc_auc": 0.6549,
+        "val_brier": 0.1545,
+        "fit_time_sec": 12.88
+      },
+      {
+        "fraction": 0.75,
+        "train_samples": 671081,
+        "best_iter": 65,
+        "val_pr_auc": 0.3229,
+        "val_roc_auc": 0.6554,
+        "val_brier": 0.1545,
+        "fit_time_sec": 16.45
+      },
+      {
+        "fraction": 1.0,
+        "train_samples": 894775,
+        "best_iter": 71,
+        "val_pr_auc": 0.3232,
+        "val_roc_auc": 0.6553,
+        "val_brier": 0.1544,
+        "fit_time_sec": 22.29
+      }
+    ]
+  }
+}

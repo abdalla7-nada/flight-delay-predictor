@@ -1,0 +1,536 @@
+{
+  "causes_by_airline": [
+    {
+      "AIRLINE_CODE": "HA",
+      "AIRLINE": "Hawaiian Airlines Inc.",
+      "delayed_flights_with_cause": 3349,
+      "carrier_share_pct": 58.71,
+      "late_aircraft_share_pct": 34.44,
+      "nas_share_pct": 2.86,
+      "weather_share_pct": 3.49,
+      "security_share_pct": 0.5
+    },
+    {
+      "AIRLINE_CODE": "OO",
+      "AIRLINE": "SkyWest Airlines Inc.",
+      "delayed_flights_with_cause": 35184,
+      "carrier_share_pct": 51.26,
+      "late_aircraft_share_pct": 26.71,
+      "nas_share_pct": 9.78,
+      "weather_share_pct": 12.12,
+      "security_share_pct": 0.13
+    },
+    {
+      "AIRLINE_CODE": "DL",
+      "AIRLINE": "Delta Air Lines Inc.",
+      "delayed_flights_with_cause": 37155,
+      "carrier_share_pct": 46.16,
+      "late_aircraft_share_pct": 27.72,
+      "nas_share_pct": 20.15,
+      "weather_share_pct": 5.82,
+      "security_share_pct": 0.15
+    },
+    {
+      "AIRLINE_CODE": "B6",
+      "AIRLINE": "JetBlue Airways",
+      "delayed_flights_with_cause": 19627,
+      "carrier_share_pct": 40.92,
+      "late_aircraft_share_pct": 36.96,
+      "nas_share_pct": 18.79,
+      "weather_share_pct": 3.06,
+      "security_share_pct": 0.26
+    },
+    {
+      "AIRLINE_CODE": "YV",
+      "AIRLINE": "Mesa Airlines Inc.",
+      "delayed_flights_with_cause": 7897,
+      "carrier_share_pct": 37.99,
+      "late_aircraft_share_pct": 39.01,
+      "nas_share_pct": 14.1,
+      "weather_share_pct": 8.78,
+      "security_share_pct": 0.13
+    },
+    {
+      "AIRLINE_CODE": "AA",
+      "AIRLINE": "American Airlines Inc.",
+      "delayed_flights_with_cause": 49554,
+      "carrier_share_pct": 37.33,
+      "late_aircraft_share_pct": 41.42,
+      "nas_share_pct": 16.24,
+      "weather_share_pct": 4.81,
+      "security_share_pct": 0.21
+    },
+    {
+      "AIRLINE_CODE": "QX",
+      "AIRLINE": "Horizon Air",
+      "delayed_flights_with_cause": 1885,
+      "carrier_share_pct": 35.27,
+      "late_aircraft_share_pct": 41.07,
+      "nas_share_pct": 17.56,
+      "weather_share_pct": 5.6,
+      "security_share_pct": 0.5
+    },
+    {
+      "AIRLINE_CODE": "WN",
+      "AIRLINE": "Southwest Airlines Co.",
+      "delayed_flights_with_cause": 71529,
+      "carrier_share_pct": 33.75,
+      "late_aircraft_share_pct": 48.25,
+      "nas_share_pct": 15.38,
+      "weather_share_pct": 2.33,
+      "security_share_pct": 0.3
+    },
+    {
+      "AIRLINE_CODE": "9E",
+      "AIRLINE": "Endeavor Air Inc.",
+      "delayed_flights_with_cause": 9435,
+      "carrier_share_pct": 32.25,
+      "late_aircraft_share_pct": 35.3,
+      "nas_share_pct": 24.23,
+      "weather_share_pct": 8.17,
+      "security_share_pct": 0.06
+    },
+    {
+      "AIRLINE_CODE": "G4",
+      "AIRLINE": "Allegiant Air",
+      "delayed_flights_with_cause": 8992,
+      "carrier_share_pct": 31.81,
+      "late_aircraft_share_pct": 42.11,
+      "nas_share_pct": 18.2,
+      "weather_share_pct": 7.6,
+      "security_share_pct": 0.29
+    },
+    {
+      "AIRLINE_CODE": "AS",
+      "AIRLINE": "Alaska Airlines Inc.",
+      "delayed_flights_with_cause": 12179,
+      "carrier_share_pct": 31.57,
+      "late_aircraft_share_pct": 34.31,
+      "nas_share_pct": 29.75,
+      "weather_share_pct": 3.72,
+      "security_share_pct": 0.65
+    },
+    {
+      "AIRLINE_CODE": "F9",
+      "AIRLINE": "Frontier Airlines Inc.",
+      "delayed_flights_with_cause": 10899,
+      "carrier_share_pct": 31.27,
+      "late_aircraft_share_pct": 44.48,
+      "nas_share_pct": 21.83,
+      "weather_share_pct": 2.42,
+      "security_share_pct": 0.0
+    },
+    {
+      "AIRLINE_CODE": "EV",
+      "AIRLINE": "ExpressJet Airlines LLC d/b/a aha!",
+      "delayed_flights_with_cause": 2588,
+      "carrier_share_pct": 30.7,
+      "late_aircraft_share_pct": 27.66,
+      "nas_share_pct": 38.55,
+      "weather_share_pct": 3.09,
+      "security_share_pct": 0.0
+    },
+    {
+      "AIRLINE_CODE": "OH",
+      "AIRLINE": "PSA Airlines Inc.",
+      "delayed_flights_with_cause": 11841,
+      "carrier_share_pct": 30.43,
+      "late_aircraft_share_pct": 45.91,
+      "nas_share_pct": 16.19,
+      "weather_share_pct": 7.3,
+      "security_share_pct": 0.16
+    },
+    {
+      "AIRLINE_CODE": "UA",
+      "AIRLINE": "United Air Lines Inc.",
+      "delayed_flights_with_cause": 31819,
+      "carrier_share_pct": 29.39,
+      "late_aircraft_share_pct": 40.72,
+      "nas_share_pct": 24.35,
+      "weather_share_pct": 5.53,
+      "security_share_pct": 0.02
+    },
+    {
+      "AIRLINE_CODE": "YX",
+      "AIRLINE": "Republic Airline",
+      "delayed_flights_with_cause": 14606,
+      "carrier_share_pct": 28.37,
+      "late_aircraft_share_pct": 35.44,
+      "nas_share_pct": 30.19,
+      "weather_share_pct": 5.88,
+      "security_share_pct": 0.12
+    },
+    {
+      "AIRLINE_CODE": "NK",
+      "AIRLINE": "Spirit Air Lines",
+      "delayed_flights_with_cause": 14021,
+      "carrier_share_pct": 26.73,
+      "late_aircraft_share_pct": 29.43,
+      "nas_share_pct": 38.6,
+      "weather_share_pct": 4.55,
+      "security_share_pct": 0.69
+    },
+    {
+      "AIRLINE_CODE": "MQ",
+      "AIRLINE": "Envoy Air",
+      "delayed_flights_with_cause": 13660,
+      "carrier_share_pct": 24.58,
+      "late_aircraft_share_pct": 38.0,
+      "nas_share_pct": 26.38,
+      "weather_share_pct": 10.91,
+      "security_share_pct": 0.14
+    }
+  ],
+  "causes_by_year": [
+    {
+      "year": 2019,
+      "delayed_flights_with_cause": 94408,
+      "carrier_share_pct": 30.63,
+      "late_aircraft_share_pct": 39.92,
+      "nas_share_pct": 23.87,
+      "weather_share_pct": 5.46,
+      "security_share_pct": 0.12
+    },
+    {
+      "year": 2020,
+      "delayed_flights_with_cause": 29440,
+      "carrier_share_pct": 42.0,
+      "late_aircraft_share_pct": 28.93,
+      "nas_share_pct": 21.9,
+      "weather_share_pct": 6.87,
+      "security_share_pct": 0.3
+    },
+    {
+      "year": 2021,
+      "delayed_flights_with_cause": 69012,
+      "carrier_share_pct": 41.03,
+      "late_aircraft_share_pct": 35.44,
+      "nas_share_pct": 16.44,
+      "weather_share_pct": 6.8,
+      "security_share_pct": 0.29
+    },
+    {
+      "year": 2022,
+      "delayed_flights_with_cause": 93461,
+      "carrier_share_pct": 39.63,
+      "late_aircraft_share_pct": 37.67,
+      "nas_share_pct": 16.87,
+      "weather_share_pct": 5.63,
+      "security_share_pct": 0.2
+    },
+    {
+      "year": 2023,
+      "delayed_flights_with_cause": 69899,
+      "carrier_share_pct": 35.53,
+      "late_aircraft_share_pct": 40.4,
+      "nas_share_pct": 18.44,
+      "weather_share_pct": 5.42,
+      "security_share_pct": 0.21
+    }
+  ],
+  "cat_associations": [
+    {
+      "feature": "dep_hour",
+      "unique_values_in_sample": 24,
+      "cramers_v": 0.1429,
+      "mutual_information": 0.01061
+    },
+    {
+      "feature": "route",
+      "unique_values_in_sample": 6826,
+      "cramers_v": 0.1189,
+      "mutual_information": 0.02566
+    },
+    {
+      "feature": "AIRLINE_CODE",
+      "unique_values_in_sample": 18,
+      "cramers_v": 0.0859,
+      "mutual_information": 0.00363
+    },
+    {
+      "feature": "month",
+      "unique_values_in_sample": 12,
+      "cramers_v": 0.074,
+      "mutual_information": 0.00278
+    },
+    {
+      "feature": "ORIGIN",
+      "unique_values_in_sample": 378,
+      "cramers_v": 0.0709,
+      "mutual_information": 0.00358
+    },
+    {
+      "feature": "DEST",
+      "unique_values_in_sample": 377,
+      "cramers_v": 0.0677,
+      "mutual_information": 0.00333
+    },
+    {
+      "feature": "day_of_week",
+      "unique_values_in_sample": 7,
+      "cramers_v": 0.0355,
+      "mutual_information": 0.00065
+    }
+  ],
+  "cardinality_stats": {
+    "unique_airlines": 18,
+    "unique_origins": 380,
+    "unique_dests": 380,
+    "unique_routes": 7718
+  },
+  "route_frequency_stats": {
+    "total_routes": 7718,
+    "routes_over_1000_flights": 377.0,
+    "routes_100_to_999": 3714.0,
+    "routes_10_to_99": 2605.0,
+    "rare_routes_under_10": 1022.0
+  },
+  "split_options": {
+    "Standard_3way_Split": [
+      {
+        "split_name": "Train (2019-2021)",
+        "total_flights": 1231937,
+        "cancelled": 35379.0,
+        "completed": 1193757.0,
+        "delay_rate": 15.57,
+        "mean_arr_delay": 2.04
+      },
+      {
+        "split_name": "Validation (2022)",
+        "total_flights": 457760,
+        "cancelled": 12133.0,
+        "completed": 444554.0,
+        "delay_rate": 20.32,
+        "mean_arr_delay": 6.99
+      },
+      {
+        "split_name": "Test (2023)",
+        "total_flights": 310303,
+        "cancelled": 5010.0,
+        "completed": 304458.0,
+        "delay_rate": 22.24,
+        "mean_arr_delay": 9.26
+      }
+    ],
+    "COVID_Excluded_Split": [
+      {
+        "split_name": "Train (2019 + 2021 No COVID)",
+        "total_flights": 913169,
+        "cancelled": 16141.0,
+        "completed": 894775.0,
+        "delay_rate": 17.62,
+        "mean_arr_delay": 4.38
+      },
+      {
+        "split_name": "Validation (2022)",
+        "total_flights": 457760,
+        "cancelled": 12133.0,
+        "completed": 444554.0,
+        "delay_rate": 20.32,
+        "mean_arr_delay": 6.99
+      },
+      {
+        "split_name": "Test (2023)",
+        "total_flights": 310303,
+        "cancelled": 5010.0,
+        "completed": 304458.0,
+        "delay_rate": 22.24,
+        "mean_arr_delay": 9.26
+      }
+    ]
+  },
+  "columns_leakage": [
+    {
+      "column": "FL_DATE",
+      "category": "Temporal",
+      "status": "SAFE",
+      "reason": "Known at schedule publication and ticket booking time."
+    },
+    {
+      "column": "AIRLINE",
+      "category": "Identifier",
+      "status": "SAFE",
+      "reason": "Known at booking time (redundant with AIRLINE_CODE)."
+    },
+    {
+      "column": "AIRLINE_DOT",
+      "category": "Identifier",
+      "status": "SAFE",
+      "reason": "Known at booking time (redundant text format)."
+    },
+    {
+      "column": "AIRLINE_CODE",
+      "category": "Identifier",
+      "status": "SAFE",
+      "reason": "Primary 2-letter airline code known at booking time."
+    },
+    {
+      "column": "DOT_CODE",
+      "category": "Identifier",
+      "status": "SAFE",
+      "reason": "Numeric carrier DOT code known at booking time."
+    },
+    {
+      "column": "FL_NUMBER",
+      "category": "Identifier",
+      "status": "SAFE",
+      "reason": "Flight number assigned at schedule publication."
+    },
+    {
+      "column": "ORIGIN",
+      "category": "Spatial",
+      "status": "SAFE",
+      "reason": "Departure airport code known at booking time."
+    },
+    {
+      "column": "ORIGIN_CITY",
+      "category": "Spatial",
+      "status": "SAFE",
+      "reason": "Origin municipality known at booking time."
+    },
+    {
+      "column": "DEST",
+      "category": "Spatial",
+      "status": "SAFE",
+      "reason": "Destination airport code known at booking time."
+    },
+    {
+      "column": "DEST_CITY",
+      "category": "Spatial",
+      "status": "SAFE",
+      "reason": "Destination municipality known at booking time."
+    },
+    {
+      "column": "CRS_DEP_TIME",
+      "category": "Temporal",
+      "status": "SAFE",
+      "reason": "Computer Reservation System scheduled departure time (HHMM)."
+    },
+    {
+      "column": "DEP_TIME",
+      "category": "Operational",
+      "status": "LEAKAGE",
+      "reason": "Actual gate pushback time; only recorded as flight departs."
+    },
+    {
+      "column": "DEP_DELAY",
+      "category": "Operational",
+      "status": "LEAKAGE",
+      "reason": "Actual departure delay; strongly collinear with target (r=0.96) and unknown pre-departure."
+    },
+    {
+      "column": "TAXI_OUT",
+      "category": "Operational",
+      "status": "LEAKAGE",
+      "reason": "Taxiing duration from gate to runway; occurs after departure."
+    },
+    {
+      "column": "WHEELS_OFF",
+      "category": "Operational",
+      "status": "LEAKAGE",
+      "reason": "Time aircraft wheels leave ground; occurs post-departure."
+    },
+    {
+      "column": "WHEELS_ON",
+      "category": "Operational",
+      "status": "LEAKAGE",
+      "reason": "Touchdown time at destination; occurs post-flight."
+    },
+    {
+      "column": "TAXI_IN",
+      "category": "Operational",
+      "status": "LEAKAGE",
+      "reason": "Taxi duration from runway to arrival gate; occurs post-flight."
+    },
+    {
+      "column": "CRS_ARR_TIME",
+      "category": "Temporal",
+      "status": "SAFE",
+      "reason": "Computer Reservation System scheduled arrival time (HHMM)."
+    },
+    {
+      "column": "ARR_TIME",
+      "category": "Operational",
+      "status": "LEAKAGE",
+      "reason": "Actual gate arrival time; directly reveals arrival delay."
+    },
+    {
+      "column": "ARR_DELAY",
+      "category": "Target",
+      "status": "TARGET",
+      "reason": "Ground truth continuous arrival delay in minutes; used to create binary target."
+    },
+    {
+      "column": "CANCELLED",
+      "category": "Target / Filter",
+      "status": "LEAKAGE / SECONDARY TARGET",
+      "reason": "Recorded upon flight cancellation; cannot be used as an input feature for predicting ARR_DELAY."
+    },
+    {
+      "column": "CANCELLATION_CODE",
+      "category": "Target / Filter",
+      "status": "LEAKAGE",
+      "reason": "Reason code (A, B, C, D) entered upon cancellation; post-schedule operational outcome."
+    },
+    {
+      "column": "DIVERTED",
+      "category": "Filter",
+      "status": "LEAKAGE",
+      "reason": "Diversion flag recorded mid-flight or upon diversion landing."
+    },
+    {
+      "column": "CRS_ELAPSED_TIME",
+      "category": "Operational",
+      "status": "SAFE",
+      "reason": "Scheduled gate-to-gate duration; published in timetable."
+    },
+    {
+      "column": "ELAPSED_TIME",
+      "category": "Operational",
+      "status": "LEAKAGE",
+      "reason": "Actual gate-to-gate flight duration; only known after gate arrival."
+    },
+    {
+      "column": "AIR_TIME",
+      "category": "Operational",
+      "status": "LEAKAGE",
+      "reason": "Airborne flight duration (wheels-off to wheels-on); known only after flight."
+    },
+    {
+      "column": "DISTANCE",
+      "category": "Spatial",
+      "status": "SAFE",
+      "reason": "Direct nautical/statute mileage between airport coordinates."
+    },
+    {
+      "column": "DELAY_DUE_CARRIER",
+      "category": "Delay Cause",
+      "status": "LEAKAGE",
+      "reason": "DOT post-flight delay attribution; populated only after arrival."
+    },
+    {
+      "column": "DELAY_DUE_WEATHER",
+      "category": "Delay Cause",
+      "status": "LEAKAGE",
+      "reason": "DOT post-flight delay attribution; populated only after arrival."
+    },
+    {
+      "column": "DELAY_DUE_NAS",
+      "category": "Delay Cause",
+      "status": "LEAKAGE",
+      "reason": "DOT post-flight delay attribution; populated only after arrival."
+    },
+    {
+      "column": "DELAY_DUE_SECURITY",
+      "category": "Delay Cause",
+      "status": "LEAKAGE",
+      "reason": "DOT post-flight delay attribution; populated only after arrival."
+    },
+    {
+      "column": "DELAY_DUE_LATE_AIRCRAFT",
+      "category": "Delay Cause",
+      "status": "LEAKAGE",
+      "reason": "DOT post-flight delay attribution; populated only after arrival."
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Node & Next.js
+node_modules/
+.next/
+out/
+.turbo/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python & Package Builds
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+*.whl
+
+# Testing & Quality Gates
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# CatBoost & ML Telemetry
+catboost_info/
+
+# Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Local Environment Variables & Secrets
+.env.local
+.env.*.local
+*.pem
+
+# Data & Heavy Raw Files
+data/
+data/raw/
+data/processed/
+*.parquet
+*.csv.gz
+
+# Large Non-Serving Artifacts
+artifacts/test_predictions.parquet
+artifacts/models/catboost_native_cats_v2.joblib
+artifacts/models/catboost_priors_v2.joblib
+
+# OS & Editor Dumps
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.gemini/
+
+# Quarantine & Staging
+_quarantine/
+
+# Reports & Cleanup Audit Deliverables
+reports/cleanup_*
+reports/cleanup_audit.md
+reports/cleanup_inventory.csv
+
+# Request Logs
+*.log
+*.jsonl
+api/logs/*
+!api/logs/.gitkeep

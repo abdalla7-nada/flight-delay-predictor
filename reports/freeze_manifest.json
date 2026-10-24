@@ -1,0 +1,26 @@
+{
+  "artifacts/feature_pipeline_v2.joblib": {
+    "sha256": "fdaca2ceb7f84ca03cebe9a485e134c5ecbf7eb751b14c715159aaddd9b8cafe",
+    "size_bytes": 559397
+  },
+  "artifacts/models/champion_v2.joblib": {
+    "sha256": "e106c35c0800631c3b71ca1c1038a53703dda4b8c6b04e6ac74684da9a0e270d",
+    "size_bytes": 14885501
+  },
+  "artifacts/models/calibrator_v2.joblib": {
+    "sha256": "445f4fc419504ee6b66b039e894f2edd6902661eefab9526d26f3c262b47d6b4",
+    "size_bytes": 949
+  },
+  "data/processed/train.parquet": {
+    "sha256": "6b0f6483cbae33399ad7e6cdb242b3e83fcd42e2302d225e998a503ffaae6282",
+    "size_bytes": 6906667
+  },
+  "data/processed/val.parquet": {
+    "sha256": "2894054b137722b1359105b3c31c84cf81cb1c53ba4a86b3ed6e538e5465b289",
+    "size_bytes": 3473645
+  },
+  "data/processed/test.parquet": {
+    "sha256": "ca6c8ca99d98f3adeffc300893bbacbe83d8b62b7119fe5d830bec4893066c68",
+    "size_bytes": 2343501
+  }
+}

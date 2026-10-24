@@ -1,0 +1,551 @@
+{
+  "train_flight_count": {
+    "description": "Number of completed flights in training set (2019, 2021)",
+    "source_file": "reports/phase1_2_validation.json",
+    "source_key": "shapes.tree_train[0]",
+    "expected_value": 894775,
+    "doc_string": "894,775",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_flight_count": {
+    "description": "Number of completed flights in validation set (2022 full)",
+    "source_file": "reports/phase1_2_validation.json",
+    "source_key": "shapes.tree_val[0]",
+    "expected_value": 444554,
+    "doc_string": "444,554",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_flight_count": {
+    "description": "Number of completed flights in test set (Jan-Aug 2023)",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "test_flight_count",
+    "expected_value": 304458,
+    "doc_string": "304,458",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "total_flight_count": {
+    "description": "Total completed domestic flights analyzed across all 3 splits",
+    "source_file": "reports/phase1_2_validation.json",
+    "source_key": "sum_of_splits",
+    "expected_value": 1643787,
+    "doc_string": "1,643,787",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_jan_aug_flight_count": {
+    "description": "Validation flights in seasonal matched Jan-Aug 2022 subset",
+    "source_file": "reports/preregistered_benchmarks.json",
+    "source_key": "val_jan_aug_benchmark.flight_count",
+    "expected_value": 296276,
+    "doc_string": "296,276",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "train_base_rate_pct": {
+    "description": "Observed base delay rate in training set (strictly > 15 min)",
+    "source_file": "reports/baseline_metrics.json",
+    "source_key": "train_prevalence",
+    "expected_value": 17.62,
+    "doc_string": "17.62%",
+    "tolerance": 0.05,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_base_rate_pct": {
+    "description": "Observed base delay rate in 2022 validation set (strictly > 15 min)",
+    "source_file": "reports/phase4_metrics.json",
+    "source_key": "champion.performance.val_base_rate",
+    "expected_value": 20.32,
+    "doc_string": "20.32%",
+    "tolerance": 0.05,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_jan_aug_base_rate_pct": {
+    "description": "Observed base delay rate in Jan-Aug 2022 validation subset",
+    "source_file": "reports/preregistered_benchmarks.json",
+    "source_key": "val_jan_aug_benchmark.base_rate",
+    "expected_value": 21.06,
+    "doc_string": "21.06%",
+    "tolerance": 0.05,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_base_rate_pct": {
+    "description": "Observed base delay rate in Jan-Aug 2023 test set",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "test_base_rate",
+    "expected_value": 22.24,
+    "doc_string": "22.24%",
+    "tolerance": 0.05,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_arr_delay_15_count": {
+    "description": "Number of 2022 validation flights with ARR_DELAY exactly equal to 15.0 min",
+    "source_file": "reports/target_threshold_sensitivity.json",
+    "source_key": "flights_with_arr_delay_equal_15",
+    "expected_value": 3137,
+    "doc_string": "3,137",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_pr_auc": {
+    "description": "Validation PR-AUC for Champion CatBoost v2 (calibrated)",
+    "source_file": "reports/phase4_metrics.json",
+    "source_key": "champion.performance.val_pr_auc",
+    "expected_value": 0.3257,
+    "doc_string": "0.3257",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_roc_auc": {
+    "description": "Validation ROC-AUC for Champion CatBoost v2",
+    "source_file": "reports/phase4_metrics.json",
+    "source_key": "champion.performance.val_roc_auc",
+    "expected_value": 0.6571,
+    "doc_string": "0.6571",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_brier": {
+    "description": "Validation Brier score for Champion CatBoost v2 (Platt calibrated)",
+    "source_file": "reports/phase4_metrics.json",
+    "source_key": "champion.performance.val_brier",
+    "expected_value": 0.1534,
+    "doc_string": "0.1534",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_log_loss": {
+    "description": "Validation Log Loss for Champion CatBoost v2",
+    "source_file": "reports/phase4_metrics.json",
+    "source_key": "champion.performance.val_log_loss",
+    "expected_value": 0.4793,
+    "doc_string": "0.4793",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_top_10_lift": {
+    "description": "Validation Top 10% Decile Lift for Champion CatBoost v2",
+    "source_file": "reports/phase4_metrics.json",
+    "source_key": "champion.performance.val_lift_at_10",
+    "expected_value": 1.95,
+    "doc_string": "1.95x",
+    "tolerance": 0.01,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_bss_vs_base_rate_pct": {
+    "description": "Validation Brier Skill Score vs Validation Base Rate",
+    "source_file": "reports/phase4_metrics.json",
+    "source_key": "champion.performance.bss_vs_val_base_rate",
+    "expected_value": 5.25,
+    "doc_string": "+5.25%",
+    "tolerance": 0.05,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "val_ece_10": {
+    "description": "Validation Expected Calibration Error (10 bins) for Platt calibrated CatBoost",
+    "source_file": "reports/calibration_metrics.json",
+    "source_key": "CatBoost_v2_NativeCats.Platt_Scaling.ece_10",
+    "expected_value": 0.0027,
+    "doc_string": "0.0027",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_pr_auc": {
+    "description": "Out-of-sample Test PR-AUC for Champion CatBoost v2 (2023)",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "champion_test_metrics.test_pr_auc",
+    "expected_value": 0.3497,
+    "doc_string": "0.3497",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_roc_auc": {
+    "description": "Out-of-sample Test ROC-AUC for Champion CatBoost v2 (2023)",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "champion_test_metrics.test_roc_auc",
+    "expected_value": 0.6523,
+    "doc_string": "0.6523",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_brier": {
+    "description": "Out-of-sample Test Brier Score for Champion CatBoost v2 (2023)",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "champion_test_metrics.test_brier",
+    "expected_value": 0.1638,
+    "doc_string": "0.1638",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_top_10_lift": {
+    "description": "Out-of-sample Test Top 10% Decile Lift (2023)",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "champion_test_metrics.test_lift_at_10",
+    "expected_value": 1.93,
+    "doc_string": "1.93x",
+    "tolerance": 0.01,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_bss_vs_base_rate_pct": {
+    "description": "Out-of-sample Test Brier Skill Score vs Test Base Rate (2023)",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "brier_skill_scores.bss_vs_test_base_rate",
+    "expected_value": 5.29,
+    "doc_string": "+5.29%",
+    "tolerance": 0.05,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_ece_10": {
+    "description": "Out-of-sample Test Expected Calibration Error (10 bins) for Frozen Platt (2023)",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "calibration_test.ece_10",
+    "expected_value": 0.0104,
+    "doc_string": "0.0104",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_catboost_vs_lgbm_delta_prauc": {
+    "description": "Delta PR-AUC of CatBoost vs LightGBM on 2023 test set",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "baselines_comparison.LightGBM_Variant_G_v1.paired_diff_vs_champion.delta_pr_auc.point",
+    "expected_value": -0.00067,
+    "doc_string": "-0.0007",
+    "tolerance": 0.0001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "test_catboost_vs_lgbm_pvalue": {
+    "description": "Two-tailed bootstrap p-value of CatBoost vs LightGBM on 2023 test set",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "baselines_comparison.LightGBM_Variant_G_v1.paired_diff_vs_champion.delta_pr_auc.p_value_two_tailed",
+    "expected_value": 0.248,
+    "doc_string": "0.248",
+    "tolerance": 0.001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "model_tree_count": {
+    "description": "Number of constructed trees in champion CatBoost model",
+    "source_file": "artifacts/models/model_metadata_v2.json",
+    "source_key": "hyperparameters.best_iteration + 1",
+    "expected_value": 178,
+    "doc_string": "178",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "model_iterations_setting": {
+    "description": "Iterations hyperparameter setting for CatBoost model",
+    "source_file": "artifacts/models/model_metadata_v2.json",
+    "source_key": "hyperparameters.iterations",
+    "expected_value": 1000,
+    "doc_string": "1000",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "model_depth": {
+    "description": "Tree depth for champion CatBoost model",
+    "source_file": "artifacts/models/model_metadata_v2.json",
+    "source_key": "hyperparameters.depth",
+    "expected_value": 6,
+    "doc_string": "6",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "model_learning_rate": {
+    "description": "Learning rate for champion CatBoost model",
+    "source_file": "artifacts/models/model_metadata_v2.json",
+    "source_key": "hyperparameters.learning_rate",
+    "expected_value": 0.08,
+    "doc_string": "0.08",
+    "tolerance": 0.001,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "model_l2_leaf_reg": {
+    "description": "L2 leaf regularization for champion CatBoost model",
+    "source_file": "artifacts/models/model_metadata_v2.json",
+    "source_key": "hyperparameters.l2_leaf_reg",
+    "expected_value": 3,
+    "doc_string": "3",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "model_feature_count": {
+    "description": "Exact count of input features in pipeline and model",
+    "source_file": "artifacts/models/model_metadata_v2.json",
+    "source_key": "feature_count",
+    "expected_value": 33,
+    "doc_string": "33",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "model_calibrator_slope_A": {
+    "description": "Platt scaling slope coefficient A",
+    "source_file": "notebooks/outputs/calibrator_v2_params.json",
+    "source_key": "slope_A",
+    "expected_value": 0.933139,
+    "doc_string": "0.933139",
+    "tolerance": 1e-06,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "model_calibrator_intercept_B": {
+    "description": "Platt scaling intercept coefficient B",
+    "source_file": "notebooks/outputs/calibrator_v2_params.json",
+    "source_key": "intercept_B",
+    "expected_value": 0.097311,
+    "doc_string": "0.097311",
+    "tolerance": 1e-06,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "vocab_airlines_count": {
+    "description": "Count of reporting airlines in vocabulary and pipeline",
+    "source_file": "artifacts/serving/vocab.json",
+    "source_key": "airline_count",
+    "expected_value": 18,
+    "doc_string": "18",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "vocab_airports_count": {
+    "description": "Count of commercial airports in vocabulary and pipeline",
+    "source_file": "artifacts/serving/vocab.json",
+    "source_key": "airport_count",
+    "expected_value": 378,
+    "doc_string": "378",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "vocab_frequent_routes_count": {
+    "description": "Count of frequent routes (>= 50 training flights) tracked in pipeline",
+    "source_file": "artifacts/serving/vocab.json",
+    "source_key": "frequent_routes_count",
+    "expected_value": 3942,
+    "doc_string": "3,942",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "total_routes_in_train": {
+    "description": "Count of unique directional routes in training set (in route_lookup.json)",
+    "source_file": "artifacts/serving/route_lookup.json",
+    "source_key": "len(keys)",
+    "expected_value": 7260,
+    "doc_string": "7,260",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "dummy_lift": {
+    "description": "Top 10% lift for Dummy baseline constant predictor",
+    "source_file": "reports/test_evaluation_metrics.json",
+    "source_key": "dummy_constant_lift",
+    "expected_value": 1.0,
+    "doc_string": "1.00x (not meaningful for constant predictor)",
+    "tolerance": 0.1,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "serving_eval_sample_size": {
+    "description": "Sample size of validation flights evaluated for serving approximation",
+    "source_file": "reports/serving_approximation_metrics.json",
+    "source_key": "sample_size",
+    "expected_value": 5000,
+    "doc_string": "5,000",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "serving_mean_abs_diff": {
+    "description": "Mean absolute difference in serving approximation probability",
+    "source_file": "reports/serving_approximation_metrics.json",
+    "source_key": "mean_absolute_difference",
+    "expected_value": 0.000446,
+    "doc_string": "0.000446",
+    "tolerance": 1e-06,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "serving_max_abs_diff": {
+    "description": "Max absolute difference in serving approximation probability",
+    "source_file": "reports/serving_approximation_metrics.json",
+    "source_key": "max_absolute_difference",
+    "expected_value": 0.011377,
+    "doc_string": "0.011377",
+    "tolerance": 1e-06,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "serving_p95_abs_diff": {
+    "description": "95th percentile absolute difference in serving approximation probability",
+    "source_file": "reports/serving_approximation_metrics.json",
+    "source_key": "p95_absolute_difference",
+    "expected_value": 0.002274,
+    "doc_string": "0.002274",
+    "tolerance": 1e-06,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "serving_spearman_rank": {
+    "description": "Spearman rank correlation for serving approximation",
+    "source_file": "reports/serving_approximation_metrics.json",
+    "source_key": "spearman_correlation",
+    "expected_value": 0.999935,
+    "doc_string": "0.999935",
+    "tolerance": 1e-06,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "serving_decile_exact_pct": {
+    "description": "Percentage of flights with exact decile agreement under serving approximation",
+    "source_file": "reports/serving_approximation_metrics.json",
+    "source_key": "decile_exact_pct",
+    "expected_value": 98.98,
+    "doc_string": "98.98%",
+    "tolerance": 0.01,
+    "appears_in": [
+      "README.md",
+      "MODEL_CARD.md"
+    ]
+  },
+  "optuna_trials_count": {
+    "description": "Number of Optuna Bayesian optimization trials on LightGBM",
+    "source_file": "reports/optuna_study.json",
+    "source_key": "len(study)",
+    "expected_value": 40,
+    "doc_string": "40",
+    "tolerance": 0,
+    "appears_in": [
+      "README.md"
+    ]
+  },
+  "optuna_delta_prauc": {
+    "description": "Delta PR-AUC from Optuna tuning on LightGBM vs baseline",
+    "source_file": "reports/lgbm_tuning_summary.json",
+    "source_key": "paired_bootstrap_vs_baseline.delta_pr_auc.point",
+    "expected_value": 0.00051,
+    "doc_string": "+0.00051",
+    "tolerance": 1e-05,
+    "appears_in": [
+      "README.md"
+    ]
+  }
+}

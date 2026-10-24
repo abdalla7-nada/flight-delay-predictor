@@ -1,0 +1,43 @@
+# Environments
+.venv/
+venv/
+ENV/
+
+# Data
+data/
+data/raw/
+data/processed/
+
+# Staging & quarantine
+_quarantine/
+
+# Request logs
+api/logs/
+*.jsonl
+
+# Cleanup reports
+reports/cleanup_*
+
+# Git and IDE
+.git/
+.gitignore
+.dockerignore
+.gemini/
+.idea/
+.vscode/
+
+# Python cache & telemetry
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+catboost_info/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Binary / build artifacts
+*.whl
+*.parquet
+artifacts/test_predictions.parquet
+artifacts/models/catboost_native_cats_v2.joblib
+artifacts/models/catboost_priors_v2.joblib

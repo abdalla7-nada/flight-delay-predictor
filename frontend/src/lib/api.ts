@@ -1,0 +1,163 @@
+import {
+  FlightPredictionRequest,
+  PredictionResult,
+  ApiMetadata,
+  ApiOptions,
+  ApiHealth,
+  ApiErrorResponse,
+} from "@/types";
+
+const RAW_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+export const API_BASE_URL = RAW_API_URL.replace(/\/+$/, "");
+
+export class ApiClientError extends Error {
+  status?: number;
+  fieldErrors?: Record<string, string>;
+
+  constructor(message: string, status?: number, fieldErrors?: Record<string, string>) {
+    super(message);
+    this.name = "ApiClientError";
+    this.status = status;
+    this.fieldErrors = fieldErrors;
+  }
+}
+
+async function handleResponse<T>(res: Response): Promise<T> {
+  if (res.ok) {
+    return res.json() as Promise<T>;
+  }
+
+  let errorMessage = `Server error (HTTP ${res.status})`;
+  const fieldErrors: Record<string, string> = {};
+
+  try {
+    const errorData: ApiErrorResponse = await res.json();
+    if (typeof errorData.detail === "string") {
+      errorMessage = errorData.detail;
+    } else if (Array.isArray(errorData.detail)) {
+      const messages: string[] = [];
+      for (const err of errorData.detail) {
+        const field = err.loc && err.loc.length > 1 ? String(err.loc[err.loc.length - 1]) : "general";
+        fieldErrors[field] = err.msg;
+        messages.push(`${field}: ${err.msg}`);
+      }
+      errorMessage = messages.join(" | ");
+    }
+  } catch {
+    // Non-JSON response
+    errorMessage = `Request failed with HTTP status ${res.status}: ${res.statusText}`;
+  }
+
+  throw new ApiClientError(errorMessage, res.status, fieldErrors);
+}
+
+export async function fetchHealth(): Promise<ApiHealth> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/health`, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+    });
+    return await handleResponse<ApiHealth>(res);
+  } catch (err: unknown) {
+    if (err instanceof ApiClientError) throw err;
+    throw new ApiClientError(
+      `Failed to connect to backend at ${API_BASE_URL}. Ensure FastAPI is running on port 8000.`,
+      0
+    );
+  }
+}
+
+export async function fetchMetadata(): Promise<ApiMetadata> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/metadata`, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+      next: { revalidate: 3600 },
+    });
+    return await handleResponse<ApiMetadata>(res);
+  } catch (err: unknown) {
+    if (err instanceof ApiClientError) throw err;
+    throw new ApiClientError(
+      `Failed to fetch model metadata from ${API_BASE_URL}.`,
+      0
+    );
+  }
+}
+
+export async function fetchOptions(): Promise<ApiOptions> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/options`, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+      next: { revalidate: 3600 },
+    });
+    return await handleResponse<ApiOptions>(res);
+  } catch (err: unknown) {
+    if (err instanceof ApiClientError) throw err;
+    throw new ApiClientError(
+      `Failed to fetch supported airlines/airports from ${API_BASE_URL}.`,
+      0
+    );
+  }
+}
+
+export async function predictSingle(
+  flight: FlightPredictionRequest,
+  includeShap: boolean = true
+): Promise<PredictionResult> {
+  try {
+    const url = new URL(`${API_BASE_URL}/predict`);
+    if (!includeShap) {
+      url.searchParams.set("include_shap", "false");
+    }
+
+    const res = await fetch(url.toString(), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(flight),
+    });
+    return await handleResponse<PredictionResult>(res);
+  } catch (err: unknown) {
+    if (err instanceof ApiClientError) throw err;
+    throw new ApiClientError(
+      `Connection failure while predicting flight risk. Ensure API is running at ${API_BASE_URL}.`,
+      0
+    );
+  }
+}
+
+export async function predictBatch(
+  flights: FlightPredictionRequest[],
+  includeShap: boolean = false
+): Promise<PredictionResult[]> {
+  if (flights.length > 500) {
+    throw new ApiClientError("Batch size exceeds 500 flights ceiling enforced by API.", 422);
+  }
+
+  try {
+    const url = new URL(`${API_BASE_URL}/predict/batch`);
+    if (includeShap) {
+      url.searchParams.set("include_shap", "true");
+    }
+
+    const res = await fetch(url.toString(), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(flights),
+    });
+    return await handleResponse<PredictionResult[]>(res);
+  } catch (err: unknown) {
+    if (err instanceof ApiClientError) throw err;
+    throw new ApiClientError(
+      `Connection failure during batch scoring. Ensure API is reachable at ${API_BASE_URL}.`,
+      0
+    );
+  }
+}

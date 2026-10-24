@@ -1,0 +1,371 @@
+{
+  "baseline_variant_g": {
+    "features_count": 30,
+    "metrics": {
+      "val_pr_auc": 0.3232,
+      "val_roc_auc": 0.6552,
+      "val_brier": 0.1544,
+      "val_log_loss": 0.4827,
+      "val_best_f1": 0.3916,
+      "val_best_threshold": 0.17,
+      "val_prec_at_10": 0.3923,
+      "val_rec_at_10": 0.1931,
+      "val_lift_at_10": 1.93,
+      "val_base_rate": 0.2032,
+      "val_samples": 444554
+    },
+    "bootstrap_ci": {
+      "pr_auc": {
+        "point": 0.3232,
+        "ci_lower": 0.3098,
+        "ci_upper": 0.336,
+        "std_err": 0.0067
+      },
+      "roc_auc": {
+        "point": 0.6552,
+        "ci_lower": 0.6491,
+        "ci_upper": 0.6605,
+        "std_err": 0.003
+      },
+      "brier": {
+        "point": 0.1544,
+        "ci_lower": 0.15,
+        "ci_upper": 0.1587,
+        "std_err": 0.0023
+      },
+      "n_resamples": 250,
+      "n_days": 365,
+      "n_samples": 444554
+    }
+  },
+  "prior_sanity_correlations": {
+    "prior_origin_month": {
+      "train_oof_corr": 0.1311,
+      "val_corr": 0.0779,
+      "abs_diff": 0.0532,
+      "status": "WARNING"
+    },
+    "prior_origin_dow_pod": {
+      "train_oof_corr": 0.1534,
+      "val_corr": 0.1592,
+      "abs_diff": 0.0058,
+      "status": "PASS"
+    },
+    "prior_airline_hour": {
+      "train_oof_corr": 0.1758,
+      "val_corr": 0.1999,
+      "abs_diff": 0.0242,
+      "status": "PASS"
+    },
+    "prior_airline_origin": {
+      "train_oof_corr": 0.1164,
+      "val_corr": 0.1107,
+      "abs_diff": 0.0057,
+      "status": "PASS"
+    },
+    "prior_dest_arrhour": {
+      "train_oof_corr": 0.1642,
+      "val_corr": 0.1748,
+      "abs_diff": 0.0106,
+      "status": "PASS"
+    }
+  },
+  "candidate_results": {
+    "prior_origin_month": {
+      "metrics": {
+        "val_pr_auc": 0.322,
+        "val_roc_auc": 0.6538,
+        "val_brier": 0.1546,
+        "val_log_loss": 0.4832,
+        "val_best_f1": 0.3903,
+        "val_best_threshold": 0.16,
+        "val_prec_at_10": 0.3914,
+        "val_rec_at_10": 0.1926,
+        "val_lift_at_10": 1.93,
+        "val_base_rate": 0.2032,
+        "val_samples": 444554
+      },
+      "best_iteration": 83,
+      "fit_time_sec": 24.33,
+      "paired_bootstrap": {
+        "delta_pr_auc": {
+          "point": -0.00121,
+          "ci_lower": -0.00235,
+          "ci_upper": -0.00032,
+          "std_err": 0.00055,
+          "excludes_zero": true,
+          "statistically_significant_improvement": false,
+          "p_value_two_tailed": 0.016
+        },
+        "delta_roc_auc": {
+          "point": -0.00135,
+          "ci_lower": -0.00228,
+          "ci_upper": -0.0005,
+          "std_err": 0.00048
+        },
+        "delta_brier": {
+          "point": 0.00012,
+          "ci_lower": 4e-05,
+          "ci_upper": 0.00025,
+          "std_err": 5e-05
+        },
+        "verdict": "drop"
+      },
+      "verdict": "drop"
+    },
+    "prior_origin_dow_pod": {
+      "metrics": {
+        "val_pr_auc": 0.3233,
+        "val_roc_auc": 0.6553,
+        "val_brier": 0.1544,
+        "val_log_loss": 0.4826,
+        "val_best_f1": 0.3914,
+        "val_best_threshold": 0.17,
+        "val_prec_at_10": 0.3939,
+        "val_rec_at_10": 0.1939,
+        "val_lift_at_10": 1.94,
+        "val_base_rate": 0.2032,
+        "val_samples": 444554
+      },
+      "best_iteration": 69,
+      "fit_time_sec": 14.55,
+      "paired_bootstrap": {
+        "delta_pr_auc": {
+          "point": 9e-05,
+          "ci_lower": -0.0007,
+          "ci_upper": 0.00089,
+          "std_err": 0.00039,
+          "excludes_zero": false,
+          "statistically_significant_improvement": false,
+          "p_value_two_tailed": 0.784
+        },
+        "delta_roc_auc": {
+          "point": 0.00015,
+          "ci_lower": -0.00029,
+          "ci_upper": 0.00066,
+          "std_err": 0.00025
+        },
+        "delta_brier": {
+          "point": -2e-05,
+          "ci_lower": -8e-05,
+          "ci_upper": 3e-05,
+          "std_err": 3e-05
+        },
+        "verdict": "drop"
+      },
+      "verdict": "drop"
+    },
+    "prior_airline_hour": {
+      "metrics": {
+        "val_pr_auc": 0.3236,
+        "val_roc_auc": 0.6551,
+        "val_brier": 0.1544,
+        "val_log_loss": 0.4827,
+        "val_best_f1": 0.3912,
+        "val_best_threshold": 0.16,
+        "val_prec_at_10": 0.3923,
+        "val_rec_at_10": 0.1931,
+        "val_lift_at_10": 1.93,
+        "val_base_rate": 0.2032,
+        "val_samples": 444554
+      },
+      "best_iteration": 71,
+      "fit_time_sec": 12.56,
+      "paired_bootstrap": {
+        "delta_pr_auc": {
+          "point": 0.0004,
+          "ci_lower": -0.00022,
+          "ci_upper": 0.00101,
+          "std_err": 0.00031,
+          "excludes_zero": false,
+          "statistically_significant_improvement": false,
+          "p_value_two_tailed": 0.256
+        },
+        "delta_roc_auc": {
+          "point": -0.00011,
+          "ci_lower": -0.00054,
+          "ci_upper": 0.00027,
+          "std_err": 0.00022
+        },
+        "delta_brier": {
+          "point": -1e-05,
+          "ci_lower": -6e-05,
+          "ci_upper": 4e-05,
+          "std_err": 2e-05
+        },
+        "verdict": "drop"
+      },
+      "verdict": "drop"
+    },
+    "prior_airline_origin": {
+      "metrics": {
+        "val_pr_auc": 0.3239,
+        "val_roc_auc": 0.656,
+        "val_brier": 0.1544,
+        "val_log_loss": 0.4824,
+        "val_best_f1": 0.3921,
+        "val_best_threshold": 0.17,
+        "val_prec_at_10": 0.3937,
+        "val_rec_at_10": 0.1938,
+        "val_lift_at_10": 1.94,
+        "val_base_rate": 0.2032,
+        "val_samples": 444554
+      },
+      "best_iteration": 59,
+      "fit_time_sec": 12.5,
+      "paired_bootstrap": {
+        "delta_pr_auc": {
+          "point": 0.00066,
+          "ci_lower": -0.00013,
+          "ci_upper": 0.00151,
+          "std_err": 0.00044,
+          "excludes_zero": false,
+          "statistically_significant_improvement": false,
+          "p_value_two_tailed": 0.16
+        },
+        "delta_roc_auc": {
+          "point": 0.00084,
+          "ci_lower": 0.00011,
+          "ci_upper": 0.00151,
+          "std_err": 0.00038
+        },
+        "delta_brier": {
+          "point": -3e-05,
+          "ci_lower": -0.00011,
+          "ci_upper": 6e-05,
+          "std_err": 5e-05
+        },
+        "verdict": "drop"
+      },
+      "verdict": "drop"
+    },
+    "prior_dest_arrhour": {
+      "metrics": {
+        "val_pr_auc": 0.3235,
+        "val_roc_auc": 0.6549,
+        "val_brier": 0.1544,
+        "val_log_loss": 0.4827,
+        "val_best_f1": 0.3911,
+        "val_best_threshold": 0.17,
+        "val_prec_at_10": 0.3937,
+        "val_rec_at_10": 0.1938,
+        "val_lift_at_10": 1.94,
+        "val_base_rate": 0.2032,
+        "val_samples": 444554
+      },
+      "best_iteration": 69,
+      "fit_time_sec": 11.8,
+      "paired_bootstrap": {
+        "delta_pr_auc": {
+          "point": 0.00028,
+          "ci_lower": -0.0003,
+          "ci_upper": 0.0009,
+          "std_err": 0.00032,
+          "excludes_zero": false,
+          "statistically_significant_improvement": false,
+          "p_value_two_tailed": 0.448
+        },
+        "delta_roc_auc": {
+          "point": -0.00032,
+          "ci_lower": -0.00081,
+          "ci_upper": 0.00015,
+          "std_err": 0.00024
+        },
+        "delta_brier": {
+          "point": -1e-05,
+          "ci_lower": -7e-05,
+          "ci_upper": 3e-05,
+          "std_err": 3e-05
+        },
+        "verdict": "drop"
+      },
+      "verdict": "drop"
+    },
+    "typical_dep_density": {
+      "metrics": {
+        "val_pr_auc": 0.3233,
+        "val_roc_auc": 0.6556,
+        "val_brier": 0.1544,
+        "val_log_loss": 0.4826,
+        "val_best_f1": 0.3916,
+        "val_best_threshold": 0.16,
+        "val_prec_at_10": 0.3929,
+        "val_rec_at_10": 0.1934,
+        "val_lift_at_10": 1.93,
+        "val_base_rate": 0.2032,
+        "val_samples": 444554
+      },
+      "best_iteration": 73,
+      "fit_time_sec": 12.57,
+      "paired_bootstrap": {
+        "delta_pr_auc": {
+          "point": 0.00011,
+          "ci_lower": -0.00042,
+          "ci_upper": 0.00062,
+          "std_err": 0.00028,
+          "excludes_zero": false,
+          "statistically_significant_improvement": false,
+          "p_value_two_tailed": 0.768
+        },
+        "delta_roc_auc": {
+          "point": 0.00042,
+          "ci_lower": 4e-05,
+          "ci_upper": 0.00077,
+          "std_err": 0.00018
+        },
+        "delta_brier": {
+          "point": -2e-05,
+          "ci_lower": -6e-05,
+          "ci_upper": 3e-05,
+          "std_err": 2e-05
+        },
+        "verdict": "drop"
+      },
+      "verdict": "drop"
+    },
+    "days_to_nearest_holiday": {
+      "metrics": {
+        "val_pr_auc": 0.3217,
+        "val_roc_auc": 0.6546,
+        "val_brier": 0.1546,
+        "val_log_loss": 0.4829,
+        "val_best_f1": 0.391,
+        "val_best_threshold": 0.17,
+        "val_prec_at_10": 0.3948,
+        "val_rec_at_10": 0.1943,
+        "val_lift_at_10": 1.94,
+        "val_base_rate": 0.2032,
+        "val_samples": 444554
+      },
+      "best_iteration": 59,
+      "fit_time_sec": 12.17,
+      "paired_bootstrap": {
+        "delta_pr_auc": {
+          "point": -0.00154,
+          "ci_lower": -0.00293,
+          "ci_upper": 0.00013,
+          "std_err": 0.00081,
+          "excludes_zero": false,
+          "statistically_significant_improvement": false,
+          "p_value_two_tailed": 0.072
+        },
+        "delta_roc_auc": {
+          "point": -0.00058,
+          "ci_lower": -0.00172,
+          "ci_upper": 0.00089,
+          "std_err": 0.00073
+        },
+        "delta_brier": {
+          "point": 0.00015,
+          "ci_lower": -3e-05,
+          "ci_upper": 0.00028,
+          "std_err": 8e-05
+        },
+        "verdict": "drop"
+      },
+      "verdict": "drop"
+    }
+  },
+  "combined_winners": null,
+  "winning_candidates": []
+}

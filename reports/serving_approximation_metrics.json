@@ -1,0 +1,18 @@
+{
+  "sample_size": 5000,
+  "seed": 42,
+  "mean_absolute_difference": 0.000446,
+  "mean_absolute_difference_pp": 0.0446,
+  "max_absolute_difference": 0.011377,
+  "max_absolute_difference_pp": 1.1377,
+  "p95_absolute_difference": 0.002274,
+  "spearman_correlation": 0.999935,
+  "share_decile_changed": 0.0102,
+  "share_decile_changed_pct": 1.02,
+  "share_decile_within_1_pct": 100.0,
+  "unseen_flights_in_sample": 25,
+  "unseen_flights_in_sample_pct": 0.5,
+  "distinct_unseen_routes_in_sample": 24,
+  "verification_200_rows_max_abs_diff": 0.0,
+  "status": "PASSED"
+}

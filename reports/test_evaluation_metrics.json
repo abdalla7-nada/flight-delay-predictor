@@ -1,0 +1,644 @@
+{
+  "evaluation_timestamp": "2026-10-18T19:32:52Z",
+  "test_flight_count": 304458,
+  "test_days_count": 243,
+  "test_base_rate": 0.2224,
+  "execution_time_sec": 529.71,
+  "champion_test_metrics": {
+    "test_pr_auc": 0.3497,
+    "test_roc_auc": 0.6523,
+    "test_brier": 0.1638,
+    "test_log_loss": 0.5045,
+    "test_best_f1": 0.4117,
+    "test_best_threshold": 0.2,
+    "test_prec_at_10": 0.4286,
+    "test_rec_at_10": 0.1927,
+    "test_lift_at_10": 1.93,
+    "test_base_rate": 0.2224,
+    "test_samples": 304458
+  },
+  "champion_test_bootstrap_ci": {
+    "pr_auc": {
+      "point": 0.3497,
+      "ci_lower": 0.3343,
+      "ci_upper": 0.3655,
+      "std_err": 0.008
+    },
+    "roc_auc": {
+      "point": 0.6523,
+      "ci_lower": 0.6432,
+      "ci_upper": 0.6619,
+      "std_err": 0.0048
+    },
+    "brier": {
+      "point": 0.1638,
+      "ci_lower": 0.1591,
+      "ci_upper": 0.1682,
+      "std_err": 0.0023
+    },
+    "n_resamples": 250,
+    "n_days": 243,
+    "n_samples": 304458
+  },
+  "brier_skill_scores": {
+    "bss_vs_test_base_rate": 0.0529,
+    "bss_vs_train_base_rate": 0.0645,
+    "reference_brier_test": 0.173,
+    "reference_brier_train": 0.1751
+  },
+  "calibration_test": {
+    "ece_10": 0.0104,
+    "ece_20": 0.0108,
+    "mean_predicted_prob": 0.2124,
+    "calibration_bias": -0.01
+  },
+  "decile_table_test": [
+    {
+      "decile": 1,
+      "flight_count": 30446,
+      "prob_min": 0.0334,
+      "prob_max": 0.1027,
+      "mean_pred_prob": 0.084,
+      "observed_delay_rate": 0.0983,
+      "lift": 0.44,
+      "calibration_ratio": 0.855
+    },
+    {
+      "decile": 2,
+      "flight_count": 30446,
+      "prob_min": 0.1027,
+      "prob_max": 0.1273,
+      "mean_pred_prob": 0.1157,
+      "observed_delay_rate": 0.1287,
+      "lift": 0.58,
+      "calibration_ratio": 0.899
+    },
+    {
+      "decile": 3,
+      "flight_count": 30446,
+      "prob_min": 0.1273,
+      "prob_max": 0.1487,
+      "mean_pred_prob": 0.1381,
+      "observed_delay_rate": 0.151,
+      "lift": 0.68,
+      "calibration_ratio": 0.914
+    },
+    {
+      "decile": 4,
+      "flight_count": 30445,
+      "prob_min": 0.1487,
+      "prob_max": 0.17,
+      "mean_pred_prob": 0.1592,
+      "observed_delay_rate": 0.1668,
+      "lift": 0.75,
+      "calibration_ratio": 0.955
+    },
+    {
+      "decile": 5,
+      "flight_count": 30446,
+      "prob_min": 0.17,
+      "prob_max": 0.1925,
+      "mean_pred_prob": 0.1811,
+      "observed_delay_rate": 0.1925,
+      "lift": 0.87,
+      "calibration_ratio": 0.941
+    },
+    {
+      "decile": 6,
+      "flight_count": 30446,
+      "prob_min": 0.1925,
+      "prob_max": 0.2173,
+      "mean_pred_prob": 0.2045,
+      "observed_delay_rate": 0.2176,
+      "lift": 0.98,
+      "calibration_ratio": 0.94
+    },
+    {
+      "decile": 7,
+      "flight_count": 30445,
+      "prob_min": 0.2173,
+      "prob_max": 0.2479,
+      "mean_pred_prob": 0.2319,
+      "observed_delay_rate": 0.2477,
+      "lift": 1.11,
+      "calibration_ratio": 0.937
+    },
+    {
+      "decile": 8,
+      "flight_count": 30446,
+      "prob_min": 0.2479,
+      "prob_max": 0.2893,
+      "mean_pred_prob": 0.2673,
+      "observed_delay_rate": 0.2731,
+      "lift": 1.23,
+      "calibration_ratio": 0.979
+    },
+    {
+      "decile": 9,
+      "flight_count": 30446,
+      "prob_min": 0.2893,
+      "prob_max": 0.3551,
+      "mean_pred_prob": 0.3191,
+      "observed_delay_rate": 0.3201,
+      "lift": 1.44,
+      "calibration_ratio": 0.997
+    },
+    {
+      "decile": 10,
+      "flight_count": 30446,
+      "prob_min": 0.3551,
+      "prob_max": 0.7073,
+      "mean_pred_prob": 0.423,
+      "observed_delay_rate": 0.4286,
+      "lift": 1.93,
+      "calibration_ratio": 0.987
+    }
+  ],
+  "baselines_comparison": {
+    "Dummy_Constant_Train_Rate": {
+      "metrics": {
+        "test_dummy_pr_auc": 0.2224,
+        "test_dummy_roc_auc": 0.5,
+        "test_dummy_brier": 0.1751,
+        "test_dummy_log_loss": 0.5369,
+        "test_dummy_best_f1": 0.3639,
+        "test_dummy_best_threshold": 0.01,
+        "test_dummy_prec_at_10": 0.2008,
+        "test_dummy_rec_at_10": 0.0903,
+        "test_dummy_lift_at_10": 0.9,
+        "test_dummy_base_rate": 0.2224,
+        "test_dummy_samples": 304458
+      },
+      "paired_diff_vs_champion": {
+        "delta_pr_auc": {
+          "point": 0.12726,
+          "ci_lower": 0.11633,
+          "ci_upper": 0.13784,
+          "std_err": 0.00553,
+          "excludes_zero": true,
+          "statistically_significant_improvement": true,
+          "p_value_two_tailed": 0.0
+        },
+        "delta_roc_auc": {
+          "point": 0.15235,
+          "ci_lower": 0.14324,
+          "ci_upper": 0.16187,
+          "std_err": 0.00483
+        },
+        "delta_brier": {
+          "point": -0.01131,
+          "ci_lower": -0.013,
+          "ci_upper": -0.00961,
+          "std_err": 0.0009
+        },
+        "verdict": "keep"
+      }
+    },
+    "Logistic_Regression": {
+      "metrics": {
+        "test_lr_pr_auc": 0.3376,
+        "test_lr_roc_auc": 0.6455,
+        "test_lr_brier": 0.1667,
+        "test_lr_log_loss": 0.5134,
+        "test_lr_best_f1": 0.4094,
+        "test_lr_best_threshold": 0.18,
+        "test_lr_prec_at_10": 0.4077,
+        "test_lr_rec_at_10": 0.1833,
+        "test_lr_lift_at_10": 1.83,
+        "test_lr_base_rate": 0.2224,
+        "test_lr_samples": 304458
+      },
+      "paired_diff_vs_champion": {
+        "delta_pr_auc": {
+          "point": 0.01205,
+          "ci_lower": 0.00571,
+          "ci_upper": 0.01871,
+          "std_err": 0.00316,
+          "excludes_zero": true,
+          "statistically_significant_improvement": true,
+          "p_value_two_tailed": 0.0
+        },
+        "delta_roc_auc": {
+          "point": 0.00685,
+          "ci_lower": 0.00277,
+          "ci_upper": 0.01123,
+          "std_err": 0.00237
+        },
+        "delta_brier": {
+          "point": -0.0029,
+          "ci_lower": -0.00386,
+          "ci_upper": -0.00208,
+          "std_err": 0.00047
+        },
+        "verdict": "keep"
+      }
+    },
+    "LightGBM_Variant_G_v1": {
+      "metrics": {
+        "test_lgbm_v1_pr_auc": 0.3504,
+        "test_lgbm_v1_roc_auc": 0.6534,
+        "test_lgbm_v1_brier": 0.1651,
+        "test_lgbm_v1_log_loss": 0.5089,
+        "test_lgbm_v1_best_f1": 0.4121,
+        "test_lgbm_v1_best_threshold": 0.16,
+        "test_lgbm_v1_prec_at_10": 0.4291,
+        "test_lgbm_v1_rec_at_10": 0.1929,
+        "test_lgbm_v1_lift_at_10": 1.93,
+        "test_lgbm_v1_base_rate": 0.2224,
+        "test_lgbm_v1_samples": 304458
+      },
+      "paired_diff_vs_champion": {
+        "delta_pr_auc": {
+          "point": -0.00067,
+          "ci_lower": -0.00194,
+          "ci_upper": 0.00034,
+          "std_err": 0.00061,
+          "excludes_zero": false,
+          "statistically_significant_improvement": false,
+          "p_value_two_tailed": 0.248
+        },
+        "delta_roc_auc": {
+          "point": -0.00108,
+          "ci_lower": -0.00215,
+          "ci_upper": 6e-05,
+          "std_err": 0.00055
+        },
+        "delta_brier": {
+          "point": -0.00134,
+          "ci_lower": -0.00193,
+          "ci_upper": -0.00089,
+          "std_err": 0.00027
+        },
+        "verdict": "drop"
+      }
+    },
+    "Champion_Uncalibrated_Raw": {
+      "metrics": {
+        "test_champ_raw_pr_auc": 0.3497,
+        "test_champ_raw_roc_auc": 0.6523,
+        "test_champ_raw_brier": 0.1652,
+        "test_champ_raw_log_loss": 0.5095,
+        "test_champ_raw_best_f1": 0.4117,
+        "test_champ_raw_best_threshold": 0.17,
+        "test_champ_raw_prec_at_10": 0.4286,
+        "test_champ_raw_rec_at_10": 0.1927,
+        "test_champ_raw_lift_at_10": 1.93,
+        "test_champ_raw_base_rate": 0.2224,
+        "test_champ_raw_samples": 304458
+      },
+      "paired_diff_vs_champion": {
+        "delta_pr_auc": {
+          "point": 0.0,
+          "ci_lower": 0.0,
+          "ci_upper": 0.0,
+          "std_err": 0.0,
+          "excludes_zero": false,
+          "statistically_significant_improvement": false,
+          "p_value_two_tailed": 2.0
+        },
+        "delta_roc_auc": {
+          "point": 0.0,
+          "ci_lower": 0.0,
+          "ci_upper": 0.0,
+          "std_err": 0.0
+        },
+        "delta_brier": {
+          "point": -0.00138,
+          "ci_lower": -0.00194,
+          "ci_upper": -0.00095,
+          "std_err": 0.00025
+        },
+        "verdict": "drop"
+      }
+    }
+  },
+  "oracle_calibration_diagnostic": {
+    "uncalibrated_raw": {
+      "mean_pred_prob": 0.184,
+      "brier": 0.1652,
+      "ece_10": 0.0384
+    },
+    "frozen_platt_2022_calibrator": {
+      "mean_pred_prob": 0.2124,
+      "brier": 0.1638,
+      "ece_10": 0.0104
+    },
+    "oracle_intercept_shift_upper_bound": {
+      "mean_pred_prob": 0.2224,
+      "brier": 0.1638,
+      "ece_10": 0.0097,
+      "delta_brier": 4e-05
+    },
+    "oracle_platt_upper_bound": {
+      "mean_pred_prob": 0.2224,
+      "brier": 0.1637,
+      "ece_10": 0.0024,
+      "delta_brier": -0.00012
+    }
+  },
+  "monthly_diagnostics": [
+    {
+      "month": 1,
+      "flight_count": 36002,
+      "base_rate": 0.211,
+      "mean_pred_prob": 0.1809,
+      "calibration_ratio": 0.857,
+      "roc_auc": 0.5992,
+      "pr_auc": 0.2758,
+      "top_10_lift": 1.49
+    },
+    {
+      "month": 2,
+      "flight_count": 33912,
+      "base_rate": 0.1814,
+      "mean_pred_prob": 0.2192,
+      "calibration_ratio": 1.208,
+      "roc_auc": 0.6129,
+      "pr_auc": 0.2462,
+      "top_10_lift": 1.57
+    },
+    {
+      "month": 3,
+      "flight_count": 39150,
+      "base_rate": 0.232,
+      "mean_pred_prob": 0.1712,
+      "calibration_ratio": 0.738,
+      "roc_auc": 0.6261,
+      "pr_auc": 0.3216,
+      "top_10_lift": 1.63
+    },
+    {
+      "month": 4,
+      "flight_count": 37584,
+      "base_rate": 0.2239,
+      "mean_pred_prob": 0.1746,
+      "calibration_ratio": 0.78,
+      "roc_auc": 0.6454,
+      "pr_auc": 0.3339,
+      "top_10_lift": 1.83
+    },
+    {
+      "month": 5,
+      "flight_count": 39335,
+      "base_rate": 0.1744,
+      "mean_pred_prob": 0.1973,
+      "calibration_ratio": 1.132,
+      "roc_auc": 0.6745,
+      "pr_auc": 0.3019,
+      "top_10_lift": 2.13
+    },
+    {
+      "month": 6,
+      "flight_count": 38241,
+      "base_rate": 0.2632,
+      "mean_pred_prob": 0.2597,
+      "calibration_ratio": 0.987,
+      "roc_auc": 0.6914,
+      "pr_auc": 0.4325,
+      "top_10_lift": 2.0
+    },
+    {
+      "month": 7,
+      "flight_count": 39592,
+      "base_rate": 0.2765,
+      "mean_pred_prob": 0.2523,
+      "calibration_ratio": 0.913,
+      "roc_auc": 0.7044,
+      "pr_auc": 0.4632,
+      "top_10_lift": 2.0
+    },
+    {
+      "month": 8,
+      "flight_count": 40642,
+      "base_rate": 0.2118,
+      "mean_pred_prob": 0.2405,
+      "calibration_ratio": 1.136,
+      "roc_auc": 0.6554,
+      "pr_auc": 0.3206,
+      "top_10_lift": 1.82
+    }
+  ],
+  "slice_diagnostics": {
+    "airline_slices": [
+      {
+        "carrier": "WN",
+        "flight_count": 63519,
+        "observed_delay_rate": 0.2286,
+        "roc_auc": 0.7003,
+        "top_10_lift": 2.08
+      },
+      {
+        "carrier": "DL",
+        "flight_count": 43878,
+        "observed_delay_rate": 0.1876,
+        "roc_auc": 0.6259,
+        "top_10_lift": 1.7
+      },
+      {
+        "carrier": "AA",
+        "flight_count": 41993,
+        "observed_delay_rate": 0.254,
+        "roc_auc": 0.6429,
+        "top_10_lift": 1.78
+      },
+      {
+        "carrier": "UA",
+        "flight_count": 32477,
+        "observed_delay_rate": 0.2332,
+        "roc_auc": 0.6416,
+        "top_10_lift": 1.88
+      },
+      {
+        "carrier": "OO",
+        "flight_count": 29698,
+        "observed_delay_rate": 0.1681,
+        "roc_auc": 0.594,
+        "top_10_lift": 1.52
+      },
+      {
+        "carrier": "YX",
+        "flight_count": 13500,
+        "observed_delay_rate": 0.1446,
+        "roc_auc": 0.6227,
+        "top_10_lift": 1.78
+      },
+      {
+        "carrier": "B6",
+        "flight_count": 12451,
+        "observed_delay_rate": 0.3168,
+        "roc_auc": 0.6611,
+        "top_10_lift": 1.79
+      },
+      {
+        "carrier": "NK",
+        "flight_count": 11674,
+        "observed_delay_rate": 0.3187,
+        "roc_auc": 0.6472,
+        "top_10_lift": 1.79
+      },
+      {
+        "carrier": "AS",
+        "flight_count": 11330,
+        "observed_delay_rate": 0.2006,
+        "roc_auc": 0.5878,
+        "top_10_lift": 1.41
+      },
+      {
+        "carrier": "MQ",
+        "flight_count": 9940,
+        "observed_delay_rate": 0.1864,
+        "roc_auc": 0.5763,
+        "top_10_lift": 1.48
+      },
+      {
+        "carrier": "9E",
+        "flight_count": 8769,
+        "observed_delay_rate": 0.1529,
+        "roc_auc": 0.5963,
+        "top_10_lift": 1.66
+      },
+      {
+        "carrier": "OH",
+        "flight_count": 8547,
+        "observed_delay_rate": 0.1695,
+        "roc_auc": 0.6274,
+        "top_10_lift": 1.86
+      },
+      {
+        "carrier": "F9",
+        "flight_count": 7480,
+        "observed_delay_rate": 0.3545,
+        "roc_auc": 0.6449,
+        "top_10_lift": 1.62
+      },
+      {
+        "carrier": "G4",
+        "flight_count": 5467,
+        "observed_delay_rate": 0.2861,
+        "roc_auc": 0.6317,
+        "top_10_lift": 1.5
+      },
+      {
+        "carrier": "HA",
+        "flight_count": 3735,
+        "observed_delay_rate": 0.2637,
+        "roc_auc": 0.5851,
+        "top_10_lift": 1.2
+      }
+    ],
+    "origin_slices": [
+      {
+        "origin": "ATL",
+        "flight_count": 14921,
+        "observed_delay_rate": 0.2236,
+        "roc_auc": 0.6506,
+        "top_10_lift": 1.92
+      },
+      {
+        "origin": "DEN",
+        "flight_count": 12705,
+        "observed_delay_rate": 0.2853,
+        "roc_auc": 0.6518,
+        "top_10_lift": 1.86
+      },
+      {
+        "origin": "DFW",
+        "flight_count": 12376,
+        "observed_delay_rate": 0.2698,
+        "roc_auc": 0.6544,
+        "top_10_lift": 1.8
+      },
+      {
+        "origin": "ORD",
+        "flight_count": 11740,
+        "observed_delay_rate": 0.2323,
+        "roc_auc": 0.5963,
+        "top_10_lift": 1.5
+      },
+      {
+        "origin": "LAX",
+        "flight_count": 8810,
+        "observed_delay_rate": 0.1905,
+        "roc_auc": 0.6024,
+        "top_10_lift": 1.63
+      },
+      {
+        "origin": "CLT",
+        "flight_count": 8607,
+        "observed_delay_rate": 0.2527,
+        "roc_auc": 0.6558,
+        "top_10_lift": 1.94
+      },
+      {
+        "origin": "LAS",
+        "flight_count": 8316,
+        "observed_delay_rate": 0.2927,
+        "roc_auc": 0.6793,
+        "top_10_lift": 1.73
+      },
+      {
+        "origin": "PHX",
+        "flight_count": 7745,
+        "observed_delay_rate": 0.1966,
+        "roc_auc": 0.6508,
+        "top_10_lift": 1.85
+      },
+      {
+        "origin": "LGA",
+        "flight_count": 7377,
+        "observed_delay_rate": 0.2031,
+        "roc_auc": 0.652,
+        "top_10_lift": 2.16
+      },
+      {
+        "origin": "SEA",
+        "flight_count": 7335,
+        "observed_delay_rate": 0.2025,
+        "roc_auc": 0.6132,
+        "top_10_lift": 1.6
+      }
+    ],
+    "part_of_day_slices": [
+      {
+        "part_of_day": "night",
+        "flight_count": 9477,
+        "observed_delay_rate": 0.1005,
+        "roc_auc": 0.6401,
+        "top_10_lift": 2.21
+      },
+      {
+        "part_of_day": "morning",
+        "flight_count": 117668,
+        "observed_delay_rate": 0.148,
+        "roc_auc": 0.5918,
+        "top_10_lift": 1.55
+      },
+      {
+        "part_of_day": "afternoon",
+        "flight_count": 106472,
+        "observed_delay_rate": 0.2553,
+        "roc_auc": 0.6022,
+        "top_10_lift": 1.67
+      },
+      {
+        "part_of_day": "evening",
+        "flight_count": 70841,
+        "observed_delay_rate": 0.3129,
+        "roc_auc": 0.6224,
+        "top_10_lift": 1.62
+      }
+    ]
+  },
+  "unseen_categories_audit": {
+    "unseen_airlines_count": 0,
+    "unseen_airlines_list": [],
+    "flights_unseen_airline": 0,
+    "unseen_airports_count": 0,
+    "unseen_airports_list": [],
+    "flights_unseen_origin": 0,
+    "flights_unseen_dest": 0,
+    "unseen_routes_count": 257,
+    "flights_unseen_route": 2207,
+    "flights_unseen_route_pct": 0.72
+  }
+}

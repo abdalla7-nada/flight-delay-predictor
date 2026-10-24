@@ -1,0 +1,108 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flight-delay-predictor"
+version = "2.0.0"
+description = "Production Flight Delay Risk Prediction System (Champion v2)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Abdallah Nada" }
+]
+keywords = ["machine-learning", "flight-delay", "catboost", "mlops", "fastapi"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "catboost>=1.2.10",
+    "lightgbm>=4.0.0",
+    "scikit-learn>=1.3.0",
+    "scipy>=1.10.0",
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "pyarrow>=14.0.0",
+    "joblib>=1.3.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "shap>=0.42.0",
+    "airportsdata>=20230101",
+    "optuna>=3.3.0",
+    "tabulate>=0.9.0",
+    "tqdm>=4.66.0"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0.0",
+    "httpx>=0.27.0",
+    "ruff>=0.1.0"
+]
+dev = [
+    "pytest>=8.0.0",
+    "httpx>=0.27.0",
+    "ruff>=0.1.0",
+    "pre-commit"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "api*"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra -q --strict-markers"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::FutureWarning",
+    "ignore::UserWarning"
+]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".pytest_cache",
+    "build",
+    "dist",
+    "notebooks",
+    "reports"
+]
+
+[tool.ruff.lint]
+select = [
+    "E9",   # Runtime syntax errors
+    "F",    # Pyflakes
+]
+ignore = [
+    "E501",  # Line length
+    "F841",  # Unused local variables
+    "F821",  # Undefined names in type hints of training scripts
+    "F541",  # f-string without placeholders
+    "E741",  # Ambiguous variable names
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"tests/*" = ["F401", "F811", "E402"]
+"scripts/*" = ["E402", "F401"]
+"src/*" = ["E402", "F401"]
+"api/*" = ["E402"]

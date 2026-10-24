@@ -1,0 +1,196 @@
+{
+  "shapes": {
+    "tree_train": [
+      894775,
+      35
+    ],
+    "tree_val": [
+      444554,
+      35
+    ],
+    "tree_test": [
+      304458,
+      35
+    ],
+    "linear_train": [
+      894775,
+      45
+    ],
+    "linear_val": [
+      444554,
+      45
+    ],
+    "linear_test": [
+      304458,
+      45
+    ]
+  },
+  "correlations": [
+    {
+      "prior": "prior_airline",
+      "train_oof_corr": 0.0845,
+      "val_corr": 0.0944,
+      "abs_diff": 0.0099
+    },
+    {
+      "prior": "prior_origin",
+      "train_oof_corr": 0.0792,
+      "val_corr": 0.0684,
+      "abs_diff": 0.0108
+    },
+    {
+      "prior": "prior_dest",
+      "train_oof_corr": 0.072,
+      "val_corr": 0.0638,
+      "abs_diff": 0.0082
+    },
+    {
+      "prior": "prior_route",
+      "train_oof_corr": 0.1004,
+      "val_corr": 0.0821,
+      "abs_diff": 0.0183
+    },
+    {
+      "prior": "prior_origin_hour",
+      "train_oof_corr": 0.1659,
+      "val_corr": 0.1734,
+      "abs_diff": 0.0074
+    }
+  ],
+  "single_row_checks": [
+    {
+      "row_idx": 0,
+      "flight": "AS ANC->SEA",
+      "date": "2022-01-01 00:00:00",
+      "status": "IDENTICAL"
+    },
+    {
+      "row_idx": 100,
+      "flight": "DL JAC->SLC",
+      "date": "2022-01-01 00:00:00",
+      "status": "IDENTICAL"
+    },
+    {
+      "row_idx": 5000,
+      "flight": "AS ANC->SEA",
+      "date": "2022-01-05 00:00:00",
+      "status": "IDENTICAL"
+    }
+  ],
+  "univariate_prauc": [
+    {
+      "prior_feature": "prior_airline",
+      "val_prauc": 0.2419,
+      "baseline_prauc": 0.2032,
+      "lift_pct": 19.06
+    },
+    {
+      "prior_feature": "prior_origin",
+      "val_prauc": 0.2294,
+      "baseline_prauc": 0.2032,
+      "lift_pct": 12.88
+    },
+    {
+      "prior_feature": "prior_dest",
+      "val_prauc": 0.2277,
+      "baseline_prauc": 0.2032,
+      "lift_pct": 12.07
+    },
+    {
+      "prior_feature": "prior_route",
+      "val_prauc": 0.2366,
+      "baseline_prauc": 0.2032,
+      "lift_pct": 16.43
+    },
+    {
+      "prior_feature": "prior_origin_hour",
+      "val_prauc": 0.2845,
+      "baseline_prauc": 0.2032,
+      "lift_pct": 40.04
+    }
+  ],
+  "tree_cat_cols": [
+    "AIRLINE_CODE",
+    "ORIGIN",
+    "DEST",
+    "route",
+    "part_of_day"
+  ],
+  "tree_numeric_cols": [
+    "CRS_DEP_TIME",
+    "CRS_ARR_TIME",
+    "CRS_ELAPSED_TIME",
+    "DISTANCE",
+    "log_distance",
+    "scheduled_speed",
+    "dep_hour",
+    "arr_hour",
+    "month",
+    "day_of_week",
+    "day_of_year",
+    "is_weekend",
+    "is_holiday_period",
+    "dep_hour_sin",
+    "dep_hour_cos",
+    "arr_hour_sin",
+    "arr_hour_cos",
+    "month_sin",
+    "month_cos",
+    "day_of_week_sin",
+    "day_of_week_cos",
+    "origin_freq",
+    "dest_freq",
+    "route_freq",
+    "prior_airline",
+    "prior_origin",
+    "prior_dest",
+    "prior_route",
+    "prior_origin_hour"
+  ],
+  "linear_feature_cols": [
+    "AIRLINE_CODE_9E",
+    "AIRLINE_CODE_AA",
+    "AIRLINE_CODE_AS",
+    "AIRLINE_CODE_B6",
+    "AIRLINE_CODE_DL",
+    "AIRLINE_CODE_EV",
+    "AIRLINE_CODE_F9",
+    "AIRLINE_CODE_G4",
+    "AIRLINE_CODE_HA",
+    "AIRLINE_CODE_MQ",
+    "AIRLINE_CODE_NK",
+    "AIRLINE_CODE_OH",
+    "AIRLINE_CODE_OO",
+    "AIRLINE_CODE_QX",
+    "AIRLINE_CODE_UA",
+    "AIRLINE_CODE_WN",
+    "AIRLINE_CODE_YV",
+    "AIRLINE_CODE_YX",
+    "part_of_day_night",
+    "part_of_day_morning",
+    "part_of_day_afternoon",
+    "part_of_day_evening",
+    "DISTANCE",
+    "log_distance",
+    "CRS_ELAPSED_TIME",
+    "scheduled_speed",
+    "origin_freq",
+    "dest_freq",
+    "route_freq",
+    "prior_airline",
+    "prior_origin",
+    "prior_dest",
+    "prior_route",
+    "prior_origin_hour",
+    "is_weekend",
+    "is_holiday_period",
+    "dep_hour_sin",
+    "dep_hour_cos",
+    "arr_hour_sin",
+    "arr_hour_cos",
+    "month_sin",
+    "month_cos",
+    "day_of_week_sin",
+    "day_of_week_cos"
+  ]
+}

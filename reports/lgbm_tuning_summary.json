@@ -1,0 +1,88 @@
+{
+  "best_params": {
+    "num_leaves": 127,
+    "max_depth": 6,
+    "min_child_samples": 100,
+    "learning_rate": 0.04,
+    "colsample_bytree": 0.6,
+    "subsample": 1.0,
+    "reg_alpha": 4.5,
+    "reg_lambda": 5.0
+  },
+  "best_iteration": 94,
+  "refit_time_sec": 18.09,
+  "optuna_total_time_sec": 574.74,
+  "baseline_metrics": {
+    "val_pr_auc": 0.3232,
+    "val_roc_auc": 0.6552,
+    "val_brier": 0.1544,
+    "val_log_loss": 0.4827,
+    "val_best_f1": 0.3916,
+    "val_best_threshold": 0.17,
+    "val_prec_at_10": 0.3923,
+    "val_rec_at_10": 0.1931,
+    "val_lift_at_10": 1.93,
+    "val_base_rate": 0.2032,
+    "val_samples": 444554
+  },
+  "tuned_metrics": {
+    "val_pr_auc": 0.3237,
+    "val_roc_auc": 0.6559,
+    "val_brier": 0.1544,
+    "val_log_loss": 0.4824,
+    "val_best_f1": 0.3924,
+    "val_best_threshold": 0.17,
+    "val_prec_at_10": 0.3932,
+    "val_rec_at_10": 0.1935,
+    "val_lift_at_10": 1.94,
+    "val_base_rate": 0.2032,
+    "val_samples": 444554
+  },
+  "tuned_bootstrap_ci": {
+    "pr_auc": {
+      "point": 0.3237,
+      "ci_lower": 0.3104,
+      "ci_upper": 0.3366,
+      "std_err": 0.0067
+    },
+    "roc_auc": {
+      "point": 0.6559,
+      "ci_lower": 0.65,
+      "ci_upper": 0.6611,
+      "std_err": 0.0029
+    },
+    "brier": {
+      "point": 0.1544,
+      "ci_lower": 0.15,
+      "ci_upper": 0.1587,
+      "std_err": 0.0023
+    },
+    "n_resamples": 250,
+    "n_days": 365,
+    "n_samples": 444554
+  },
+  "paired_bootstrap_vs_baseline": {
+    "delta_pr_auc": {
+      "point": 0.00051,
+      "ci_lower": -0.00028,
+      "ci_upper": 0.00136,
+      "std_err": 0.00044,
+      "excludes_zero": false,
+      "statistically_significant_improvement": false,
+      "p_value_two_tailed": 0.24
+    },
+    "delta_roc_auc": {
+      "point": 0.00073,
+      "ci_lower": 0.00015,
+      "ci_upper": 0.00139,
+      "std_err": 0.00032
+    },
+    "delta_brier": {
+      "point": -2e-05,
+      "ci_lower": -0.0001,
+      "ci_upper": 5e-05,
+      "std_err": 4e-05
+    },
+    "verdict": "drop"
+  }
+}

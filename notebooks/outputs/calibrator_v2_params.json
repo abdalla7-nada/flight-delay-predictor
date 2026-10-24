@@ -1,0 +1,6 @@
+{
+  "slope_A": 0.933138807978378,
+  "intercept_B": 0.09731147911152838,
+  "calibrator_type": "LogisticRegression (Platt)",
+  "source_file": "artifacts/models/calibrator_v2.joblib"
+}

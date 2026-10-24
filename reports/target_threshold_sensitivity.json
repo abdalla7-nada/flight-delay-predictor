@@ -1,0 +1,9 @@
+{
+  "dataset": "2022_validation",
+  "total_validation_flights": 444554,
+  "flights_with_arr_delay_equal_15": 3137,
+  "flights_with_arr_delay_greater_15": 90324,
+  "base_rate_strictly_greater_15": 0.20317891864677984,
+  "base_rate_greater_equal_15": 0.21023543135356906,
+  "dot_convention_difference_flights": 3137
+}

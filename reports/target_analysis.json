@@ -1,0 +1,169 @@
+{
+  "overall_balance": {
+    "completed_flights": 1942769,
+    "delayed_count": 343875.0,
+    "delayed_pct": 17.7,
+    "ontime_count": 1598894.0,
+    "ontime_pct": 82.3
+  },
+  "flight_outcomes": {
+    "total_flights": 2000000,
+    "on_time_flights": 1598894.0,
+    "on_time_pct": 79.945,
+    "delayed_flights": 343875.0,
+    "delayed_pct": 17.194,
+    "cancelled_flights": 52522.0,
+    "cancelled_pct": 2.626,
+    "diverted_flights": 4709.0,
+    "diverted_pct": 0.235
+  },
+  "cancellation_code_breakdown": [
+    {
+      "CANCELLATION_CODE": "B",
+      "description": "Weather",
+      "count": 19022,
+      "pct_of_cancelled": 36.217,
+      "pct_of_total": 0.951
+    },
+    {
+      "CANCELLATION_CODE": "D",
+      "description": "Security",
+      "count": 16308,
+      "pct_of_cancelled": 31.05,
+      "pct_of_total": 0.815
+    },
+    {
+      "CANCELLATION_CODE": "A",
+      "description": "Carrier",
+      "count": 12825,
+      "pct_of_cancelled": 24.418,
+      "pct_of_total": 0.641
+    },
+    {
+      "CANCELLATION_CODE": "C",
+      "description": "National Aviation System (NAS)",
+      "count": 4367,
+      "pct_of_cancelled": 8.315,
+      "pct_of_total": 0.218
+    }
+  ],
+  "yearly_drift": [
+    {
+      "year": 2019,
+      "total_flights": 505345,
+      "cancelled_flights": 9067.0,
+      "cancellation_rate": 1.79,
+      "diverted_flights": 1262.0,
+      "diverted_rate": 0.25,
+      "completed_flights": 495016.0,
+      "delayed_flights": 91191.0,
+      "delay_rate_completed": 18.42,
+      "mean_arr_delay": 5.35,
+      "median_arr_delay": -6.0
+    },
+    {
+      "year": 2020,
+      "total_flights": 318768,
+      "cancelled_flights": 19238.0,
+      "cancellation_rate": 6.04,
+      "diverted_flights": 548.0,
+      "diverted_rate": 0.17,
+      "completed_flights": 298982.0,
+      "delayed_flights": 28179.0,
+      "delay_rate_completed": 9.42,
+      "mean_arr_delay": -4.96,
+      "median_arr_delay": -11.0
+    },
+    {
+      "year": 2021,
+      "total_flights": 407824,
+      "cancelled_flights": 7074.0,
+      "cancellation_rate": 1.73,
+      "diverted_flights": 991.0,
+      "diverted_rate": 0.24,
+      "completed_flights": 399759.0,
+      "delayed_flights": 66459.0,
+      "delay_rate_completed": 16.62,
+      "mean_arr_delay": 3.17,
+      "median_arr_delay": -7.0
+    },
+    {
+      "year": 2022,
+      "total_flights": 457760,
+      "cancelled_flights": 12133.0,
+      "cancellation_rate": 2.65,
+      "diverted_flights": 1073.0,
+      "diverted_rate": 0.23,
+      "completed_flights": 444554.0,
+      "delayed_flights": 90324.0,
+      "delay_rate_completed": 20.32,
+      "mean_arr_delay": 6.99,
+      "median_arr_delay": -5.0
+    },
+    {
+      "year": 2023,
+      "total_flights": 310303,
+      "cancelled_flights": 5010.0,
+      "cancellation_rate": 1.61,
+      "diverted_flights": 835.0,
+      "diverted_rate": 0.27,
+      "completed_flights": 304458.0,
+      "delayed_flights": 67722.0,
+      "delay_rate_completed": 22.24,
+      "mean_arr_delay": 9.26,
+      "median_arr_delay": -5.0
+    }
+  ],
+  "cancellation_pivot": [
+    {
+      "year": 2019,
+      "A": 2592,
+      "B": 4786,
+      "C": 1688,
+      "D": 1
+    },
+    {
+      "year": 2020,
+      "A": 1327,
+      "B": 1427,
+      "C": 315,
+      "D": 16169
+    },
+    {
+      "year": 2021,
+      "A": 2771,
+      "B": 3684,
+      "C": 554,
+      "D": 65
+    },
+    {
+      "year": 2022,
+      "A": 4711,
+      "B": 6317,
+      "C": 1042,
+      "D": 63
+    },
+    {
+      "year": 2023,
+      "A": 1424,
+      "B": 2808,
+      "C": 768,
+      "D": 10
+    }
+  ],
+  "arr_delay_quantiles": {
+    "p10": -23.0,
+    "p20": -18.0,
+    "p30": -14.0,
+    "p40": -10.0,
+    "p50": -7.0,
+    "p60": -3.0,
+    "p70": 3.0,
+    "p80": 12.0,
+    "p82": 15.0,
+    "p85": 21.0,
+    "p90": 36.0,
+    "p95": 71.0,
+    "p99": 190.0
+  }
+}

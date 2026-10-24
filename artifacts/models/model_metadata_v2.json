@@ -1,0 +1,121 @@
+{
+  "model_name": "CatBoost_v2_NativeCats_Calibrated",
+  "model_version": "v2",
+  "description": "Champion Phase 4 model: CatBoost with native high-cardinality categoricals (ORIGIN, DEST, route) + Platt probability calibration.",
+  "champion_status": "CHAMPION",
+  "features": [
+    "month",
+    "day_of_week",
+    "is_weekend",
+    "is_holiday_period",
+    "dep_hour",
+    "arr_hour",
+    "part_of_day",
+    "dep_hour_sin",
+    "dep_hour_cos",
+    "arr_hour_sin",
+    "arr_hour_cos",
+    "month_sin",
+    "month_cos",
+    "day_of_week_sin",
+    "day_of_week_cos",
+    "AIRLINE_CODE",
+    "CRS_DEP_TIME",
+    "CRS_ARR_TIME",
+    "CRS_ELAPSED_TIME",
+    "DISTANCE",
+    "log_distance",
+    "scheduled_speed",
+    "prior_airline",
+    "prior_origin",
+    "prior_dest",
+    "prior_route",
+    "prior_origin_hour",
+    "origin_freq",
+    "dest_freq",
+    "route_freq",
+    "ORIGIN",
+    "DEST",
+    "route"
+  ],
+  "feature_count": 33,
+  "categoricals": [
+    "part_of_day",
+    "AIRLINE_CODE",
+    "ORIGIN",
+    "DEST",
+    "route"
+  ],
+  "hyperparameters": {
+    "iterations": 1000,
+    "best_iteration": 177,
+    "learning_rate": 0.08,
+    "depth": 6,
+    "loss_function": "Logloss",
+    "eval_metric": "PRAUC",
+    "random_seed": 42,
+    "early_stopping_rounds": 40,
+    "l2_leaf_reg": 3,
+    "subsample": 0.8,
+    "bootstrap_type": "MVS"
+  },
+  "calibrator": {
+    "type": "PlattScaling",
+    "solver": "lbfgs",
+    "trained_on": "validation_2022_full",
+    "intercept_shift": 0.09731147911152838,
+    "slope_coef": 0.933138807978378
+  },
+  "performance": {
+    "val_pr_auc": 0.3257,
+    "val_pr_auc_ci": [
+      0.312,
+      0.3392
+    ],
+    "val_roc_auc": 0.6571,
+    "val_roc_auc_ci": [
+      0.6511,
+      0.6623
+    ],
+    "val_brier": 0.1534,
+    "val_brier_ci": [
+      0.1494,
+      0.1573
+    ],
+    "val_log_loss": 0.4793,
+    "val_best_f1": 0.3931,
+    "val_best_threshold": 0.2,
+    "val_prec_at_10": 0.3972,
+    "val_rec_at_10": 0.1955,
+    "val_lift_at_10": 1.95,
+    "val_base_rate": 0.2031789163971081,
+    "val_samples": 444554,
+    "bss_vs_val_base_rate": 0.0525,
+    "bss_vs_train_base_rate": 0.0567,
+    "delta_pr_auc_vs_lgbm_v1": {
+      "point": 0.00246,
+      "ci_lower": 0.00141,
+      "ci_upper": 0.00365,
+      "std_err": 0.00058,
+      "excludes_zero": true,
+      "statistically_significant_improvement": true,
+      "p_value_two_tailed": 0.0
+    }
+  },
+  "single_row_batch_equivalence": {
+    "validation_rows_tested": 1000,
+    "max_numeric_absolute_difference": 0.0,
+    "categoricals_match": true,
+    "status": "PASSED"
+  },
+  "library_versions": {
+    "catboost": "1.2.10",
+    "lightgbm": "4.7.0",
+    "scikit-learn": "1.9.1",
+    "optuna": "5.0.0",
+    "pandas": "3.0.6",
+    "numpy": "2.5.4",
+    "joblib": "1.6.0",
+    "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]"
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "total_rows": 2000000,
+  "missing_counts": {
+    "FL_DATE": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "AIRLINE": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "AIRLINE_DOT": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "AIRLINE_CODE": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "DOT_CODE": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "FL_NUMBER": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "ORIGIN": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "ORIGIN_CITY": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "DEST": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "DEST_CITY": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "CRS_DEP_TIME": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "DEP_TIME": {
+      "count": 51430,
+      "pct": 2.571
+    },
+    "DEP_DELAY": {
+      "count": 51449,
+      "pct": 2.572
+    },
+    "TAXI_OUT": {
+      "count": 52281,
+      "pct": 2.614
+    },
+    "WHEELS_OFF": {
+      "count": 52281,
+      "pct": 2.614
+    },
+    "WHEELS_ON": {
+      "count": 53091,
+      "pct": 2.655
+    },
+    "TAXI_IN": {
+      "count": 53091,
+      "pct": 2.655
+    },
+    "CRS_ARR_TIME": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "ARR_TIME": {
+      "count": 53091,
+      "pct": 2.655
+    },
+    "ARR_DELAY": {
+      "count": 57231,
+      "pct": 2.862
+    },
+    "CANCELLED": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "CANCELLATION_CODE": {
+      "count": 1947478,
+      "pct": 97.374
+    },
+    "DIVERTED": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "CRS_ELAPSED_TIME": {
+      "count": 17,
+      "pct": 0.001
+    },
+    "ELAPSED_TIME": {
+      "count": 57231,
+      "pct": 2.862
+    },
+    "AIR_TIME": {
+      "count": 57231,
+      "pct": 2.862
+    },
+    "DISTANCE": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "DELAY_DUE_CARRIER": {
+      "count": 1643780,
+      "pct": 82.189
+    },
+    "DELAY_DUE_WEATHER": {
+      "count": 1643780,
+      "pct": 82.189
+    },
+    "DELAY_DUE_NAS": {
+      "count": 1643780,
+      "pct": 82.189
+    },
+    "DELAY_DUE_SECURITY": {
+      "count": 1643780,
+      "pct": 82.189
+    },
+    "DELAY_DUE_LATE_AIRCRAFT": {
+      "count": 1643780,
+      "pct": 82.189
+    }
+  },
+  "flight_status": {
+    "total_flights": 2000000,
+    "cancelled_flights": 52522.0,
+    "diverted_flights": 4709.0,
+    "completed_flights": 1942769.0
+  },
+  "cancelled_missing": {
+    "total_cancelled": 52522,
+    "dep_time_null": 51430.0,
+    "arr_time_null": 52522.0,
+    "arr_delay_null": 52522.0,
+    "taxi_out_null": 52281.0,
+    "wheels_off_null": 52281.0,
+    "air_time_null": 52522.0,
+    "has_cancellation_code": 52522.0
+  },
+  "diverted_missing": {
+    "total_diverted": 4709,
+    "dep_time_null": 0.0,
+    "arr_time_null": 569.0,
+    "arr_delay_null": 4709.0,
+    "wheels_on_null": 569.0,
+    "air_time_null": 4709.0
+  },
+  "delay_causes_missing": {
+    "completed_flights": 1942769,
+    "delayed_over_15": 343875.0,
+    "delayed_with_cause": 343875.0,
+    "ontime_with_cause": 12345.0,
+    "total_delay_cause_null": 1586549.0
+  },
+  "full_dup_count": 0,
+  "key_dup_stats": {
+    "duplicate_groups": 1,
+    "total_rows_in_duplicate_groups": 2.0,
+    "max_duplicate_in_group": 2
+  },
+  "invalid_checks": {
+    "invalid_crs_dep_time": 0.0,
+    "invalid_crs_dep_minute": 0.0,
+    "invalid_crs_arr_time": 12.0,
+    "invalid_crs_arr_minute": 0.0,
+    "non_positive_distance": 0.0,
+    "non_positive_crs_elapsed": 1.0,
+    "negative_taxi_out": 0.0,
+    "negative_taxi_in": 0.0,
+    "negative_air_time": 0.0,
+    "invalid_cancelled_flag": 0.0,
+    "invalid_diverted_flag": 0.0,
+    "both_cancelled_and_diverted": 0.0
+  },
+  "unique_airlines": 18,
+  "unique_airline_codes": 18,
+  "unique_dot_codes": 18,
+  "airport_format": {
+    "unique_origins": 380,
+    "unique_dests": 380,
+    "invalid_origin_codes": 0.0,
+    "invalid_dest_codes": 0.0
+  },
+  "delay_stats": [
+    {
+      "metric": "ARR_DELAY",
+      "count": 1942769,
+      "min_val": -119.0,
+      "p01": -37.0,
+      "p05": -27.0,
+      "q1": -16.0,
+      "median_val": -7.0,
+      "mean_val": 4.301958184426455,
+      "std_val": 51.58452608657628,
+      "q3": 7.0,
+      "p95": 71.0,
+      "p99": 190.0,
+      "p999": 654.0,
+      "max_val": 3237.0
+    },
+    {
+      "metric": "DEP_DELAY",
+      "count": 1948551,
+      "min_val": -93.0,
+      "p01": -14.0,
+      "p05": -10.0,
+      "q1": -6.0,
+      "median_val": -2.0,
+      "mean_val": 10.175305136996672,
+      "std_val": 49.62963625824909,
+      "q3": 6.0,
+      "p95": 72.0,
+      "p99": 191.0,
+      "p999": 665.0,
+      "max_val": 3221.0
+    }
+  ],
+  "outlier_counts": {
+    "ARR_DELAY": {
+      "iqr": 23.0,
+      "lower_fence": -50.5,
+      "upper_fence": 41.5,
+      "extreme_upper_fence": 76.0,
+      "below_lower_count": 1846.0,
+      "above_upper_count": 170451.0,
+      "above_upper_pct": 8.77,
+      "extreme_upper_count": 88648.0,
+      "extreme_upper_pct": 4.56
+    },
+    "DEP_DELAY": {
+      "iqr": 12.0,
+      "lower_fence": -24.0,
+      "upper_fence": 24.0,
+      "extreme_upper_fence": 42.0,
+      "below_lower_count": 752.0,
+      "above_upper_count": 261211.0,
+      "above_upper_pct": 13.41,
+      "extreme_upper_count": 169486.0,
+      "extreme_upper_pct": 8.7
+    }
+  }
+}

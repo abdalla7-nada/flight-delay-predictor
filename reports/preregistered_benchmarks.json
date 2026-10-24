@@ -1,0 +1,35 @@
+{
+  "val_jan_aug_benchmark": {
+    "flight_count": 296276,
+    "unique_days": 243,
+    "base_rate": 0.2106,
+    "pr_auc": 0.3355,
+    "pr_auc_ci": [
+      0.3208,
+      0.3508
+    ],
+    "roc_auc": 0.6576,
+    "roc_auc_ci": [
+      0.6481,
+      0.6649
+    ],
+    "brier": 0.1572,
+    "brier_ci": [
+      0.1528,
+      0.1618
+    ],
+    "bss_vs_base_rate": 0.0544,
+    "top_10_lift": 1.93,
+    "top_10_precision": 0.4063
+  },
+  "test_ground_truth_prevalence": {
+    "flight_count": 304458,
+    "unique_days": 243,
+    "months_span": [
+      1,
+      8
+    ],
+    "base_rate": 0.2224,
+    "reference_brier": 0.173
+  }
+}

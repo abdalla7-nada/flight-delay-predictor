@@ -1,0 +1,311 @@
+{
+  "airline_slices": [
+    {
+      "carrier": "WN",
+      "flight_count": 85844,
+      "observed_delay_rate": 0.234,
+      "roc_auc": 0.7054,
+      "top_10_lift": 2.05
+    },
+    {
+      "carrier": "DL",
+      "flight_count": 60058,
+      "observed_delay_rate": 0.1531,
+      "roc_auc": 0.6256,
+      "top_10_lift": 1.83
+    },
+    {
+      "carrier": "AA",
+      "flight_count": 57701,
+      "observed_delay_rate": 0.2149,
+      "roc_auc": 0.6479,
+      "top_10_lift": 1.85
+    },
+    {
+      "carrier": "OO",
+      "flight_count": 48491,
+      "observed_delay_rate": 0.159,
+      "roc_auc": 0.5929,
+      "top_10_lift": 1.57
+    },
+    {
+      "carrier": "UA",
+      "flight_count": 41776,
+      "observed_delay_rate": 0.1858,
+      "roc_auc": 0.6571,
+      "top_10_lift": 2.0
+    },
+    {
+      "carrier": "YX",
+      "flight_count": 20330,
+      "observed_delay_rate": 0.1911,
+      "roc_auc": 0.6235,
+      "top_10_lift": 1.7
+    },
+    {
+      "carrier": "B6",
+      "flight_count": 17848,
+      "observed_delay_rate": 0.318,
+      "roc_auc": 0.649,
+      "top_10_lift": 1.57
+    },
+    {
+      "carrier": "MQ",
+      "flight_count": 16374,
+      "observed_delay_rate": 0.1683,
+      "roc_auc": 0.587,
+      "top_10_lift": 1.38
+    },
+    {
+      "carrier": "NK",
+      "flight_count": 15305,
+      "observed_delay_rate": 0.246,
+      "roc_auc": 0.6047,
+      "top_10_lift": 1.29
+    },
+    {
+      "carrier": "AS",
+      "flight_count": 15272,
+      "observed_delay_rate": 0.1972,
+      "roc_auc": 0.6029,
+      "top_10_lift": 1.76
+    },
+    {
+      "carrier": "9E",
+      "flight_count": 14989,
+      "observed_delay_rate": 0.1565,
+      "roc_auc": 0.6298,
+      "top_10_lift": 1.88
+    },
+    {
+      "carrier": "OH",
+      "flight_count": 14158,
+      "observed_delay_rate": 0.1838,
+      "roc_auc": 0.6515,
+      "top_10_lift": 1.89
+    },
+    {
+      "carrier": "F9",
+      "flight_count": 10293,
+      "observed_delay_rate": 0.3045,
+      "roc_auc": 0.5983,
+      "top_10_lift": 1.23
+    },
+    {
+      "carrier": "G4",
+      "flight_count": 7587,
+      "observed_delay_rate": 0.3383,
+      "roc_auc": 0.6474,
+      "top_10_lift": 1.44
+    },
+    {
+      "carrier": "YV",
+      "flight_count": 7510,
+      "observed_delay_rate": 0.1887,
+      "roc_auc": 0.5799,
+      "top_10_lift": 1.52
+    },
+    {
+      "carrier": "QX",
+      "flight_count": 5993,
+      "observed_delay_rate": 0.1473,
+      "roc_auc": 0.5821,
+      "top_10_lift": 1.62
+    },
+    {
+      "carrier": "HA",
+      "flight_count": 5025,
+      "observed_delay_rate": 0.2237,
+      "roc_auc": 0.5962,
+      "top_10_lift": 1.25
+    }
+  ],
+  "origin_slices": [
+    {
+      "origin": "ATL",
+      "flight_count": 21265,
+      "observed_delay_rate": 0.1728,
+      "roc_auc": 0.6462,
+      "top_10_lift": 2.03
+    },
+    {
+      "origin": "DFW",
+      "flight_count": 18197,
+      "observed_delay_rate": 0.2234,
+      "roc_auc": 0.6384,
+      "top_10_lift": 1.77
+    },
+    {
+      "origin": "DEN",
+      "flight_count": 17909,
+      "observed_delay_rate": 0.2512,
+      "roc_auc": 0.6428,
+      "top_10_lift": 1.8
+    },
+    {
+      "origin": "ORD",
+      "flight_count": 17193,
+      "observed_delay_rate": 0.2027,
+      "roc_auc": 0.5991,
+      "top_10_lift": 1.54
+    },
+    {
+      "origin": "CLT",
+      "flight_count": 12793,
+      "observed_delay_rate": 0.2014,
+      "roc_auc": 0.6808,
+      "top_10_lift": 2.19
+    },
+    {
+      "origin": "LAX",
+      "flight_count": 12676,
+      "observed_delay_rate": 0.1709,
+      "roc_auc": 0.6133,
+      "top_10_lift": 1.75
+    },
+    {
+      "origin": "LAS",
+      "flight_count": 11686,
+      "observed_delay_rate": 0.2542,
+      "roc_auc": 0.673,
+      "top_10_lift": 1.82
+    },
+    {
+      "origin": "SEA",
+      "flight_count": 11585,
+      "observed_delay_rate": 0.1727,
+      "roc_auc": 0.6217,
+      "top_10_lift": 1.86
+    },
+    {
+      "origin": "PHX",
+      "flight_count": 11207,
+      "observed_delay_rate": 0.2064,
+      "roc_auc": 0.693,
+      "top_10_lift": 2.18
+    },
+    {
+      "origin": "LGA",
+      "flight_count": 11118,
+      "observed_delay_rate": 0.2254,
+      "roc_auc": 0.644,
+      "top_10_lift": 1.76
+    }
+  ],
+  "month_slices": [
+    {
+      "month": 1,
+      "flight_count": 34365,
+      "observed_delay_rate": 0.1834,
+      "roc_auc": 0.6157,
+      "top_10_lift": 1.68
+    },
+    {
+      "month": 2,
+      "flight_count": 31755,
+      "observed_delay_rate": 0.1838,
+      "roc_auc": 0.6431,
+      "top_10_lift": 1.89
+    },
+    {
+      "month": 3,
+      "flight_count": 37974,
+      "observed_delay_rate": 0.2077,
+      "roc_auc": 0.6511,
+      "top_10_lift": 2.01
+    },
+    {
+      "month": 4,
+      "flight_count": 36985,
+      "observed_delay_rate": 0.2156,
+      "roc_auc": 0.6563,
+      "top_10_lift": 2.08
+    },
+    {
+      "month": 5,
+      "flight_count": 38346,
+      "observed_delay_rate": 0.2047,
+      "roc_auc": 0.6724,
+      "top_10_lift": 2.1
+    },
+    {
+      "month": 6,
+      "flight_count": 37977,
+      "observed_delay_rate": 0.2298,
+      "roc_auc": 0.6783,
+      "top_10_lift": 2.01
+    },
+    {
+      "month": 7,
+      "flight_count": 39840,
+      "observed_delay_rate": 0.23,
+      "roc_auc": 0.678,
+      "top_10_lift": 1.94
+    },
+    {
+      "month": 8,
+      "flight_count": 39034,
+      "observed_delay_rate": 0.2216,
+      "roc_auc": 0.6853,
+      "top_10_lift": 2.08
+    },
+    {
+      "month": 9,
+      "flight_count": 37454,
+      "observed_delay_rate": 0.1579,
+      "roc_auc": 0.6616,
+      "top_10_lift": 2.09
+    },
+    {
+      "month": 10,
+      "flight_count": 38534,
+      "observed_delay_rate": 0.1532,
+      "roc_auc": 0.6357,
+      "top_10_lift": 2.02
+    },
+    {
+      "month": 11,
+      "flight_count": 36507,
+      "observed_delay_rate": 0.1838,
+      "roc_auc": 0.6237,
+      "top_10_lift": 1.73
+    },
+    {
+      "month": 12,
+      "flight_count": 35783,
+      "observed_delay_rate": 0.2628,
+      "roc_auc": 0.6463,
+      "top_10_lift": 1.75
+    }
+  ],
+  "part_of_day_slices": [
+    {
+      "part_of_day": "night",
+      "flight_count": 12753,
+      "observed_delay_rate": 0.0958,
+      "roc_auc": 0.6471,
+      "top_10_lift": 2.47
+    },
+    {
+      "part_of_day": "morning",
+      "flight_count": 173931,
+      "observed_delay_rate": 0.1404,
+      "roc_auc": 0.6082,
+      "top_10_lift": 1.7
+    },
+    {
+      "part_of_day": "afternoon",
+      "flight_count": 157951,
+      "observed_delay_rate": 0.2333,
+      "roc_auc": 0.6123,
+      "top_10_lift": 1.64
+    },
+    {
+      "part_of_day": "evening",
+      "flight_count": 99919,
+      "observed_delay_rate": 0.2785,
+      "roc_auc": 0.6442,
+      "top_10_lift": 1.67
+    }
+  ]
+}

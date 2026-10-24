@@ -1,0 +1,397 @@
+{
+  "airline": [
+    {
+      "slice": "airline",
+      "category": "9E",
+      "count": 14989,
+      "delay_rate": 0.1565,
+      "pr_auc": 0.2383,
+      "roc_auc": 0.6279,
+      "lift_at_10": 1.92
+    },
+    {
+      "slice": "airline",
+      "category": "AA",
+      "count": 57701,
+      "delay_rate": 0.2149,
+      "pr_auc": 0.3258,
+      "roc_auc": 0.6467,
+      "lift_at_10": 1.85
+    },
+    {
+      "slice": "airline",
+      "category": "AS",
+      "count": 15272,
+      "delay_rate": 0.1972,
+      "pr_auc": 0.2788,
+      "roc_auc": 0.5997,
+      "lift_at_10": 1.8
+    },
+    {
+      "slice": "airline",
+      "category": "B6",
+      "count": 17848,
+      "delay_rate": 0.318,
+      "pr_auc": 0.4386,
+      "roc_auc": 0.6489,
+      "lift_at_10": 1.55
+    },
+    {
+      "slice": "airline",
+      "category": "DL",
+      "count": 60058,
+      "delay_rate": 0.1531,
+      "pr_auc": 0.2346,
+      "roc_auc": 0.6248,
+      "lift_at_10": 1.86
+    },
+    {
+      "slice": "airline",
+      "category": "F9",
+      "count": 10293,
+      "delay_rate": 0.3045,
+      "pr_auc": 0.3574,
+      "roc_auc": 0.5918,
+      "lift_at_10": 1.16
+    },
+    {
+      "slice": "airline",
+      "category": "G4",
+      "count": 7587,
+      "delay_rate": 0.3383,
+      "pr_auc": 0.4418,
+      "roc_auc": 0.6428,
+      "lift_at_10": 1.45
+    },
+    {
+      "slice": "airline",
+      "category": "HA",
+      "count": 5025,
+      "delay_rate": 0.2237,
+      "pr_auc": 0.2794,
+      "roc_auc": 0.6029,
+      "lift_at_10": 1.39
+    },
+    {
+      "slice": "airline",
+      "category": "MQ",
+      "count": 16374,
+      "delay_rate": 0.1683,
+      "pr_auc": 0.2045,
+      "roc_auc": 0.5786,
+      "lift_at_10": 1.32
+    },
+    {
+      "slice": "airline",
+      "category": "NK",
+      "count": 15305,
+      "delay_rate": 0.246,
+      "pr_auc": 0.3102,
+      "roc_auc": 0.6052,
+      "lift_at_10": 1.31
+    },
+    {
+      "slice": "airline",
+      "category": "OH",
+      "count": 14158,
+      "delay_rate": 0.1838,
+      "pr_auc": 0.2855,
+      "roc_auc": 0.646,
+      "lift_at_10": 1.92
+    },
+    {
+      "slice": "airline",
+      "category": "OO",
+      "count": 48491,
+      "delay_rate": 0.159,
+      "pr_auc": 0.2079,
+      "roc_auc": 0.59,
+      "lift_at_10": 1.55
+    },
+    {
+      "slice": "airline",
+      "category": "QX",
+      "count": 5993,
+      "delay_rate": 0.1473,
+      "pr_auc": 0.1895,
+      "roc_auc": 0.5671,
+      "lift_at_10": 1.48
+    },
+    {
+      "slice": "airline",
+      "category": "UA",
+      "count": 41776,
+      "delay_rate": 0.1858,
+      "pr_auc": 0.2963,
+      "roc_auc": 0.6539,
+      "lift_at_10": 1.99
+    },
+    {
+      "slice": "airline",
+      "category": "WN",
+      "count": 85844,
+      "delay_rate": 0.234,
+      "pr_auc": 0.3998,
+      "roc_auc": 0.7041,
+      "lift_at_10": 2.04
+    },
+    {
+      "slice": "airline",
+      "category": "YV",
+      "count": 7510,
+      "delay_rate": 0.1887,
+      "pr_auc": 0.2395,
+      "roc_auc": 0.5764,
+      "lift_at_10": 1.39
+    },
+    {
+      "slice": "airline",
+      "category": "YX",
+      "count": 20330,
+      "delay_rate": 0.1911,
+      "pr_auc": 0.276,
+      "roc_auc": 0.6218,
+      "lift_at_10": 1.71
+    }
+  ],
+  "top_origin_airports": [
+    {
+      "slice": "top_origin",
+      "category": "ATL",
+      "count": 21265,
+      "delay_rate": 0.1728,
+      "pr_auc": 0.2832,
+      "roc_auc": 0.6483,
+      "lift_at_10": 2.03
+    },
+    {
+      "slice": "top_origin",
+      "category": "DFW",
+      "count": 18197,
+      "delay_rate": 0.2234,
+      "pr_auc": 0.3223,
+      "roc_auc": 0.6327,
+      "lift_at_10": 1.77
+    },
+    {
+      "slice": "top_origin",
+      "category": "DEN",
+      "count": 17909,
+      "delay_rate": 0.2512,
+      "pr_auc": 0.3686,
+      "roc_auc": 0.637,
+      "lift_at_10": 1.77
+    },
+    {
+      "slice": "top_origin",
+      "category": "ORD",
+      "count": 17193,
+      "delay_rate": 0.2027,
+      "pr_auc": 0.2673,
+      "roc_auc": 0.5948,
+      "lift_at_10": 1.48
+    },
+    {
+      "slice": "top_origin",
+      "category": "CLT",
+      "count": 12793,
+      "delay_rate": 0.2014,
+      "pr_auc": 0.3462,
+      "roc_auc": 0.6743,
+      "lift_at_10": 2.22
+    },
+    {
+      "slice": "top_origin",
+      "category": "LAX",
+      "count": 12676,
+      "delay_rate": 0.1709,
+      "pr_auc": 0.246,
+      "roc_auc": 0.6153,
+      "lift_at_10": 1.69
+    },
+    {
+      "slice": "top_origin",
+      "category": "LAS",
+      "count": 11686,
+      "delay_rate": 0.2542,
+      "pr_auc": 0.3826,
+      "roc_auc": 0.6669,
+      "lift_at_10": 1.78
+    },
+    {
+      "slice": "top_origin",
+      "category": "SEA",
+      "count": 11585,
+      "delay_rate": 0.1727,
+      "pr_auc": 0.2554,
+      "roc_auc": 0.6162,
+      "lift_at_10": 1.82
+    },
+    {
+      "slice": "top_origin",
+      "category": "PHX",
+      "count": 11207,
+      "delay_rate": 0.2064,
+      "pr_auc": 0.3568,
+      "roc_auc": 0.6864,
+      "lift_at_10": 2.12
+    },
+    {
+      "slice": "top_origin",
+      "category": "LGA",
+      "count": 11118,
+      "delay_rate": 0.2254,
+      "pr_auc": 0.3319,
+      "roc_auc": 0.6405,
+      "lift_at_10": 1.7
+    }
+  ],
+  "month": [
+    {
+      "slice": "month",
+      "category": 1,
+      "count": 34365,
+      "delay_rate": 0.1834,
+      "pr_auc": 0.2509,
+      "roc_auc": 0.6083,
+      "lift_at_10": 1.64
+    },
+    {
+      "slice": "month",
+      "category": 2,
+      "count": 31755,
+      "delay_rate": 0.1838,
+      "pr_auc": 0.2803,
+      "roc_auc": 0.6379,
+      "lift_at_10": 1.86
+    },
+    {
+      "slice": "month",
+      "category": 3,
+      "count": 37974,
+      "delay_rate": 0.2077,
+      "pr_auc": 0.3283,
+      "roc_auc": 0.6489,
+      "lift_at_10": 1.97
+    },
+    {
+      "slice": "month",
+      "category": 4,
+      "count": 36985,
+      "delay_rate": 0.2156,
+      "pr_auc": 0.3474,
+      "roc_auc": 0.6544,
+      "lift_at_10": 1.98
+    },
+    {
+      "slice": "month",
+      "category": 5,
+      "count": 38346,
+      "delay_rate": 0.2047,
+      "pr_auc": 0.3433,
+      "roc_auc": 0.6696,
+      "lift_at_10": 2.0
+    },
+    {
+      "slice": "month",
+      "category": 6,
+      "count": 37977,
+      "delay_rate": 0.2298,
+      "pr_auc": 0.3783,
+      "roc_auc": 0.6773,
+      "lift_at_10": 2.0
+    },
+    {
+      "slice": "month",
+      "category": 7,
+      "count": 39840,
+      "delay_rate": 0.23,
+      "pr_auc": 0.3743,
+      "roc_auc": 0.6772,
+      "lift_at_10": 1.95
+    },
+    {
+      "slice": "month",
+      "category": 8,
+      "count": 39034,
+      "delay_rate": 0.2216,
+      "pr_auc": 0.3723,
+      "roc_auc": 0.6846,
+      "lift_at_10": 2.06
+    },
+    {
+      "slice": "month",
+      "category": 9,
+      "count": 37454,
+      "delay_rate": 0.1579,
+      "pr_auc": 0.2627,
+      "roc_auc": 0.6642,
+      "lift_at_10": 2.08
+    },
+    {
+      "slice": "month",
+      "category": 10,
+      "count": 38534,
+      "delay_rate": 0.1532,
+      "pr_auc": 0.2366,
+      "roc_auc": 0.6346,
+      "lift_at_10": 1.98
+    },
+    {
+      "slice": "month",
+      "category": 11,
+      "count": 36507,
+      "delay_rate": 0.1838,
+      "pr_auc": 0.2659,
+      "roc_auc": 0.6252,
+      "lift_at_10": 1.73
+    },
+    {
+      "slice": "month",
+      "category": 12,
+      "count": 35783,
+      "delay_rate": 0.2628,
+      "pr_auc": 0.3809,
+      "roc_auc": 0.6403,
+      "lift_at_10": 1.72
+    }
+  ],
+  "part_of_day": [
+    {
+      "slice": "part_of_day",
+      "category": "night",
+      "count": 12753,
+      "delay_rate": 0.0958,
+      "pr_auc": 0.1753,
+      "roc_auc": 0.6424,
+      "lift_at_10": 2.44
+    },
+    {
+      "slice": "part_of_day",
+      "category": "morning",
+      "count": 173931,
+      "delay_rate": 0.1404,
+      "pr_auc": 0.1978,
+      "roc_auc": 0.6053,
+      "lift_at_10": 1.63
+    },
+    {
+      "slice": "part_of_day",
+      "category": "afternoon",
+      "count": 157951,
+      "delay_rate": 0.2333,
+      "pr_auc": 0.3189,
+      "roc_auc": 0.611,
+      "lift_at_10": 1.64
+    },
+    {
+      "slice": "part_of_day",
+      "category": "evening",
+      "count": 99919,
+      "delay_rate": 0.2785,
+      "pr_auc": 0.393,
+      "roc_auc": 0.6408,
+      "lift_at_10": 1.65
+    }
+  ]
+}
